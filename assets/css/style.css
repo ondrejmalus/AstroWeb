@@ -820,3 +820,58 @@ body > .content {
   font-size: 14px;
   color: #ff6b6b;
 }
+
+/* 🔔 Toast notifikace */
+.toast {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  color: #fff;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.4s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast.success {
+  background-color: #28a745; /* zelená */
+}
+
+.toast.error {
+  background-color: #dc3545; /* červená */
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper .login-input {
+  width: 100%;
+  padding-right: 40px; /* aby bylo místo na ikonku */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #646464;
+  transition: color 0.2s;
+}
+
+.toggle-password:hover {
+  color: #000000;
+}
+
+.success-msg {
+  color: rgb(20, 226, 20);
+}

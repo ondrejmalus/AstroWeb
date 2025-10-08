@@ -20,34 +20,81 @@
 <!-- HLAVNÍ OBSAH -->
 <main class="container mt-5 content">
 
-  <!-- Registrace formulář -->
   <div class="login-box">
     <h2 class="login-title">Registrace</h2>
     <form id="registerForm" class="login-form">
-      <input type="text" id="regUsername" class="login-input" placeholder="Uživatelské jméno" required>
-      <input type="email" id="regEmail" class="login-input" placeholder="E-mail" required>
-      <input type="password" id="regPassword" class="login-input" placeholder="Heslo" required>
-      <input type="password" id="regConfirm" class="login-input" placeholder="Potvrzení hesla" required>
-      <button type="submit" class="login-btn">Zaregistrovat se</button>
-    </form>
-    <p class="login-register">
-      Už máte účet? <a href="login.html">Přihlaste se</a>
-    </p>
-    <p id="regMsg" class="login-msg"></p>
+  <input type="text" id="regUsername" class="login-input" placeholder="Uživatelské jméno" required>
+  <input type="email" id="regEmail" class="login-input" placeholder="E-mail" required>
+  <div class="password-wrapper">
+    <input type="password" id="regPassword" class="login-input" placeholder="Heslo" required minlength="8">
+    <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+  </div>
+  <div class="password-wrapper">
+    <input type="password" id="regConfirm" class="login-input" placeholder="Potvrď heslo" required>
+    <i class="fas fa-eye toggle-password" id="toggleConfirm"></i>
+  </div>
+  <button type="submit" class="login-btn">Zaregistrovat se</button>
+</form>
+<p class="login-register">
+    Již máte účet? <a href="login.html">Přihlaste se</a>
+  </p>
+<p id="regMsg" class="login-msg"></p>
   </div>
 
 </main>  
 
-<!-- FOOTER (načtený dynamicky) -->
+<!-- FOOTER -->
 <div id="footer"></div>
 
 <script src="layout/navbar.js"></script>
 
-<!-- Načítání layoutu -->
 <script>
-  fetch('/layout/footer.html')
-    .then(res => res.text())
-    .then(data => document.getElementById('footer').innerHTML = data);
+document.getElementById('registerForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const username = document.getElementById('regUsername').value;
+  const email = document.getElementById('regEmail').value;
+  const password = document.getElementById('regPassword').value;
+  const confirm = document.getElementById('regConfirm').value;
+  const msg = document.getElementById('regMsg');
+
+  // --- Ověření hesla ---
+  if (password.length < 8) {
+    msg.textContent = "Heslo musí mít alespoň 8 znaků.";
+    return;
+  }
+  if (password !== confirm) {
+    msg.textContent = "Zadaná hesla se musí shodovat.";
+    return;
+  }
+
+  try {
+    const res = await fetch('http://localhost:3000/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password, confirm })
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      msg.textContent = 'Registrace úspěšná, nyní se přihlaste.';
+      msg.classList.add('success-msg');
+      setTimeout(() => location.href = 'login.html', 1500);
+    } else {
+      msg.textContent = data.msg;
+    }
+  } catch (err) {
+    msg.textContent = 'Chyba serveru';
+    console.error(err);
+  }
+});
+</script>
+
+
+<!-- Načítání footeru -->
+<script>
+fetch('/layout/footer.html')
+  .then(res => res.text())
+  .then(data => document.getElementById('footer').innerHTML = data);
 </script>
 
 <!-- Tlačítko Zpět nahoru -->
@@ -56,20 +103,18 @@
 </button>
 
 <script>
-  // Ukázat tlačítko při scrollu
-  window.onscroll = function () {
-    const btn = document.getElementById("scrollTopBtn");
-    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-      btn.style.display = "block";
-    } else {
-      btn.style.display = "none";
-    }
-  };
-
-  // Funkce pro scroll nahoru
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+window.onscroll = function () {
+  const btn = document.getElementById("scrollTopBtn");
+  if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+    btn.style.display = "block";
+  } else {
+    btn.style.display = "none";
   }
+};
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 </script>
 </body>
 </html>
