@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroWeb – Registrace</title>
+  <link rel="icon" type="image/png" href="data/web_images/icon.png">
+
+  <!-- Vlastní CSS -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Bootswatch Lux -->
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
+</head>
+<body class="body">
+
+<!-- HLAVNÍ OBSAH -->
+<main class="container mt-5 content">
+
+  <!-- Registrace formulář -->
+  <div class="login-box">
+    <h2 class="login-title">Registrace</h2>
+    <form id="registerForm" class="login-form">
+      <input type="text" id="regUsername" class="login-input" placeholder="Uživatelské jméno" required>
+      <input type="email" id="regEmail" class="login-input" placeholder="E-mail" required>
+      <input type="password" id="regPassword" class="login-input" placeholder="Heslo" required>
+      <input type="password" id="regConfirm" class="login-input" placeholder="Potvrzení hesla" required>
+      <button type="submit" class="login-btn">Zaregistrovat se</button>
+    </form>
+    <p class="login-register">
+      Už máte účet? <a href="login.html">Přihlaste se</a>
+    </p>
+    <p id="regMsg" class="login-msg"></p>
+  </div>
+
+</main>  
+
+<!-- FOOTER (načtený dynamicky) -->
+<div id="footer"></div>
+
+<script src="layout/navbar.js"></script>
+
+<!-- Načítání layoutu -->
+<script>
+  fetch('/layout/footer.html')
+    .then(res => res.text())
+    .then(data => document.getElementById('footer').innerHTML = data);
+</script>
+
+<!-- Tlačítko Zpět nahoru -->
+<button onclick="scrollToTop()" id="scrollTopBtn" title="Zpět nahoru">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+  // Ukázat tlačítko při scrollu
+  window.onscroll = function () {
+    const btn = document.getElementById("scrollTopBtn");
+    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+    }
+  };
+
+  // Funkce pro scroll nahoru
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

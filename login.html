@@ -41,33 +41,6 @@
 
 <script src="layout/navbar.js"></script>
 
-<!-- Login JS -->
-<script>
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-
-  try {
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    });
-    const data = await res.json();
-    document.getElementById("msg").textContent = data.message;
-
-    if (res.ok) {
-      localStorage.setItem("userRole", data.role); // uloží roli pro navbar
-      window.location.href = "/index.html"; // přesměruje po úspěšném loginu
-    }
-  } catch (err) {
-    document.getElementById("msg").textContent = "Chyba připojení k serveru.";
-    console.error(err);
-  }
-});
-</script>
-
 <!-- Načítání layoutu -->
 <script>
   // Footer
