@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroWeb – Domov</title>
+  <link rel="icon" type="image/png" href="data/web_images/icon.png">
+  
+  <!-- Vlastní CSS -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Bootswatch Lux -->
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
+</head>
+
+<body class="body">
+
+<section class="hero">
+  <div class="hero-content text-center">
+    <h1 class="display-4 fw-bold">Vítej na AstroWebu</h1>
+    <p class="lead">Objevuj krásy vesmíru mýma očima</p>
+
+    <!-- Šipka dolů -->
+    <div class="hero-scroll">
+      <i class="fas fa-chevron-down fa-2x bounce"></i>
+    </div>
+
+    <!-- Odkaz na galerii -->
+    <p class="mt-4 gallery-link">
+      <a href="astro.html" class="btn-astro">Přejdi do galerie</a>
+    </p>
+
+    <!-- Věta + tlačítko k základním pojmům -->
+    <p class="mt-4 hero-pillars">
+      Nový ve světě astronomie?
+      <div class="hero-buttons">
+      <a href="#basic-terms" class="btn-astro">Podívej se na základní pojmy</a>
+      </div>
+    </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- HLAVNÍ OBSAH -->
+  <main class="container mt-5 content">
+    
+    <!-- Tento element dělá posun nad nadpis -->
+<div id="basic-terms" style="position: relative; top: -150px;"></div>
+<!-- === ZÁKLADNÍ POJMY === -->
+<section id="basic-terms" class="basic-terms">
+  <h2>Základní pojmy astronomie</h2>
+  <p style="text-align: center;">
+    Astronomie je věda, která zkoumá vesmír, nebeská tělesa a jevy, 
+    které se v něm odehrávají – od hvězd a planet až po vzdálené galaxie a mlhoviny.
+  </p>
+
+  <div class="terms-columns">
+    <!-- Levý sloupec -->
+    <div class="term-box">
+      <h3>⭐ Hvězdy</h3>
+      <p>
+        Hvězdy jsou ohromné koule plazmatu, které září díky jaderné fúzi. 
+        Rozdělují se podle svítivosti a velikosti do tříd I–VIII 
+        (nadobři, obři, podobři, hvězdy hlavní posloupnosti, podtrpaslíci, bílí trpaslíci...).
+      </p>
+
+      <h3>☄️ Komety</h3>
+      <p>
+        Malá tělesa složená převážně z ledu a prachu. 
+        Při přiblížení ke Slunci vytvářejí viditelnou komu a ohon.
+      </p>
+
+      <h3>✨ Hvězdokupy</h3>
+      <p>
+        Seskupení hvězd vzniklých ze stejného mračna. 
+        Existují <strong>otevřené hvězdokupy</strong> (volnější, mladší) 
+        a <strong>kulové hvězdokupy</strong> (husté, starší, kulovitého tvaru).
+      </p>
+    </div>
+
+    <!-- Pravý sloupec -->
+    <div class="term-box">
+      <h3>🌌 Galaxie</h3>
+      <p>
+        Obrovské soustavy hvězd, plynu a temné hmoty. 
+        <strong>Eliptické galaxie</strong> mají hladký oválný tvar, 
+        zatímco <strong>spirální galaxie</strong> mají výrazná ramena a centrální výduť.
+      </p>
+
+      <h3>☁️ Mlhoviny</h3>
+      <p>Obrovská mračna plynu a prachu. Dělí se na:</p>
+      <ul>
+        <li><strong>Emisní</strong> – září vlastním světlem díky ionizaci.</li>
+        <li><strong>Reflexní</strong> – pouze odrážejí světlo hvězd.</li>
+        <li><strong>Planetární</strong> – vznikají odvržením obalů hvězdy.</li>
+        <li><strong>Pozůstatky supernov</strong> – zbytky po výbuchu masivní hvězdy.</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+      <!-- Věta nad tlačítky – základní pilíře astronomie -->
+     <h3 class="zaklad">Základní pilíře amatérské astronomie najdeš v těchto katalozích:</h3>
+
+    <!-- Tlačítka -->
+    <div class="hero-buttons">
+      <a href="#messier-offset" class="btn-astro">Messierův katalog</a>
+      <a href="#other-catalogs" class="btn-astro">Další katalogy</a>
+    </div>
+
+    <!-- === MESSIER SEKCE === -->
+<section id="messier" class="messier-section container py-5">
+
+  <!-- Tento element dělá posun nad nadpis -->
+  <div id="messier-offset" style="position: relative; top: -150px;"></div>
+
+  <h2 class="text-center mb-4">Messierův katalog</h2>
+  <p class="text-center mb-5">
+    Messierův katalog je soupis 110 astronomických objektů, který vytvořil
+    francouzský astronom Charles Messier v 18. století. Je jedním z
+    nejvýznamnějších katalogů používaných amatérskými astronomy dodnes.
+  </p>
+
+  <div class="row align-items-center">
+    <!-- Levá část – Messier -->
+    <div class="col-lg-6 mb-4 mb-lg-0 text-center text-lg-start">
+      <img src="data/web_images/messier.jpg" alt="Charles Messier" class="img-fluid rounded shadow mb-3" style="max-width: 280px;">
+      <ul class="list-unstyled mt-3">
+        <li>🔭 Francouzský astronom (1730–1817).</li>
+        <li>📝 Vytvořil katalog 110 objektů.</li>
+        <li>🌌 Cíl: odlišit komety od mlhovin.</li>
+        <li>⭐ Dodnes zásadní pro amatérskou astronomii.</li>
+      </ul>
+    </div>
+
+<div class="col-lg-6">
+  <h3 class="text-center mb-4">Top 5 známých objektů - Hubble images</h3>
+  <div id="messierCarousel" class="custom-carousel">
+    <!-- Slidy -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="data/web_images/orion.jpg" alt="M42 Orion Nebula">
+        <div class="caption">
+          <h5 class="caption-title">M42 – Orion Nebula</h5>
+          <p class="caption-text">Nejznámější mlhovina, oblast vzniku hvězd v Orionu.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="data/web_images/sombrero.jpg" alt="M104 Sombrero Galaxy">
+        <div class="caption">
+          <h5 class="caption-title">M104 – Sombrero Galaxy</h5>
+          <p>Elegantní spirální galaxie připomínající sombrero.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="data/web_images/ring.jpg" alt="M57 Ring Nebula">
+        <div class="caption">
+          <h5>M57 – Ring Nebula</h5>
+          <p>Pozůstatek umírající hvězdy v souhvězdí Lyry.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="data/web_images/whirpool.jpg" alt="M51 Whirlpool Galaxy">
+        <div class="caption">
+          <h5>M51 – Whirlpool Galaxy</h5>
+          <p>Krásná spirální galaxie s jasnými rameny.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="data/web_images/crab.jpg" alt="M1 Crab Nebula">
+        <div class="caption">
+          <h5>M1 – Crab Nebula</h5>
+          <p>Mlhovina, která vznikla výbuchem supernovy.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ovládací šipky -->
+    <button class="control prev">&#10094;</button>
+    <button class="control next">&#10095;</button>
+  </div>
+</div>
+
+
+</section>
+
+
+<!-- === Messier Tabulka === -->
+<section id="messier-table" class="container py-5">
+  <h3 class="text-center mb-4">Seznam všech Messier objektů</h3>
+  <div class="table-responsive shadow rounded">
+    <table class="table table-dark table-striped" id="messierDataTable">
+      <thead>
+        <tr>
+          <th>Název</th>
+          <th>Jméno</th>
+          <th>Typ objektu</th>
+          <th>Zajímavost</th>
+          <th>Vzdálenost od Slunce</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data budou vložena skriptem -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- === DALŠÍ KATALOGY === -->
+<section class="astro-section container py-5">
+
+  <!-- Tento element dělá posun nad nadpis -->
+  <div id="other-catalogs" style="position: relative; top: -150px;"></div>
+
+  <h2 class="astro-heading text-center mb-4">
+    Další vesmírné katalogy
+  </h2>
+
+  <p class="astro-description text-center mb-5">
+    Kromě Messierova katalogu existují i další významné seznamy vesmírných objektů.  
+    Každý z nich má svou historii, účel a zaměření.
+  </p>
+
+  <div class="catalog-grid">
+    <!-- Katalog 1 -->
+    <div class="catalog-card">
+      <h3 class="catalog-name"> NGC – New General Catalogue</h3>
+      <p class="catalog-text">
+        Obsahuje tisíce galaxií, mlhovin a hvězdokup – základní pilíř amatérské astronomie.
+      </p>
+      <ul class="catalog-info">
+        <li><strong>Základní:</strong> galaxie, mlhoviny, hvězdokupy</li>
+        <li><strong>Autor:</strong> John Louis Emil Dreyer</li>
+        <li><strong>Vznik:</strong> 1888</li>
+        <li><strong>Počet objektů:</strong> 7 840</li>
+        <li><strong>Založen na pozorováních:</strong> Williama Herschela</li>
+      </ul>
+    </div>
+
+    <!-- Katalog 2 -->
+    <div class="catalog-card">
+      <h3 class="catalog-name"> IC – Index Catalogue</h3>
+      <p class="catalog-text">
+        Rozšiřuje katalog NGC o další objekty, často méně jasné, ale vědecky významné.
+      </p>
+      <ul class="catalog-info">
+        <li><strong>Základní:</strong> mlhoviny, hvězdokupy, galaxie</li>
+        <li><strong>Autor:</strong> John Louis Emil Dreyer</li>
+        <li><strong>Vznik:</strong> 1895 a 1908 (IC I a IC II)</li>
+        <li><strong>Počet objektů:</strong> 5 386</li>
+        <li><strong>Poznámka:</strong> doplněk k NGC – obsahuje i opravy původních údajů</li>
+      </ul>
+    </div>
+
+    <!-- Katalog 3 -->
+    <div class="catalog-card">
+      <h3 class="catalog-name"> C - Caldwellův katalog</h3>
+      <p class="catalog-text">
+        Výběr 109 objektů ideálních pro vizuální pozorování menšími dalekohledy.
+      </p>
+      <ul class="catalog-info">
+        <li><strong>Základní:</strong> pro amatérské pozorování</li>
+        <li><strong>Autor:</strong> Patrick Moore (pseudonym Caldwell)</li>
+        <li><strong>Vznik:</strong> 1995</li>
+        <li><strong>Počet objektů:</strong> 109</li>
+        <li><strong>Zajímavost:</strong> obsahuje objekty z jižní i severní oblohy</li>
+      </ul>
+    </div>
+
+    <!-- Katalog 4 -->
+    <div class="catalog-card">
+      <h3 class="catalog-name"> PGC – Principal Galaxies Catalogue</h3>
+      <p class="catalog-text">
+        Obsahuje desítky tisíc velkých i trpasličích galaxií s přesnými údaji o poloze a jasu.
+      </p>
+      <ul class="catalog-info">
+        <li><strong>Základní:</strong> galaxie</li>
+        <li><strong>Autor:</strong> G. Paturel a kol.</li>
+        <li><strong>Vznik:</strong> 1989</li>
+        <li><strong>Počet objektů:</strong> 73 197</li>
+        <li><strong>Použití:</strong> databáze HyperLEDA, SIMBAD</li>
+      </ul>
+    </div>
+
+    <!-- Katalog 5 -->
+    <div class="catalog-card">
+      <h3 class="catalog-name"> HD – Henry Draper Catalogue</h3>
+      <p class="catalog-text">
+        Více než 225 000 hvězd a je zaměřen na spektrální klasifikaci hvězd.
+      </p>
+      <ul class="catalog-info">
+        <li><strong>Základní:</strong> hvězdy se spektrálním typem</li>
+        <li><strong>Autor:</strong> Annie Jump Cannon a tým Harvard College Observatory</li>
+        <li><strong>Vznik:</strong> 1918–1924</li>
+        <li><strong>Počet objektů:</strong> 225 300</li>
+        <li><strong>Zajímavost:</strong> první katalog s úplnou spektrální klasifikací hvězd</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <!-- FOOTER (načtený dynamicky) -->
+  <div id="footer"></div>
+
+  <script src="layout/navbar.js"></script>
+
+
+  <!-- Načítání layoutu -->
+  <script>
+    // Footer
+    fetch('layout/footer.html')
+      .then(res => res.text())
+      .then(data => document.getElementById('footer').innerHTML = data);
+  </script>
+
+  <script>
+  fetch('data/messier_data.json')
+    .then(response => response.json())
+    .then(data => {
+      const tbody = document.querySelector('#messierDataTable tbody');
+      data.forEach(obj => {
+        const tr = document.createElement('tr');
+
+        tr.innerHTML = `
+          <td>${obj["obj-name"]}</td>
+          <td>${obj["obj-common-name"]}</td>
+          <td>${obj["obj-type"]}</td>
+          <td>${obj["obj-fact"]}</td>
+          <td>${obj["obj-distance"]}</td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => console.error('Chyba při načítání Messier dat:', err));
+</script>
+
+
+<!-- Carousel --> 
+
+<script>
+
+// Vlastní fade carousel
+const slides = document.querySelectorAll('#messierCarousel .carousel-item');
+const prevBtn = document.querySelector('#messierCarousel .prev');
+const nextBtn = document.querySelector('#messierCarousel .next');
+let currentIndex = 0;
+
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    slide.classList.remove('active');
+  });
+  slides[index].classList.add('active');
+  currentIndex = index;
+}
+
+prevBtn.addEventListener('click', () => {
+  const newIndex = currentIndex - 1 < 0 ? slides.length - 1 : currentIndex - 1;
+  showSlide(newIndex);
+});
+
+nextBtn.addEventListener('click', () => {
+  const newIndex = currentIndex + 1 >= slides.length ? 0 : currentIndex + 1;
+  showSlide(newIndex);
+});
+
+// Inicializace
+showSlide(currentIndex);
+
+</script>
+
+<!-- Tlačítko Zpět nahoru -->
+<button onclick="scrollToTop()" id="scrollTopBtn" title="Zpět nahoru">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+  // Ukázat tlačítko při scrollu
+  window.onscroll = function () {
+    const btn = document.getElementById("scrollTopBtn");
+    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+    }
+  };
+
+  // Funkce pro scroll nahoru
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

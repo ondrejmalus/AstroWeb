@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroWeb – Objekty</title>
+  <link rel="icon" type="image/png" href="data/web_images/icon.png">
+  
+  <!-- Vlastní CSS -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Bootswatch Lux -->
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
+</head>
+<body class="body">
+
+<!-- HLAVNÍ OBSAH -->
+  <main class="container mt-5 content">
+
+<section class="objects">
+<h1 class="text-center mb-3">Seznam objektů</h1>
+<p class="text-center mb-5">
+  Na této stránce najdeš kompletní seznam všech objektů, které jsem vyfotil nebo pozoroval. 
+  Seznam je rozdělen do kategorií: Hvězdy, Messier, NGC, IC a ostatní objekty.
+</p>
+
+<!-- Přidávací formulář (vždy viditelný) -->
+<div class="add-object-form mb-5">
+  <h5>Přidat nový objekt</h5>
+  <form id="add-object-form">
+    <div class="mb-3">
+      <label for="object-name" class="form-label">Název objektu</label>
+      <input type="text" id="object-name" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="object-category" class="form-label">Kategorie</label>
+      <select id="object-category" class="form-select" required>
+        <option value="star">Hvězdy</option>
+        <option value="messier">Messier</option>
+        <option value="ngc">NGC</option>
+        <option value="ic">IC</option>
+        <option value="other">Ostatní</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success">Přidat objekt</button>
+  </form>
+</div>
+
+<!-- Seznamy objektů -->
+<div class="row g-4" id="objects-lists">
+  <div class="col-lg-2 col-md-4 col-sm-6 objects-category" id="cat-hvezdy">
+    <h5 class="category-title">Hvězdy 🌟</h5>
+    <ul class="list-group list-group-flush" id="list-star"></ul>
+  </div>
+  <div class="col-lg-2 col-md-4 col-sm-6 objects-category" id="cat-messier">
+    <h5 class="category-title">Messier 🔭</h5>
+    <ul class="list-group list-group-flush" id="list-messier"></ul>
+  </div>
+  <div class="col-lg-2 col-md-4 col-sm-6 objects-category" id="cat-ngc">
+    <h5 class="category-title">NGC 🌌</h5>
+    <ul class="list-group list-group-flush" id="list-ngc"></ul>
+  </div>
+  <div class="col-lg-2 col-md-4 col-sm-6 objects-category" id="cat-ic">
+    <h5 class="category-title">IC ☁️</h5>
+    <ul class="list-group list-group-flush" id="list-ic"></ul>
+  </div>
+  <div class="col-lg-2 col-md-4 col-sm-6 objects-category" id="cat-other">
+    <h5 class="category-title">Ostatní 🪐</h5>
+    <ul class="list-group list-group-flush" id="list-other"></ul>
+  </div>
+</div>
+
+</section>
+
+  </main>  
+
+<!-- FOOTER (načtený dynamicky) -->
+  <div id="footer"></div>
+
+  <script src="layout/navbar.js"></script>
+
+  <script src="layout/objects.js"></script>
+
+  <!-- Načítání layoutu -->
+  <script>
+    // Footer
+    fetch('layout/footer.html')
+      .then(res => res.text())
+      .then(data => document.getElementById('footer').innerHTML = data);
+  </script>
+
+<!-- Tlačítko Zpět nahoru -->
+<button onclick="scrollToTop()" id="scrollTopBtn" title="Zpět nahoru">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+  // Ukázat tlačítko při scrollu
+  window.onscroll = function () {
+    const btn = document.getElementById("scrollTopBtn");
+    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+    }
+  };
+
+  // Funkce pro scroll nahoru
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

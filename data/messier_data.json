@@ -1,0 +1,882 @@
+[
+    {
+        "obj-name": "M1",
+        "obj-common-name": "Crab Nebula 🦀",
+        "obj-type": "Zbytek supernovy",
+        "obj-fact": "Vznikla supernovou v roce 1054",
+        "obj-distance": "~ 6 500 světelných let",
+        "obj-photo": "❌"
+    },
+    {
+        "obj-name": "M2",
+        "obj-common-name": "–",
+        "obj-type": "Kulová hvězdokupa",
+        "obj-fact": "Jedna z největších kulových hvězdokup",
+        "obj-distance": "~ 37 500 světelných let",
+        "obj-photo": "✅"
+    },
+    {
+        "obj-name": "M3",
+        "obj-common-name": "–",
+        "obj-type": "Kulová hvězdokupa",
+        "obj-fact": "Obsahuje přes 500 000 hvězd",
+        "obj-distance": "~ 33 900 světelných let",
+        "obj-photo": "✅"
+    },
+    {
+        "obj-name": "M4",
+        "obj-common-name": "Spider globular cluster",
+        "obj-type": "Kulová hvězdokupa",
+        "obj-fact": "Jedna z nejbližších kuličových hvězdokup k Zemi",
+        "obj-distance": "~ 7 200 světelných let",
+        "obj-photo": "✅"
+    },
+    {
+        "obj-name": "M5",
+        "obj-common-name": "Rose cluster",
+        "obj-type": "Kulová hvězdokupa",
+        "obj-fact": "Obsahuje přes 100 000 hvězd",
+        "obj-distance": "~ 24 500 světelných let",
+        "obj-photo": "✅"
+    },
+    {
+        "obj-name": "M6",
+        "obj-common-name": "Butterfly cluster 🦋",
+        "obj-type": "Otevřená hvězdokupa",
+        "obj-fact": "Má výrazný tvar motýla",
+        "obj-distance": "~ 2 000 světelných let",
+        "obj-photo": "✅"
+    },
+    {
+        "obj-name": "M7",
+        "obj-common-name": "Ptolemy's cluster",
+        "obj-type": "Otevřená hvězdokupa",
+        "obj-fact": "Velmi jasná otevřená hvězdokupa viditelná pouhým okem",
+        "obj-distance": "~ 980 světelných let",
+        "obj-photo": "✅"
+    },
+    {
+        "obj-name": "M8",
+        "obj-common-name": "Lagoon nebula 🌌",
+        "obj-type": "Emisní mlhovina",
+        "obj-fact": "Známá svou krásnou emisní mlhovinou a hvězdokupou",
+        "obj-distance": "~ 5 200 světelných let",
+        "obj-photo": "❌"
+    },
+    {
+        "obj-name": "M9",
+        "obj-common-name": "–",
+        "obj-type": "Kulová hvězdokupa",
+        "obj-fact": "Leží blízko středu Mléčné dráhy",
+        "obj-distance": "~ 25 800 světelných let",
+        "obj-photo": "❌"
+    },
+    {
+        "obj-name": "M10",
+        "obj-common-name": "–",
+        "obj-type": "Kulová hvězdokupa",
+        "obj-fact": "Klasická Kulová hvězdokupa s jasnými hvězdami",
+        "obj-distance": "~ 14 300 světelných let",
+        "obj-photo": "✅"
+    },
+    {
+    "obj-name": "M11",
+    "obj-common-name": "Wild Duck Cluster 🦆",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Velmi bohatá otevřená hvězdokupa",
+    "obj-distance": "~ 6 200 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M12",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Jedna z nejméně hustých kulových hvězdokup",
+    "obj-distance": "~ 15 700 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M13",
+    "obj-common-name": "Great Hercules Cluster 🌌",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Nejjasnější Kulová hvězdokupa na severní obloze",
+    "obj-distance": "~ 22 200 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M14",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Bohatá Kulová hvězdokupa v souhvězdí Ophiuchus",
+    "obj-distance": "~ 30 300 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M15",
+    "obj-common-name": "Great Pegasus Cluster",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Velmi hustá Kulová hvězdokupa s hvězdami proměnných typů",
+    "obj-distance": "~ 33 600 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M16",
+    "obj-common-name": "Eagle Nebula 🦅",
+    "obj-type": "Mlhovina s oblastí H2",
+    "obj-fact": "Slavná mlhovina s aktivním hvězdotvorným regionem",
+    "obj-distance": "~ 7 000 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M17",
+    "obj-common-name": "Swan Nebula 🌌",
+    "obj-type": "Mlhovina s oblastí H2",
+    "obj-fact": "Jasná emisní mlhovina s aktivním hvězdotvorným centrem",
+    "obj-distance": "~ 5 500 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M18",
+    "obj-common-name": "Black Swan cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Malá, ale dobře definovaná otevřená hvězdokupa",
+    "obj-distance": "~ 4 900 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M19",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Jedna z nejvíce zploštělých kuličových hvězdokup",
+    "obj-distance": "~ 28 700 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M20",
+    "obj-common-name": "Trifid Nebula 🌌",
+    "obj-type": "Mlhovina s oblastí H2",
+    "obj-fact": "Slavná mlhovina s tmavými pruhy a aktivním hvězdotvorným regionem",
+    "obj-distance": "~ 5 200 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M21",
+    "obj-common-name": "Webb's Cross Cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Malá otevřená hvězdokupa poblíž Trifid Nebula",
+    "obj-distance": "~ 4 100 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M22",
+    "obj-common-name": "Great Sagittarius Cluster",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Jasná Kulová hvězdokupa viditelná i malými dalekohledy",
+    "obj-distance": "~ 10 600 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M23",
+    "obj-common-name": "–",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Rozptýlená a relativně mladá hvězdokupa",
+    "obj-distance": "~ 2 600 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M24",
+    "obj-common-name": "Small Sagittarius Star Cloud 🌌",
+    "obj-type": "Hvězdný oblak",
+    "obj-fact": "Velký hvězdný oblak v Mléčné dráze, snadno viditelný i pouhým okem",
+    "obj-distance": "~ 10 000 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M25",
+    "obj-common-name": "–",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Malá a rozptýlená otevřená hvězdokupa v souhvězdí Střelce",
+    "obj-distance": "~ 2 600 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M26",
+    "obj-common-name": "–",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Středně bohatá otevřená hvězdokupa",
+    "obj-distance": "~ 5 100 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M27",
+    "obj-common-name": "Dumbbell Nebula 🍐",
+    "obj-type": "Planetární mlhovina",
+    "obj-fact": "Jedna z nejjasnějších planetárních mlhovin, snadno pozorovatelná malým dalekohledem",
+    "obj-distance": "~ 1 250 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M28",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Klasická Kulová hvězdokupa v souhvězdí Střelce",
+    "obj-distance": "~ 18 400 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M29",
+    "obj-common-name": "Cooling Tower Cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Malá, ale jasná otevřená hvězdokupa v souhvězdí Labutě",
+    "obj-distance": "~ 4 100 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M30",
+    "obj-common-name": "Jellyfish Cluster",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Hustá hvězdokupa s výraznou centrální koncentrací",
+    "obj-distance": "~ 27 100 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M31",
+    "obj-common-name": "Andromeda Galaxy 🌌",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Nejbližší velká galaxie k Mléčné dráze, viditelná i pouhým okem",
+    "obj-distance": "~ 2,54 milionu světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M32",
+    "obj-common-name": "Andromeda Satellite #1",
+    "obj-type": "Eliptická galaxie",
+    "obj-fact": "Družice galaxie Andromeda, kompaktní eliptická galaxie",
+    "obj-distance": "~ 2,5 milionu světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M33",
+    "obj-common-name": "Triangulum Galaxy 🌌",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Třetí nejbližší velká galaxie, součást Lokální skupiny galaxií",
+    "obj-distance": "~ 2,73 milionu světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M34",
+    "obj-common-name": "Spiral Cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Rozptýlená hvězdokupa v souhvězdí Persea",
+    "obj-distance": "~ 1 400 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M35",
+    "obj-common-name": "Shoe-Buckle cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Velká otevřená hvězdokupa v Blížencích, snadno pozorovatelná malým dalekohledem",
+    "obj-distance": "~ 2 800 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M36",
+    "obj-common-name": "Pinwheel cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Malá, jasná hvězdokupa v souhvězdí Auriga",
+    "obj-distance": "~ 4 000 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M37",
+    "obj-common-name": "Salt and Pepper Cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Bohatá otevřená hvězdokupa v souhvězdí Auriga",
+    "obj-distance": "~ 4 400 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M38",
+    "obj-common-name": "Starfish Cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Rozptýlená otevřená hvězdokupa, snadno viditelná středními dalekohledy",
+    "obj-distance": "~ 4 100 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M39",
+    "obj-common-name": "Pyramid Cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Rozptýlená hvězdokupa v souhvězdí Labutě, viditelná pouhým okem",
+    "obj-distance": "~ 800 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M40",
+    "obj-common-name": "Winnecke 4 🔭",
+    "obj-type": "Dvojhvězda",
+    "obj-fact": "Jediný Messierův objekt, který je vlastně dvojhvězdou",
+    "obj-distance": "~ 350 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M41",
+    "obj-common-name": "Little Beehive Cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Velká, jasná hvězdokupa v souhvězdí Velký Pes",
+    "obj-distance": "~ 2 300 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M42",
+    "obj-common-name": "Orion Nebula 🌌",
+    "obj-type": "Emisní mlhovina",
+    "obj-fact": "Nejjasnější emisní mlhovina, snadno viditelná pouhým okem",
+    "obj-distance": "~ 1 350 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M43",
+    "obj-common-name": "De Mairan's Nebula 🌌",
+    "obj-type": "Emisní mlhovina",
+    "obj-fact": "Oddělená část M42, součást Orionova komplexu mlhovin",
+    "obj-distance": "~ 1 350 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M44",
+    "obj-common-name": "Praesepe 🌟",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Velká, jasná otevřená hvězdokupa v souhvězdí Raka",
+    "obj-distance": "~ 590 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M45",
+    "obj-common-name": "Pleiades 🌟",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Nejznámější hvězdokupa, viditelná pouhým okem",
+    "obj-distance": "~ 440 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M46",
+    "obj-common-name": "–",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Obsahuje planetární mlhovinu NGC 2438, což je vzácná kombinace",
+    "obj-distance": "~ 5 000 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M47",
+    "obj-common-name": "–",
+    "obj-typ": "Otevřená hvězdokupa",
+    "obj-fact": "Rozptýlená hvězdokupa v souhvězdí Puppis",
+    "obj-distance": "~ 1 600 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M48",
+    "obj-common-name": "–",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Velká otevřená hvězdokupa, snadno pozorovatelná dalekohledem",
+    "obj-distance": "~ 1 580 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M49",
+    "obj-common-name": "–",
+    "obj-type": "Eliptická galaxie",
+    "obj-fact": "Jasná eliptická galaxie v souhvězdí Panna, součást Virginské kupy",
+    "obj-distance": "~ 56 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M50",
+    "obj-common-name": "Heart-Shaped Cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Otevřená hvězdokupa v souhvězdí Monoceros",
+    "obj-distance": "~ 3 200 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M51",
+    "obj-common-name": "Whirpool Galaxy 🌌",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Známá vírová galaxie s výraznými spirálními rameny",
+    "obj-distance": "~ 23 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M52",
+    "obj-common-name": "Scorpion Cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Hustá otevřená hvězdokupa v souhvězdí Kasiopei",
+    "obj-distance": "~ 5 000 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M53",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Hustá Kulová hvězdokupa v souhvězdí Coma Berenices",
+    "obj-distance": "~ 58 000 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M54",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Patří ke Sagittariusovu trpasličí galaxii, součást Mléčné dráhy",
+    "obj-distance": "~ 87 000 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M55",
+    "obj-common-name": "Specter Cluster",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Rozptýlená Kulová hvězdokupa v souhvězdí Střelce",
+    "obj-distance": "~ 17 600 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M56",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Kulová hvězdokupa v souhvězdí Lyry, viditelná dalekohledem",
+    "obj-distance": "~ 32 900 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M57",
+    "obj-common-name": "Ring Nebula 🌌",
+    "obj-type": "Planetární mlhovina",
+    "obj-fact": "Klasická prstencová mlhovina v souhvězdí Lyry",
+    "obj-distance": "~ 2 300 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M58",
+    "obj-common-name": "–",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Velká spirální galaxie v souhvězdí Panna, součást Virginské kupy",
+    "obj-distance": "~ 68 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M59",
+    "obj-common-name": "–",
+    "obj-type": "Eliptická galaxie",
+    "obj-fact": "Eliptická galaxie v souhvězdí Panna, součást Virginské kupy",
+    "obj-distance": "~ 60 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M60",
+    "obj-common-name": "–",
+    "obj-type": "Eliptická galaxie",
+    "obj-fact": "Jasná eliptická galaxie v souhvězdí Panna, součást Virginské kupy",
+    "obj-distance": "~ 55 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M61",
+    "obj-common-name": "Swelling Spiral Galaxy",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Velká spirální galaxie v souhvězdí Panna, součást Virginské kupy",
+    "obj-distance": "~ 52 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M62",
+    "obj-common-name": "Flickering Globular",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Hustá Kulová hvězdokupa v souhvězdí Hadonoš",
+    "obj-distance": "~ 22 200 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M63",
+    "obj-common-name": "Sunflower Galaxy 🌌",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Velká spirální galaxie s výraznými spirálními rameny v souhvězdí Hadonoš",
+    "obj-distance": "~ 29 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M64",
+    "obj-common-name": "Black Eye Galaxy 🌌",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Známá díky tmavé prstencové oblasti prachu, v souhvězdí Hady",
+    "obj-distance": "~ 17 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M65",
+    "obj-common-name": "–",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Galaxie v souhvězdí Lva, součást skupiny tří galaxií Leo Triplet",
+    "obj-distance": "~ 35 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M66",
+    "obj-common-name": "–",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Galaxie v souhvězdí Lva, součást Leo Triplet, jasné spirální rameno",
+    "obj-distance": "~ 36 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M67",
+    "obj-common-name": "Golden Eye Cluster",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Starobylá otevřená hvězdokupa v souhvězdí Raka",
+    "obj-distance": "~ 2 600 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M68",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Kulová hvězdokupa v souhvězdí Hydra",
+    "obj-distance": "~ 33 000 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M69",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Kulová hvězdokupa v souhvězdí Střelce",
+    "obj-distance": "~ 29 700 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M70",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Kulová hvězdokupa v souhvězdí Střelce",
+    "obj-distance": "~ 29 400 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M71",
+    "obj-common-name": "Angelfish Cluster",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Lehká Kulová hvězdokupa v souhvězdí Šípu",
+    "obj-distance": "~ 13 000 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M72",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Řidší Kulová hvězdokupa v souhvězdí Vodnáře",
+    "obj-distance": "~ 53 000 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M73",
+    "obj-common-name": "–",
+    "obj-type": "Otevřená hvězdokupa (asociace)",
+    "obj-fact": "Malá skupina hvězd v souhvězdí Vodnáře, spíše náhodná seskupení hvězd",
+    "obj-distance": "~ 2 500 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M74",
+    "obj-common-name": "Phantom Galaxy 🌌",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Velká spirální galaxie v souhvězdí Ryb, téměř čelní pohled",
+    "obj-distance": "~ 32 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M75",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Hustá Kulová hvězdokupa v souhvězdí Střelce",
+    "obj-distance": "~ 67 500 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M76",
+    "obj-common-name": "Little Dumbbel Nebula 🌌",
+    "obj-type": "Planetární mlhovina",
+    "obj-fact": "Planetární mlhovina v souhvězdí Persea",
+    "obj-distance": "~ 2 500 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M77",
+    "obj-common-name": "Squid Galaxy 🌌",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Aktivní galaxie v souhvězdí Veleryby",
+    "obj-distance": "~ 47 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M78",
+    "obj-common-name": "–",
+    "obj-type": "Reflexní mlhovina",
+    "obj-fact": "Jasná reflexní mlhovina v souhvězdí Orion",
+    "obj-distance": "~ 1 600 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M79",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Kulová hvězdokupa v souhvězdí Lepus",
+    "obj-distance": "~ 41 000 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M80",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Hustá Kulová hvězdokupa v souhvězdí Hadonoše",
+    "obj-distance": "~ 32 600 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M81",
+    "obj-common-name": "Bode's Galaxy 🌌",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Velká spirální galaxie v souhvězdí Velké Medvědice",
+    "obj-distance": "~ 12 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M82",
+    "obj-common-name": "Cigar Galaxy 🌌",
+    "obj-type": "Irregulární galaxie",
+    "obj-fact": "Galaxie s aktivní oblastí hvězdotvorby v souhvězdí Velké Medvědice",
+    "obj-distance": "~ 12 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M83",
+    "obj-common-name": "Southern Pinwheel Galaxy 🌌",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Velká spirální galaxie v souhvězdí Hydry",
+    "obj-distance": "~ 15 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M84",
+    "obj-common-name": "–",
+    "obj-type": "Eliptická galaxie",
+    "obj-fact": "Eliptická galaxie v souhvězdí Panny, součást kupy galaxií v Panně",
+    "obj-distance": "~ 60 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M85",
+    "obj-common-name": "–",
+    "obj-type": "Eliptická galaxie",
+    "obj-fact": "Eliptická galaxie v souhvězdí Panny",
+    "obj-distance": "~ 60 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M86",
+    "obj-common-name": "–",
+    "obj-type": "Eliptická galaxie",
+    "obj-fact": "Eliptická galaxie v souhvězdí Panny, součást kupy galaxií",
+    "obj-distance": "~ 52 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M87",
+    "obj-common-name": "Virgo A 🌌",
+    "obj-type": "Obří eliptická galaxie",
+    "obj-fact": "Velká eliptická galaxie s aktivním galaktickým jádrem v souhvězdí Panny",
+    "obj-distance": "~ 53 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M88",
+    "obj-common-name": "–",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Spirální galaxie v souhvězdí Coma Berenices",
+    "obj-distance": "~ 60 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M89",
+    "obj-common-name": "–",
+    "obj-type": "Eliptická galaxie",
+    "obj-fact": "Eliptická galaxie v souhvězdí Panny",
+    "obj-distance": "~ 50 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M90",
+    "obj-common-name": "–",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Spirální galaxie v souhvězdí Panny",
+    "obj-distance": "~ 60 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M91",
+    "obj-common-name": "–",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Spirální galaxie v souhvězdí Coma Berenices",
+    "obj-distance": "~ 63 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M92",
+    "obj-common-name": "–",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Starší Kulová hvězdokupa v souhvězdí Herkula",
+    "obj-distance": "~ 26 700 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M93",
+    "obj-common-name": "Critter Cluster",
+    "obj-type": "Hvězdokupa otevřená",
+    "obj-fact": "Otevřená hvězdokupa v souhvězdí Puppis",
+    "obj-distance": "~ 3 600 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M94",
+    "obj-common-name": "Crocodile Eye Galaxy",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Spirální galaxie v souhvězdí Canes Venatici",
+    "obj-distance": "~ 16 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M95",
+    "obj-common-name": "–",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Barová spirální galaxie v souhvězdí Lva",
+    "obj-distance": "~ 33 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M96",
+    "obj-common-name": "–",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Spirální galaxie v souhvězdí Lva",
+    "obj-distance": "~ 31 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M97",
+    "obj-common-name": "Owl Nebula 🌌",
+    "obj-type": "Planetární mlhovina",
+    "obj-fact": "Planetární mlhovina v souhvězdí Velké Medvědice",
+    "obj-distance": "~ 2 030 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M98",
+    "obj-common-name": "–",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Spirální galaxie v souhvězdí Coma Berenices",
+    "obj-distance": "~ 60 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M99",
+    "obj-common-name": "St. Catherine's Wheel",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Spirální galaxie v souhvězdí Coma Berenices",
+    "obj-distance": "~ 59 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M100",
+    "obj-common-name": "Mirror Galaxy",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Spirální galaxie v souhvězdí Coma Berenices",
+    "obj-distance": "~ 55 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M101",
+    "obj-common-name": "Pinwheel Galaxy 🌌",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Velká spirální galaxie v souhvězdí Velké Medvědice",
+    "obj-distance": "~ 21 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M102",
+    "obj-common-name": "Spindle Galaxy",
+    "obj-type": "Lentinkulární galaxie",
+    "obj-fact": "Existence M102 je sporná, může jít o NGC 5866",
+    "obj-distance": "~ 44 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M103",
+    "obj-common-name": "–",
+    "obj-type": "Otevřená hvězdokupa",
+    "obj-fact": "Malá otevřená hvězdokupa v souhvězdí Kasiopeji",
+    "obj-distance": "~ 8 000 světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M104",
+    "obj-common-name": "Sombrero Galaxy 🌌",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Výrazná spirální galaxie se širokým prstencem v souhvězdí Panny",
+    "obj-distance": "~ 29 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M105",
+    "obj-common-name": "–",
+    "obj-type": "Eliptická galaxie",
+    "obj-fact": "Eliptická galaxie v souhvězdí Lva",
+    "obj-distance": "~ 32 milionů světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M106",
+    "obj-common-name": "–",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Spirální galaxie v souhvězdí Canes Venatici",
+    "obj-distance": "~ 22 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M107",
+    "obj-common-name": "Crucifix Cluster",
+    "obj-type": "Kulová hvězdokupa",
+    "obj-fact": "Klasická Kulová hvězdokupa v souhvězdí Hadonoše",
+    "obj-distance": "~ 20 900 světelných let",
+    "obj-photo": "❌"
+},
+{
+    "obj-name": "M108",
+    "obj-common-name": "Surfboard Galaxy",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Spirální galaxie v souhvězdí Medvědice",
+    "obj-distance": "~ 46 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M109",
+    "obj-common-name": "Vacuum Cleaner Galaxy",
+    "obj-type": "Spirální galaxie",
+    "obj-fact": "Spirální galaxie v souhvězdí Medvědice",
+    "obj-distance": "~ 55 milionů světelných let",
+    "obj-photo": "✅"
+},
+{
+    "obj-name": "M110",
+    "obj-common-name": "Andromeda Satellite #2",
+    "obj-type": "Eliptická galaxie",
+    "obj-fact": "Družice galaxie Andromeda",
+    "obj-distance": "~ 2,9 milionu světelných let",
+    "obj-photo": "✅"
+}
+]
