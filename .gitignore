@@ -1,20 +1,5 @@
 # Node.js dependencies
 node_modules/
 
-# Logs
-logs/
-*.log
-
-# Environment variables
-.env
-
-# OS soubory
-.DS_Store
-Thumbs.db
-
-# Build / output directories
-dist/
-build/
-
-# VS Code settings
-.vscode/
+# fontawesome
+assets/fonts/fontawesome/
