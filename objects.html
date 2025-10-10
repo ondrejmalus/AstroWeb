@@ -27,7 +27,7 @@
   Seznam je rozdělen do kategorií: Hvězdy, Messier, NGC, IC a ostatní objekty.
 </p>
 
-<!-- Přidávací formulář (vždy viditelný) -->
+<!-- Přidávací formulář -->
 <div class="add-object-form mb-5">
   <h5>Přidat nový objekt</h5>
   <form id="add-object-form">
@@ -47,6 +47,13 @@
     </div>
     <button type="submit" class="btn btn-success">Přidat objekt</button>
   </form>
+</div>
+
+<!-- Vyhledávač -->
+<div class="mb-4 d-flex" id="search-container">
+  <input type="text" id="object-search" class="form-control me-2" placeholder="Hledej objekt...">
+  <button id="search-btn" class="btn btn-primary me-2">Vyhledat</button>
+  <button id="reset-search" class="btn btn-primary me-2">Zpět</button>
 </div>
 
 <!-- Seznamy objektů -->

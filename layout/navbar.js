@@ -94,12 +94,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   // 5️⃣ Odhlášení
-  const logoutBtn = document.getElementById("logout");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", e => {
-      e.preventDefault();
-      localStorage.removeItem("userRole");
-      location.reload();
-    });
-  }
+const logoutBtn = document.getElementById("logout");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", e => {
+    e.preventDefault();
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("role"); // pro jistotu, pokud se někde používá starší klíč
+    window.location.href = "login.html"; // přesměruje na login stránku
+  });
+}
 });

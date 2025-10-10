@@ -1048,3 +1048,53 @@ p.text-center {
         padding: 1rem;
     }
 }
+
+#search-container {
+  max-width: 600px;
+  margin: 20px auto 20px auto; /* vycentrovat a dát spodní margin */
+}
+
+#object-search {
+  flex: 1;
+  border:#000 2px solid;
+  border-radius: 15px;
+}
+
+#search-btn, #reset-search {
+  background-color: #00b894;
+  border:#000 2px solid;
+  font-weight: bold;
+  transition: background-color 0.2s;
+  border-radius: 33px;
+}
+
+#search-btn:hover, #reset-search:hover {
+  background-color: #004131;
+  cursor: pointer;
+}
+
+/* Scrollbar pro seznam objektů */
+ul.list-group {
+  max-height: 600px; /* výška seznamu, aby bylo scrollování potřeba */
+  overflow-y: auto;  /* vertikální scroll */
+  padding-right: 10px; /* místo pro scrollbar */
+}
+
+/* Styl samotného scrollbaru pro webkit prohlížeče (Chrome, Edge, Safari) */
+ul.list-group::-webkit-scrollbar {
+  width: 8px;
+}
+
+ul.list-group::-webkit-scrollbar-track {
+  background: #ffffff; 
+  border-radius: 4px;
+}
+
+ul.list-group::-webkit-scrollbar-thumb {
+  background: #FFCC00; 
+  border-radius: 4px;
+}
+
+ul.list-group::-webkit-scrollbar-thumb:hover {
+  background: #5e4d09;
+}
