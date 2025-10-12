@@ -295,9 +295,10 @@ body > .content {
 
 .hero-pillars {
   font-size: 1.5rem;
-  color: #00d4ff;
-  text-shadow: 1px 1px 5px rgba(0,212,255,0.4);
+  color: #00d9ff;
+  text-shadow: 1px 1px 5px rgb(0, 0, 0);
   margin-bottom: 15px;
+  margin-top: 40px;
 }
 
 /* Tlačítka */
@@ -306,6 +307,7 @@ body > .content {
   gap: 15px;
   justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 80px;
 }
 
 .btn-astro {
@@ -1127,3 +1129,182 @@ ul.list-group::-webkit-scrollbar-thumb:hover {
     50% { opacity: 1; }
     100% { opacity: 0.2; }
   }
+
+.upload-header {
+  padding-top: 90px;
+  padding-bottom: 15px;
+  font-size: 2.2rem;
+  text-align: center;
+  color: #00182e;
+  text-shadow: 0 0 12px rgba(0, 136, 255, 0.75);
+  font-weight: 600;
+}
+
+#add-news-form {
+  color: #000;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+#add-news-form .form-label {
+  font-size: 1.1rem;
+  color: #000;
+}
+
+#add-news-form .form-control {
+  background: #cecece;
+  border-radius: 6px;
+  color: #2b2b2b;
+  padding: 10px;
+  transition: border 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+#add-news-form button {
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+#add-news-form button.btn-success:hover {
+  background: #1d3252;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+#add-news-form button.btn-success:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+#add-news-form button.btn-secondary {
+  background: #444;
+  color: #fff;
+  border: none;
+}
+
+#add-news-form button.btn-secondary:hover {
+  background: #666;
+}
+
+p.text-path {
+  font-size: 0.9rem;
+  color: #000000;
+  margin-top: 10px;
+  margin-left: 20px;
+  font-style: italic;
+}
+/* Kontejner pro články */
+#news-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+/* Jednotlivá dlaždice */
+#news-container .card {
+  flex: 1 1 calc(33.333% - 20px); /* 3 dlaždice vedle sebe */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Efekt při hoveru */
+#news-container .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Obrázek nahoře */
+#news-container .card img {
+  object-fit: cover;
+  height: 250px;
+}
+
+/* Tělo karty */
+#news-container .card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Titulek a datum */
+#news-container .card-title {
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+}
+
+#news-container .text-date {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color:#000;
+}
+
+/* Responzivita */
+@media (max-width: 992px) {
+  #news-container .card {
+    flex: 1 1 calc(50% - 20px); /* 2 dlaždice vedle sebe */
+  }
+}
+
+@media (max-width: 576px) {
+  #news-container .card {
+    flex: 1 1 100%; /* 1 dlaždice na mobilu */
+  }
+}
+
+/* Overlay */
+.news-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+/* Karta uvnitř overlayu */
+.news-overlay .overlay-content .card {
+  width: 90%;
+  max-width: 700px;
+  max-height: 90%;
+  overflow-y: auto;
+}
+
+/* Aktivní overlay */
+.news-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Zavírací tlačítko */
+.news-overlay .close-overlay {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+}
+
+.card-body.d-flex.flex-column {
+  color: #000000;
+}
+
+.news-header {
+  padding-bottom: 15px;
+  font-size: 2.2rem;
+  text-align: center;
+  color: #00182e;
+  text-shadow: 0 0 12px rgba(0, 136, 255, 0.75);
+  font-weight: 600;
+}

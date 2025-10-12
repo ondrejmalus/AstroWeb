@@ -20,7 +20,28 @@
 <!-- HLAVNÍ OBSAH -->
 <main class="container mt-5 content">
 
-<p class="under-construction">Under Construction</p>
+<h1 class="upload-header">Přidat nový článek</h1>
+
+  <form id="add-news-form" class="shadow p-4 rounded bg-light">
+    <div class="mb-3">
+      <label for="news-title" class="form-label">Nadpis článku</label>
+      <input type="text" id="news-title" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="news-image" class="form-label">Vyber obrázek</label>
+      <input type="file" id="news-image" class="form-control" accept="image/*" required>
+      <p class="text-path">Obrázek bude uložen do data/news_images/</p>
+    </div>
+
+    <div class="mb-3">
+      <label for="news-content" class="form-label">Obsah článku</label>
+      <textarea id="news-content" class="form-control" rows="5" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success me-2">Přidat článek</button>
+    <button type="reset" class="btn btn-secondary">Vymazat</button>
+  </form>
 
 </main>  
 
@@ -28,6 +49,8 @@
 <div id="footer"></div>
 
 <script src="layout/navbar.js"></script>
+
+<script src="layout/upload.js"></script>
 
 <!-- Načítání layoutu -->
 <script>

@@ -1,15 +1,16 @@
 import express from 'express';
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcrypt';
-import bodyParser from 'body-parser';
 import cors from 'cors';
+import newsRouter from './routes/news.js'; // přidáno
 
 const app = express();
 const PORT = 3000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json()); // nahrazuje bodyParser.json()
+app.use('/news', newsRouter); // připojení routy /news
 
 // MySQL připojení
 const db = await mysql.createPool({
@@ -86,5 +87,11 @@ app.post('/objects', async (req, res) => {
   }
 });
 
+// 🟢 NEWS ROUTER – přidání článků a načítání
+app.use('/news', newsRouter);
+
 // Start serveru
 app.listen(PORT, () => console.log(`Server běží na http://localhost:${PORT}`));
+
+// Export DB pro routery
+export { db };

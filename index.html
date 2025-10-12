@@ -40,6 +40,13 @@
       <a href="#basic-terms" class="btn-astro">Podívej se na základní pojmy</a>
       </div>
     </p>
+
+    <p class="mt-4 hero-pillars">
+      Aktuální novinky ze světa astronomie
+      <div class="hero-buttons">
+      <a href="#news-section" class="btn-astro">Podívej se na novinky</a>
+      </div>
+    </p>
     </div>
   </div>
 </section>
@@ -48,6 +55,21 @@
 <!-- HLAVNÍ OBSAH -->
   <main class="container mt-5 content">
     
+<!-- Tento element dělá posun nad nadpis -->
+<div id="news-section" style="position: relative; top: -130px;"></div>    
+<section id="news-section" class="container py-5">
+  <h2 class="text-center mb-4 news-header">Aktuálně</h2>
+  <div id="news-container" class="row g-4">
+    <!-- Články se načtou sem skriptem -->
+  </div>
+</section>
+
+<!-- Overlay pro otevřený článek -->
+<div id="news-overlay" class="news-overlay">
+  <span class="close-overlay">&times;</span>
+  <div class="overlay-content"></div>
+</div>
+
     <!-- Tento element dělá posun nad nadpis -->
 <div id="basic-terms" style="position: relative; top: -150px;"></div>
 <!-- === ZÁKLADNÍ POJMY === -->
@@ -311,6 +333,62 @@
 
   <script src="layout/navbar.js"></script>
 
+ <script>
+async function loadNews() {
+  try {
+    const res = await fetch('http://localhost:3000/news'); // endpoint na serveru
+    const data = await res.json();
+    if(!data.success) return;
+
+    const container = document.getElementById('news-container');
+    container.innerHTML = '';
+
+    data.articles.forEach(article => {
+      const col = document.createElement('div');
+      col.className = 'col-lg-4 col-md-6 mb-4';
+
+      col.innerHTML = `
+        <div class="card shadow-sm h-100 news-card">
+          ${article.image ? `<img src="${article.image}" class="card-img-top" alt="${article.title}">` : ''}
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">${article.title}</h5>
+            <p class="text-date mb-2">${new Date(article.created_at).toLocaleDateString('cs-CZ')}</p>
+            <p class="card-text d-none">${article.content}</p>
+            <button class="btn btn-primary mt-auto read-more-btn">Více</button>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(col);
+    });
+
+    // --- Overlay functionality ---
+    const overlay = document.getElementById('news-overlay');
+    const overlayContent = overlay.querySelector('.overlay-content');
+    const closeBtn = overlay.querySelector('.close-overlay');
+
+    container.addEventListener('click', (e) => {
+      if(e.target.classList.contains('read-more-btn')){
+        const card = e.target.closest('.news-card');
+        const clone = card.cloneNode(true);
+        clone.querySelector('.read-more-btn').remove(); // odstraníme tlačítko z overlay
+        clone.querySelector('.card-text').classList.remove('d-none');
+        overlayContent.innerHTML = '';
+        overlayContent.appendChild(clone);
+        overlay.classList.add('active');
+      }
+    });
+
+    closeBtn.addEventListener('click', () => overlay.classList.remove('active'));
+    overlay.addEventListener('click', e => { if(e.target === overlay) overlay.classList.remove('active'); });
+
+  } catch(err) {
+    console.error('Chyba při načítání článků:', err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadNews);
+</script>
 
   <!-- Načítání layoutu -->
   <script>
