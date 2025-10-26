@@ -6,135 +6,209 @@
   <title>AstroWeb – Galerie</title>
   <link rel="icon" type="image/png" href="data/web_images/icon.png">
   
-  <!-- Vlastní CSS -->
+  <!-- CSS -->
   <link href="assets/css/style.css" rel="stylesheet">
-
-  <!-- Bootswatch Lux -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- FontAwesome -->
   <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
 </head>
 <body class="body">
 
-<!-- HLAVNÍ OBSAH -->
 <main class="container mt-5 content">
-  <h2 class="text-center mb-4 gallery-heading">Astronomická galerie</h2>
-  
-  <!-- Filtr podle typu -->
-  <div class="text-center mb-4">
-    <select id="filterType" class="form-select w-auto d-inline-block">
-      <option value="all">Vše</option>
-      <option value="mlhovina">Mlhoviny</option>
-      <option value="galaxie">Galaxie</option>
-      <option value="planeta">Planety</option>
-      <option value="hvězda">Hvězdy</option>
-      <option value="ostatní">Ostatní</option>
-    </select>
-  </div>
+  <h1 class="text-center mb-4" style="padding-top:80px">Astronomická galerie</h1>
+  <p class="text-center mb-5 popisek">
+    Prozkoumejte obrázky podle kategorií a podkategorií. Kliknutím na snímek se zobrazí detail a možnost lajkovat.
+  </p>
 
-  <!-- Galerie -->
-  <div id="gallery" class="row g-4 justify-content-center"></div>
-</main>  
+  <div id="gallery"></div>
+</main>
 
-<!-- MODÁL PRO DETAIL -->
-<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+<!-- MODÁL -->
+<div class="modal fade" id="imageModal" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zavřít"></button>
       <div class="modal-body text-center">
         <img id="modalImage" src="" class="img-fluid rounded mb-3" alt="">
-        <p id="modalDescription" class="text-muted"></p>
-        <p><strong>Typ:</strong> <span id="modalType"></span></p>
-        <p><strong>Datum:</strong> <span id="modalDate"></span></p>
+        <h5 class="modal-title" id="modalTitle"></h5>
+        <p class="popis-main"><strong>Popis:</strong> <span id="modalDescription" class="modal-description"></span></p>
+        <p><strong>Kategorie:</strong> <span id="modalType"></span></p>
+        <p><strong>Souhvězdí:</strong> <span id="modalConstellation"></span></p>
+        <p><strong>Vzdálenost (ly):</strong> <span id="modalDistance"></span></p>
+        <p>
+          <span id="likeBtn" class="like-btn">
+            <i class="fas fa-thumbs-up"></i> <span id="likeCount">0</span>
+          </span>
+        </p>
+        <div class="d-flex justify-content-between mt-3">
+          <button id="prevBtn" class="btn btn-secondary">← Předchozí</button>
+          <button id="nextBtn" class="btn btn-secondary">Další →</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- FOOTER (načtený dynamicky) -->
 <div id="footer"></div>
-
 <script src="layout/navbar.js"></script>
-
-<!-- Načítání layoutu -->
 <script>
-  // Footer
   fetch('/layout/footer.html')
     .then(res => res.text())
     .then(data => document.getElementById('footer').innerHTML = data);
 </script>
 
-<!-- Galerie JS -->
 <script>
-  async function loadGallery() {
-    const gallery = document.getElementById('gallery');
-    const res = await fetch('/upload/gallery');
+let galleryData = [];
+let currentIndex = 0;
+
+// Funkce pro hezký formát textu
+function formatTitle(str) {
+  if (!str) return '';
+  return str
+    .replace(/_/g, ' ')             // podtržítka → mezery
+    .split(' ')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1)) // každé slovo s velkým písmenem
+    .join(' ');
+}
+
+async function loadGallery() {
+  const gallery = document.getElementById('gallery');
+
+  try {
+    const res = await fetch('http://localhost:3000/gallery');
     const data = await res.json();
+    galleryData = data;
 
     gallery.innerHTML = '';
-    data.forEach(item => {
-      const col = document.createElement('div');
-      col.className = 'col-md-4 col-lg-3';
-      col.innerHTML = `
-        <div class="card shadow-sm gallery-card h-100" data-type="${item.type}">
-          <img src="/images/${item.file_path}" class="card-img-top" alt="${item.title}">
-          <div class="card-body text-center">
-            <h5 class="card-title">${item.title}</h5>
-            <p class="card-text small text-muted">${item.type}</p>
-          </div>
-        </div>
-      `;
-      col.querySelector('.gallery-card').addEventListener('click', () => openModal(item));
-      gallery.appendChild(col);
+
+    // Kategorie podle toho, co je v DB
+    const categories = [
+      { key: 'sluneční_soustava', label: 'Sluneční soustava' },
+      { key: 'hvězdy', label: 'Hvězdy' },
+      { key: 'mlhoviny', label: 'Mlhoviny' },
+      { key: 'hvězdokupy', label: 'Hvězdokupy' },
+      { key: 'galaxie', label: 'Galaxie' }
+    ];
+
+    categories.forEach(cat => {
+      const catItems = data.filter(item => item.category === cat.key);
+      if (!catItems.length) return;
+
+      const catDiv = document.createElement('div');
+      catDiv.className = 'category mb-5';
+      catDiv.innerHTML = `<h2>${cat.label}</h2>`;
+      gallery.appendChild(catDiv);
+
+      // Podkategorie
+      const subcategories = [...new Set(catItems.map(i => i.subcategory))];
+      subcategories.forEach(sub => {
+        const subDiv = document.createElement('div');
+        subDiv.className = 'subcategory mb-3';
+        subDiv.innerHTML = `<h4 class="subcategory-header">${formatTitle(sub)}</h4>`; // hezký formát
+
+        const row = document.createElement('div');
+        row.className = 'subcategory-row d-flex overflow-auto';
+
+        catItems.filter(i => i.subcategory === sub).forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'card gallery-card shadow-sm me-3';
+          card.style.minWidth = '400px';
+          card.innerHTML = `
+            <img src="/images/${item.image}" class="card-img-top" alt="${item.common_name}">
+            <div class="card-body text-center">
+              <h5 class="card-title">${item.common_name}</h5>
+              <p class="card-text small">${item.name} | Souhvězdí: ${item.constellation}</p>
+            </div>
+          `;
+          card.addEventListener('click', () => openModal(item));
+          row.appendChild(card);
+        });
+
+        subDiv.appendChild(row);
+        catDiv.appendChild(subDiv);
+      });
     });
-  }
 
-  function openModal(item) {
-    document.getElementById('modalTitle').innerText = item.title;
-    document.getElementById('modalImage').src = `/images/${item.file_path}`;
-    document.getElementById('modalDescription').innerText = item.description;
-    document.getElementById('modalType').innerText = item.type;
-    document.getElementById('modalDate').innerText = new Date(item.date).toLocaleDateString('cs-CZ');
-    new bootstrap.Modal(document.getElementById('imageModal')).show();
+  } catch (err) {
+    console.error('Chyba při načítání galerie:', err);
+    gallery.innerHTML = '<p class="text-danger">Nepodařilo se načíst galerii.</p>';
   }
+}
 
-  document.getElementById('filterType').addEventListener('change', e => {
-    const type = e.target.value;
-    document.querySelectorAll('.gallery-card').forEach(card => {
-      card.parentElement.style.display = (type === 'all' || card.dataset.type === type) ? '' : 'none';
+function openModal(item) {
+  currentIndex = galleryData.findIndex(i => i.id === item.id);
+
+  document.getElementById('modalImage').src = `/images/${item.image}`;
+  document.getElementById('modalTitle').innerText = item.common_name;
+  document.getElementById('modalDescription').innerText = item.fact || 'Žádný popis.';
+  document.getElementById('modalType').innerText = formatTitle(item.category); // hezký název
+  document.getElementById('modalConstellation').innerText = item.constellation || '-';
+  document.getElementById('modalDistance').innerText = item.distance || '-';
+  document.getElementById('likeCount').innerText = item.likes || 0;
+
+  // Ověření, zda modal již není otevřen
+  const modalEl = document.getElementById('imageModal');
+  const modalInstance = bootstrap.Modal.getInstance(modalEl);
+  if (!modalInstance) {
+    new bootstrap.Modal(modalEl).show();
+  }
+}
+
+// Přepínání
+document.getElementById('prevBtn').addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+  openModal(galleryData[currentIndex]);
+});
+document.getElementById('nextBtn').addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % galleryData.length;
+  openModal(galleryData[currentIndex]);
+});
+
+// Like tlačítko
+// Like tlačítko
+document.getElementById('likeBtn').addEventListener('click', async () => {
+  const item = galleryData[currentIndex];
+  
+  // TODO: tady dej ID přihlášeného uživatele
+  const userId = 1;
+
+  try {
+    const res = await fetch(`http://localhost:3000/gallery/${item.id}/like`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId })
     });
-  });
+    const data = await res.json();
 
-  loadGallery();
+    if (data.success) {
+      item.likes = data.likes;
+      document.getElementById('likeCount').innerText = data.likes;
+      // vizuálně označit, že už byl lajkován
+      document.getElementById('likeBtn').classList.add('liked');
+    } else if (data.message) {
+      alert(data.message); // např. "Uživatel už lajkoval"
+    }
+  } catch (err) {
+    console.error('Chyba při lajkování:', err);
+  }
+});
+
+document.addEventListener('DOMContentLoaded', loadGallery);
+
 </script>
 
-<!-- Tlačítko Zpět nahoru -->
+
+<!-- Scroll Top -->
 <button onclick="scrollToTop()" id="scrollTopBtn" title="Zpět nahoru">
   <i class="fas fa-arrow-up"></i>
 </button>
-
 <script>
-  // Ukázat tlačítko při scrollu
   window.onscroll = function () {
     const btn = document.getElementById("scrollTopBtn");
-    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-      btn.style.display = "block";
-    } else {
-      btn.style.display = "none";
-    }
+    btn.style.display = (document.documentElement.scrollTop > 500) ? "block" : "none";
   };
-
-  // Funkce pro scroll nahoru
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 </script>
 
-<!-- Bootstrap JS -->
-<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>

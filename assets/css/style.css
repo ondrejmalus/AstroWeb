@@ -1378,60 +1378,206 @@ p.text-path {
   outline: none;
 }
 
-/* ============================== */
-/* GALERIE – Karty */
-.gallery-card {
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
-  border-radius: 0.5rem;
+/* GALERIE */
+
+.popisek {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #000000;
+  margin-bottom: 30px;
 }
 
-.gallery-card img {
+h2 {
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 20px;
+  font-size: 2.6rem;
+  color: #00182e;
+  text-shadow: 0 0 10px rgba(0, 136, 255, 0.705);
+  letter-spacing: 1px;
+}
+
+.subcategory-header {
+  padding-bottom: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #00182e;
+  text-shadow: 0 0 8px rgba(255, 102, 97, 0.849);
+}
+
+.category {
+  margin-bottom: 3rem;
+}
+
+.subcategory-row {
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.subcategory-row::-webkit-scrollbar {
+  height: 8px;
+}
+
+.subcategory-row::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+.subcategory-row::-webkit-scrollbar-track {
+  background: #1a1b2a;
+}
+
+/* =======================
+   Karty galerie
+======================= */
+.card.gallery-card {
+  background-color: #1a1b2a;
+  border: none;
+  border-radius: 12px;
+  margin-right: 15px;
+  min-width: 300px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card.gallery-card img {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  height: 260px;
+  object-fit: cover;
+}
+
+.card.gallery-card .card-body {
+  padding: 0.75rem;
+}
+
+.card.gallery-card h5.card-title {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+  color: #fff;
+}
+
+.card.gallery-card p.card-text {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin: 0;
+}
+
+.card.gallery-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+
+/* =======================
+   Modál pro detail
+======================= */
+.modal-content {
+  background: linear-gradient(145deg, #1a1b2a, #25263b);
+  color: #f0f0f0;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+  padding: 1rem;
+}
+
+.modal-body {
+  text-align: center;
+}
+
+.modal-body img {
+  border-radius: 16px;
+  max-height: 600px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  margin-bottom: 1rem;
   transition: transform 0.4s ease;
 }
 
-.gallery-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-}
-
-.gallery-card:hover img {
+.modal-body img:hover {
   transform: scale(1.05);
 }
 
-/* ============================== */
-/* MODAL – Obrázek */
-.modal-body img {
-  max-height: 60vh;
-  object-fit: contain;
+.modal-body p {
+  font-size: 0.95rem;
+  margin: 0.4rem 0;
+  line-height: 1.4;
 }
 
-/* ============================== */
-/* Nadpis a popisky karty */
-.gallery-card .card-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.2rem;
-}
-
-.gallery-card .card-text {
-  font-size: 0.85rem;
-  color: #6c757d;
-}
-
-/* ============================== */
-/* Filter select */
-#filterType {
-  max-width: 250px;
-}
-
-.gallery-heading {
-  padding-top: 100px;
-  padding-bottom: 15px;
-  font-size: 3rem;
+.modal-body p strong {
+  color: #ffd166; /* zvýraznění popisků */
   text-align: center;
-  color: #00182e;
-  text-shadow: 0 0 12px rgba(0, 136, 255, 0.75);
-  font-weight: 600;
+}
+
+h5.modal-title {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  border-bottom: 1.5px solid #b3b3b3;
+  font-size: 1.4rem;
+  color: #ffdd59;
+  text-shadow: 0 0 8px #ffde59b2;
+}
+
+#likeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  background-color: #3b3f5c;
+  color: #f0f0f0;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+#likeBtn:hover {
+  background-color: #5c62a3;
+  transform: scale(1.05);
+}
+
+#likeBtn i {
+  color: #ffd166; /* palec žlutý */
+  font-size: 1.1rem;
+}
+
+#likeCount {
+  font-weight: bold;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Šipky pro navigaci mezi snímky */
+#prevBtn, #nextBtn {
+  background-color: #3b3f5c;
+  color: #fff;
+  border-radius: 12px;
+  padding: 8px 20px;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s;
+}
+
+#prevBtn:hover, #nextBtn:hover {
+  background-color: #5c62a3;
+  transform: scale(1.05);
+}
+
+button.btn-close {
+  filter: invert(1); /* aby tlačítko bylo viditelné na tmavém pozadí */
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+
+p.popis-main {
+  margin-top: 15px;
+}
+
+span {
+  color: #dbdbdb;
+  font-size: 1rem;
 }

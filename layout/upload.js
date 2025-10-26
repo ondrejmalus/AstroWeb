@@ -51,10 +51,10 @@ if (galleryForm) {
 
   // Podkategorie podle hlavní kategorie
   const subcategories = {
-    slunecni_soustava: ["Planeta", "Slunce", "Měsíc", "Ostatní objekty"],
+    sluneční_soustava: ["Planeta", "Slunce", "Měsíc", "Ostatní objekty"],
     hvězdy: ["Nadobr", "Jasný obr", "Obr", "Podobr", "Hvězdy hlavní posloupnosti"],
     mlhoviny: ["Emisní", "Planetární", "Reflexní", "Pozůstatky supernov"],
-    hvezdokupy: ["Kulové", "Otevřené"],
+    hvězdokupy: ["Kulové", "Otevřené"],
     galaxie: ["Eliptické", "Spirální"]
   };
 
@@ -76,7 +76,7 @@ if (galleryForm) {
     const category = categorySelect.value;
     const subcategory = subcategorySelect.value;
     const name = document.getElementById('gallery-name').value.trim();
-    const common_name = document.getElementById('gallery-common-name').value.trim();
+    const common_name = document.getElementById('gallery-common_name').value.trim();
     const constellation = document.getElementById('gallery-constellation').value.trim();
     const distance = document.getElementById('gallery-distance').value.trim();
     const fact = document.getElementById('gallery-fact').value.trim();
