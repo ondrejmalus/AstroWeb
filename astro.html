@@ -19,10 +19,41 @@
 
 <!-- HLAVNÍ OBSAH -->
 <main class="container mt-5 content">
+  <h2 class="text-center mb-4 gallery-heading">Astronomická galerie</h2>
+  
+  <!-- Filtr podle typu -->
+  <div class="text-center mb-4">
+    <select id="filterType" class="form-select w-auto d-inline-block">
+      <option value="all">Vše</option>
+      <option value="mlhovina">Mlhoviny</option>
+      <option value="galaxie">Galaxie</option>
+      <option value="planeta">Planety</option>
+      <option value="hvězda">Hvězdy</option>
+      <option value="ostatní">Ostatní</option>
+    </select>
+  </div>
 
-<p class="under-construction">Under Construction</p>
-
+  <!-- Galerie -->
+  <div id="gallery" class="row g-4 justify-content-center"></div>
 </main>  
+
+<!-- MODÁL PRO DETAIL -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="modalImage" src="" class="img-fluid rounded mb-3" alt="">
+        <p id="modalDescription" class="text-muted"></p>
+        <p><strong>Typ:</strong> <span id="modalType"></span></p>
+        <p><strong>Datum:</strong> <span id="modalDate"></span></p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER (načtený dynamicky) -->
 <div id="footer"></div>
@@ -35,6 +66,50 @@
   fetch('/layout/footer.html')
     .then(res => res.text())
     .then(data => document.getElementById('footer').innerHTML = data);
+</script>
+
+<!-- Galerie JS -->
+<script>
+  async function loadGallery() {
+    const gallery = document.getElementById('gallery');
+    const res = await fetch('/upload/gallery');
+    const data = await res.json();
+
+    gallery.innerHTML = '';
+    data.forEach(item => {
+      const col = document.createElement('div');
+      col.className = 'col-md-4 col-lg-3';
+      col.innerHTML = `
+        <div class="card shadow-sm gallery-card h-100" data-type="${item.type}">
+          <img src="/images/${item.file_path}" class="card-img-top" alt="${item.title}">
+          <div class="card-body text-center">
+            <h5 class="card-title">${item.title}</h5>
+            <p class="card-text small text-muted">${item.type}</p>
+          </div>
+        </div>
+      `;
+      col.querySelector('.gallery-card').addEventListener('click', () => openModal(item));
+      gallery.appendChild(col);
+    });
+  }
+
+  function openModal(item) {
+    document.getElementById('modalTitle').innerText = item.title;
+    document.getElementById('modalImage').src = `/images/${item.file_path}`;
+    document.getElementById('modalDescription').innerText = item.description;
+    document.getElementById('modalType').innerText = item.type;
+    document.getElementById('modalDate').innerText = new Date(item.date).toLocaleDateString('cs-CZ');
+    new bootstrap.Modal(document.getElementById('imageModal')).show();
+  }
+
+  document.getElementById('filterType').addEventListener('change', e => {
+    const type = e.target.value;
+    document.querySelectorAll('.gallery-card').forEach(card => {
+      card.parentElement.style.display = (type === 'all' || card.dataset.type === type) ? '' : 'none';
+    });
+  });
+
+  loadGallery();
 </script>
 
 <!-- Tlačítko Zpět nahoru -->
@@ -58,5 +133,8 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
+
+<!-- Bootstrap JS -->
+<script src="assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

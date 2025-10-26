@@ -6,23 +6,20 @@
   <title>AstroWeb – Nahrávání</title>
   <link rel="icon" type="image/png" href="data/web_images/icon.png">
   
-  <!-- Vlastní CSS -->
   <link href="assets/css/style.css" rel="stylesheet">
-
-  <!-- Bootswatch Lux -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- FontAwesome -->
   <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
 </head>
 <body class="body">
 
-<!-- HLAVNÍ OBSAH -->
 <main class="container mt-5 content">
 
-<h1 class="upload-header">Přidat nový článek</h1>
+  <!-- ========================== -->
+  <!--    FORMULÁŘ PRO ČLÁNKY     -->
+  <!-- ========================== -->
+  <h1 class="upload-header">Přidat nový článek</h1>
 
-  <form id="add-news-form" class="shadow p-4 rounded bg-light">
+  <form id="add-news-form" class="shadow p-4 rounded bg-light mb-5">
     <div class="mb-3">
       <label for="news-title" class="form-label">Nadpis článku</label>
       <input type="text" id="news-title" class="form-control" required>
@@ -43,43 +40,95 @@
     <button type="reset" class="btn btn-secondary">Vymazat</button>
   </form>
 
-</main>  
+  <hr class="my-5">
 
-<!-- FOOTER (načtený dynamicky) -->
+  <!-- ========================== -->
+  <!--    FORMULÁŘ PRO GALERII    -->
+  <!-- ========================== -->
+  <h1 class="upload-header">Přidat snímek do galerie</h1>
+
+<form id="add-gallery-form" class="shadow p-4 rounded bg-light">
+  <div class="mb-3">
+    <label for="gallery-category" class="form-label">Kategorie</label>
+    <select id="gallery-category" class="form-select" required>
+      <option value="">Vyberte kategorii</option>
+      <option value="slunecni_soustava">Sluneční soustava</option>
+      <option value="hvězdy">Hvězdy</option>
+      <option value="mlhoviny">Mlhoviny</option>
+      <option value="hvezdokupy">Hvězdokupy</option>
+      <option value="galaxie">Galaxie</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="gallery-subcategory" class="form-label">Podkategorie</label>
+    <select id="gallery-subcategory" class="form-select" required>
+      <option value="">Nejdřív vyberte kategorii</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="gallery-name" class="form-label">Název objektu (odborný)</label>
+    <input type="text" id="gallery-name" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="gallery-common-name" class="form-label">Jméno (běžný název)</label>
+    <input type="text" id="gallery-common-name" class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="gallery-constellation" class="form-label">Souhvězdí</label>
+    <input type="text" id="gallery-constellation" class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="gallery-distance" class="form-label">Vzdálenost (ly)</label>
+    <input type="number" id="gallery-distance" class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="gallery-fact" class="form-label">Zajímavost / Fact</label>
+    <textarea id="gallery-fact" class="form-control" rows="3"></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="gallery-image" class="form-label">Vyber obrázek</label>
+    <input type="file" id="gallery-image" class="form-control" accept="image/*" required>
+    <p class="text-path">Obrázek bude uložen do složky <b>/images</b></p>
+  </div>
+
+  <button type="submit" class="btn btn-success me-2">Nahrát snímek</button>
+  <button type="reset" class="btn btn-secondary">Vymazat</button>
+</form>
+
+</main>
+
 <div id="footer"></div>
 
 <script src="layout/navbar.js"></script>
-
 <script src="layout/upload.js"></script>
 
-<!-- Načítání layoutu -->
 <script>
-  // Footer
   fetch('/layout/footer.html')
     .then(res => res.text())
     .then(data => document.getElementById('footer').innerHTML = data);
 </script>
 
-<!-- Tlačítko Zpět nahoru -->
+<!-- Scroll nahoru -->
 <button onclick="scrollToTop()" id="scrollTopBtn" title="Zpět nahoru">
   <i class="fas fa-arrow-up"></i>
 </button>
 
 <script>
-  // Ukázat tlačítko při scrollu
   window.onscroll = function () {
     const btn = document.getElementById("scrollTopBtn");
-    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-      btn.style.display = "block";
-    } else {
-      btn.style.display = "none";
-    }
+    btn.style.display = (document.documentElement.scrollTop > 500) ? "block" : "none";
   };
-
-  // Funkce pro scroll nahoru
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
+
 </body>
 </html>

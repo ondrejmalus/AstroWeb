@@ -2,15 +2,29 @@ import express from 'express';
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcrypt';
 import cors from 'cors';
-import newsRouter from './routes/news.js'; // přidáno
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+import newsRouter from './routes/news.js';
+import galleryRouter from './routes/gallery.js'; // 🆕 přidáno
 
 const app = express();
 const PORT = 3000;
 
+// Potřebné pro práci s __dirname (ESM)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Middleware
 app.use(cors());
-app.use(express.json()); // nahrazuje bodyParser.json()
-app.use('/news', newsRouter); // připojení routy /news
+app.use(express.json());
+
+// 🖼️ zpřístupnění složky "images" (statické soubory)
+app.use('/images', express.static(path.join(__dirname, '../images')));
+
+// ROUTES
+app.use('/news', newsRouter);
+app.use('/gallery', galleryRouter); // 🆕 připojeno
 
 // MySQL připojení
 const db = await mysql.createPool({
@@ -44,11 +58,13 @@ app.post('/register', async (req, res) => {
 // 🟢 Přihlášení
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
-  if (!username || !password) return res.status(400).json({ msg: 'Vyplňte všechna pole' });
+  if (!username || !password)
+    return res.status(400).json({ msg: 'Vyplňte všechna pole' });
 
   try {
     const [rows] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
-    if (rows.length === 0) return res.status(400).json({ msg: 'Uživatel nenalezen' });
+    if (rows.length === 0)
+      return res.status(400).json({ msg: 'Uživatel nenalezen' });
 
     const user = rows[0];
     const match = await bcrypt.compare(password, user.password);
@@ -75,8 +91,10 @@ app.get('/objects', async (req, res) => {
 // 🟢 POST – přidání objektu (jen admin)
 app.post('/objects', async (req, res) => {
   const { name, category, role } = req.body;
-  if (role !== 'admin') return res.status(403).json({ success: false, msg: 'Přístup zakázán' });
-  if (!name || !category) return res.status(400).json({ success: false, msg: 'Chybí údaje' });
+  if (role !== 'admin')
+    return res.status(403).json({ success: false, msg: 'Přístup zakázán' });
+  if (!name || !category)
+    return res.status(400).json({ success: false, msg: 'Chybí údaje' });
 
   try {
     await db.query('INSERT INTO objects (name, category) VALUES (?, ?)', [name, category]);
@@ -87,11 +105,8 @@ app.post('/objects', async (req, res) => {
   }
 });
 
-// 🟢 NEWS ROUTER – přidání článků a načítání
-app.use('/news', newsRouter);
-
 // Start serveru
-app.listen(PORT, () => console.log(`Server běží na http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server běží na http://localhost:${PORT}`));
 
 // Export DB pro routery
 export { db };
