@@ -1,0 +1,15 @@
+(To DO ❌)
+- profil stránka uživatelů
+- zajímavosti stránka (rozdělení na 1. osobnosti a všeobecné např.: markarians chain, galilein moons atd..)
+- o stránce stránka
+- přidat filtry do galerie (podle souhvězdí, podkategorie, katalog Messier, ...)
+- přidat vyhledávač do galerie
+- přidat do galerie všechny moje snímky
+- navigace v galerii (pro kategorie a podkategorie)
+- na home stránce v sekci "základní pojmy astronomie" ke každému vložit malý přikladný obrázek
+
+
+
+(Done ✅)
+- spravit lajkování
+- spravit rozklikávání karet v galerii
