@@ -1525,7 +1525,7 @@ h5.modal-title {
   gap: 6px;
   padding: 8px 16px;
   border-radius: 12px;
-  background-color: #3b3f5c;
+  border: solid 1.5px rgb(255, 255, 255);
   color: #f0f0f0;
   font-weight: 500;
   cursor: pointer;
@@ -1580,4 +1580,8 @@ p.popis-main {
 span {
   color: #dbdbdb;
   font-size: 1rem;
+}
+
+.like-btn.liked {
+  background-color: #169b118a;
 }

@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 
 import newsRouter from './routes/news.js';
 import galleryRouter from './routes/gallery.js'; // 🆕 přidáno
+import authRouter from './routes/auth.js'; // náš auth router
 
 const app = express();
 const PORT = 3000;
@@ -26,6 +27,7 @@ app.use('/images', express.static(path.join(__dirname, '../images')));
 // ROUTES
 app.use('/news', newsRouter);
 app.use('/gallery', galleryRouter); // 🆕 připojeno
+app.use('/auth', authRouter); // login + register
 
 // MySQL připojení
 const db = await mysql.createPool({

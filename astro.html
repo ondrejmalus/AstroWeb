@@ -74,7 +74,8 @@ async function loadGallery() {
   const gallery = document.getElementById('gallery');
 
   try {
-    const res = await fetch('http://localhost:3000/gallery');
+    const userId = localStorage.getItem('userId');
+    const res = await fetch(`http://localhost:3000/gallery${userId ? '?userId=' + userId : ''}`);
     const data = await res.json();
     galleryData = data;
 
@@ -140,17 +141,26 @@ function openModal(item) {
   document.getElementById('modalImage').src = `/images/${item.image}`;
   document.getElementById('modalTitle').innerText = item.common_name;
   document.getElementById('modalDescription').innerText = item.fact || 'Žádný popis.';
-  document.getElementById('modalType').innerText = formatTitle(item.category); // hezký název
+  document.getElementById('modalType').innerText = formatTitle(item.category);
   document.getElementById('modalConstellation').innerText = item.constellation || '-';
   document.getElementById('modalDistance').innerText = item.distance || '-';
   document.getElementById('likeCount').innerText = item.likes || 0;
 
-  // Ověření, zda modal již není otevřen
-  const modalEl = document.getElementById('imageModal');
-  const modalInstance = bootstrap.Modal.getInstance(modalEl);
-  if (!modalInstance) {
-    new bootstrap.Modal(modalEl).show();
+  const likeBtn = document.getElementById('likeBtn');
+  if (item.likedByUser) {
+    likeBtn.classList.add('liked');
+  } else {
+    likeBtn.classList.remove('liked');
   }
+
+  const modalEl = document.getElementById('imageModal');
+  let modalInstance = bootstrap.Modal.getInstance(modalEl);
+
+  if (!modalInstance) {
+    modalInstance = new bootstrap.Modal(modalEl);
+  }
+
+  modalInstance.show(); // ← vždy show()
 }
 
 // Přepínání
@@ -164,12 +174,14 @@ document.getElementById('nextBtn').addEventListener('click', () => {
 });
 
 // Like tlačítko
-// Like tlačítko
 document.getElementById('likeBtn').addEventListener('click', async () => {
   const item = galleryData[currentIndex];
-  
-  // TODO: tady dej ID přihlášeného uživatele
-  const userId = 1;
+
+  const userId = localStorage.getItem('userId');
+  if (!userId) {
+    alert('Pro lajkování se prosím přihlas.');
+    return;
+  }
 
   try {
     const res = await fetch(`http://localhost:3000/gallery/${item.id}/like`, {
@@ -177,20 +189,23 @@ document.getElementById('likeBtn').addEventListener('click', async () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId })
     });
+
     const data = await res.json();
 
     if (data.success) {
-      item.likes = data.likes;
-      document.getElementById('likeCount').innerText = data.likes;
-      // vizuálně označit, že už byl lajkován
-      document.getElementById('likeBtn').classList.add('liked');
-    } else if (data.message) {
-      alert(data.message); // např. "Uživatel už lajkoval"
+  item.likes = data.likes;
+  item.likedByUser = true;
+  document.getElementById('likeCount').innerText = data.likes;
+  document.getElementById('likeBtn').classList.add('liked');
+} else {
+      alert(data.message || 'Chyba při lajkování.');
     }
   } catch (err) {
     console.error('Chyba při lajkování:', err);
+    alert('Chyba serveru při lajkování.');
   }
 });
+
 
 document.addEventListener('DOMContentLoaded', loadGallery);
 

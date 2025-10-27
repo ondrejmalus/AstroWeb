@@ -76,17 +76,18 @@ document.getElementById('loginForm').addEventListener('submit', async e => {
   const msg = document.getElementById('msg');
 
   try {
-    const res = await fetch('http://localhost:3000/login', {
+    const res = await fetch('http://localhost:3000/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     });
     const data = await res.json();
+    console.log('Login response:', data);
 
-    if (res.ok) {
-      // Uložíme roli pro navbar
+    if (data.success) {
+      localStorage.setItem('userId', data.id);
+      localStorage.setItem('username', data.username);
       localStorage.setItem('userRole', data.role);
-      // A zároveň pro objects.js
       localStorage.setItem('role', data.role);
 
       location.href = 'index.html';
@@ -99,8 +100,6 @@ document.getElementById('loginForm').addEventListener('submit', async e => {
   }
 });
 </script>
-
-
 
 <!-- Načítání layoutu -->
 <script>

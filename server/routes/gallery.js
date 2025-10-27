@@ -69,7 +69,29 @@ router.post('/', upload.single('image'), async (req, res) => {
 // ================================
 router.get('/', async (req, res) => {
   try {
-    const [rows] = await db.query('SELECT * FROM gallery ORDER BY id DESC');
+    const userId = req.query.userId; // ID přihlášeného uživatele (volitelné)
+
+    // Načteme všechny snímky a počet lajků
+    const [rows] = await db.query(`
+      SELECT 
+        g.*, 
+        (SELECT COUNT(*) FROM gallery_likes l WHERE l.gallery_id = g.id) AS likes
+      FROM gallery g
+      ORDER BY g.id DESC
+    `);
+
+    // Pokud máme userId, zjistíme, zda už uživatel lajknul každý snímek
+    if (userId) {
+      for (let row of rows) {
+        const [likeCheck] = await db.query(
+          'SELECT 1 FROM gallery_likes WHERE gallery_id = ? AND user_id = ?',
+          [row.id, userId]
+        );
+        row.likedByUser = likeCheck.length > 0;
+        row.likes = Number(row.likes);
+      }
+    }
+
     res.json(rows);
   } catch (err) {
     console.error(err);
@@ -81,40 +103,22 @@ router.get('/', async (req, res) => {
 // POST – lajkování snímku
 // ================================
 router.post('/:id/like', async (req, res) => {
+  const galleryId = req.params.id;
+  const { userId } = req.body;
+
+  if (!userId) return res.status(401).json({ success: false, message: 'Musíš být přihlášený.' });
+
   try {
-    const { id } = req.params;
-    const userId = req.body.userId; // z front-endu, pokud je přihlášen
+    const [alreadyLiked] = await db.query('SELECT * FROM gallery_likes WHERE gallery_id = ? AND user_id = ?', [galleryId, userId]);
+    if (alreadyLiked.length) return res.json({ success: false, message: 'Tento snímek jsi již lajknul.' });
 
-    if (!userId) {
-      return res.status(401).json({ success: false, message: 'Musíš být přihlášený' });
-    }
-
-    // Pokus vložit lajkování, pokud už uživatel lajkoval, UNIQUE KEY zabrání duplikátu
-    try {
-      await db.query(
-        'INSERT INTO gallery_likes (gallery_id, user_id) VALUES (?, ?)',
-        [id, userId]
-      );
-
-      // Zvýšení počtu lajků
-      await db.query('UPDATE gallery SET likes = likes + 1 WHERE id = ?', [id]);
-
-      // Vrátíme aktuální počet
-      const [rows] = await db.query('SELECT likes FROM gallery WHERE id = ?', [id]);
-      res.json({ success: true, likes: rows[0].likes });
-
-    } catch (err) {
-      // uživatel už lajkoval
-      res.json({ success: false, message: 'Uživatel již lajkoval' });
-    }
-
+    await db.query('INSERT INTO gallery_likes (gallery_id, user_id) VALUES (?, ?)', [galleryId, userId]);
+    const [countRow] = await db.query('SELECT COUNT(*) AS count FROM gallery_likes WHERE gallery_id = ?', [galleryId]);
+    res.json({ success: true, likes: countRow[0].count });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: 'Chyba serveru při lajkování' });
+    console.error('Chyba při lajkování:', err);
+    res.status(500).json({ success: false, message: 'Chyba serveru při lajkování.' });
   }
 });
-
-
-
 
 export default router;
