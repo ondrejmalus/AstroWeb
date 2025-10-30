@@ -75,7 +75,7 @@ const sortedObjects = data.objects.sort((a, b) => {
         loadObjects();
         alert('Objekt byl úspěšně přidán ✅');
           } else {
-        alert(data.msg || '❌ Nastala chyba při přidávání objektu');
+        alert(data.msg || 'Nastala chyba při přidávání objektu ❌');
       }
       } catch (err) {
         console.error(err);

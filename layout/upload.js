@@ -104,11 +104,11 @@ if (galleryForm) {
 
       const data = await res.json();
       if (data.success) {
-        alert('Snímek přidán do galerie!');
+        alert('Snímek přidán do galerie! ✅');
         galleryForm.reset();
         subcategorySelect.innerHTML = '<option value="">Nejdřív vyberte kategorii</option>';
       } else {
-        alert(data.error || 'Chyba při přidávání snímku');
+        alert(data.error || 'Chyba při přidávání snímku ❌');
       }
     } catch (err) {
       console.error(err);
