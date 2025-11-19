@@ -1,21 +1,22 @@
 (To DO ❌)
 - profil stránka uživatelů
 - zajímavosti stránka (rozdělení na osobnosti a všeobecné např.: markarians chain, galilein moons atd..)
-- o stránce stránka
-- přidat filtry do galerie (podle souhvězdí, podkategorie, katalog Messier, ...)
-- přidat vyhledávač do galerie
+- o webu stránka
 - přidat do galerie všechny moje snímky
-- navigace v galerii (pro kategorie a podkategorie)
 - na "home" stránce v sekci "základní pojmy astronomie" ke každému vložit malý přikladný obrázek
 - na stránce "objekty" přidat to, že vyhledaný objekt bude zvýrazněný
 - -------- || -------- přidat to, že objekt na který najedu myší změní barvu (název)
-- v galerii u vzdálenosti upravit tak, aby se vždy oddělovala čísla po třech mezerou (např: 5 000 000)
-- ---------------- || ---------------- aby když bude větší jak 1 000 tak by se tam před číslo přidala "~"
-- v galerii u souhvězdí upravit tak, aby se při vkládání snímků nabízeli již někdy použité souhvězdí nebo jestli ještě nebylo použito, tak aby se dalo přidat
-- v galerii upravit to, aby další a předchozí tlačítka procházeli snímky jen v dané "podkategorii", aby nepřecházeli třeba z "ostatních objektů na spirální galaxie", protože to teď dělá a nelíbí se mi to
+- v uploadu u souhvězdí upravit tak, aby se při vkládání snímků nabízeli již někdy použité souhvězdí nebo jestli ještě nebylo použito, tak aby se dalo přidat
+- v galerii upravit to, aby další a předchozí tlačítka procházeli snímky jen v dané "podkategorii", aby nepřecházeli třeba z "ostatních objektů na spirální galaxie", 
+protože to teď dělá a nelíbí se mi to (dělá to, protože to předchozí a další proklikává mezi "nově přidanými snímky až po ty starší, jakoby podle pořadí přidání")
 
 
 
 (Done ✅)
 - spravit lajkování
 - spravit rozklikávání karet v galerii
+- v galerii u vzdálenosti upravit tak, aby se vždy oddělovala čísla po třech mezerou (např: 5 000 000)
+- ---------------- || ---------------- aby když bude větší jak 1 000 tak by se tam před číslo přidala "~"
+- navigace v galerii (pro kategorie a podkategorie)
+- přidat filtry do galerie (podle souhvězdí, podkategorie, katalog Messier, ...)
+- přidat vyhledávač do galerie
