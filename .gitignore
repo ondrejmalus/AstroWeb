@@ -1,14 +1,5 @@
 # Node.js dependencies
 node_modules/
 
-# fontawesome
-assets/fonts/fontawesome
-
 # snímky
 images/
-
-# data
-data/
-
-# assets
-assets/

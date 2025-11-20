@@ -58,16 +58,81 @@ if (galleryForm) {
     galaxie: ["Eliptické", "Spirální"]
   };
 
-  categorySelect.addEventListener('change', () => {
-    const cats = subcategories[categorySelect.value] || [];
-    subcategorySelect.innerHTML = '<option value="">Vyberte podkategorii</option>';
-    cats.forEach(c => {
-      const opt = document.createElement('option');
-      opt.value = c.toLowerCase().replaceAll(' ', '_');
-      opt.textContent = c;
-      subcategorySelect.appendChild(opt);
-    });
+categorySelect.addEventListener('change', () => {
+  const cats = subcategories[categorySelect.value] || [];
+  subcategorySelect.innerHTML = '<option value="">Vyberte podkategorii</option>';
+  cats.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.toLowerCase().replaceAll(' ', '_');
+    opt.textContent = c;
+    subcategorySelect.appendChild(opt);
   });
+
+  // === SPECIÁLNÍ LOGIKA PRO SLUNEČNÍ SOUSTAVU ===
+  if (categorySelect.value === "sluneční_soustava") {
+    constellationInput.value = "-";
+    constellationInput.disabled = true;
+  } else {
+    constellationInput.disabled = false;
+    constellationInput.value = "";
+  }
+});
+
+const constellationInput = document.getElementById('gallery-constellation');
+const dropdown = document.getElementById('constellation-dropdown');
+let constellationValues = [];
+
+// Načtení existujících souhvězdí
+async function loadConstellations() {
+  try {
+    const res = await fetch("http://localhost:3000/gallery");
+    const data = await res.json();
+
+    constellationValues = [...new Set(
+      data
+        .map(i => i.constellation)
+        .filter(c => c && c !== "-")
+    )];
+
+  } catch (err) {
+    console.error("Chyba při načítání souhvězdí:", err);
+  }
+}
+
+loadConstellations();
+
+// Filtrování při psaní
+constellationInput.addEventListener("input", () => {
+  const value = constellationInput.value.toLowerCase();
+  dropdown.innerHTML = "";
+
+  const filtered = constellationValues.filter(c =>
+    c.toLowerCase().includes(value)
+  );
+
+  if (filtered.length === 0) {
+    dropdown.innerHTML = `<div class="no-results">Žádné výsledky</div>`;
+  } else {
+    filtered.forEach(c => {
+      const div = document.createElement("div");
+      div.textContent = c;
+      div.addEventListener("click", () => {
+        constellationInput.value = c;
+        dropdown.style.display = "none";
+      });
+      dropdown.appendChild(div);
+    });
+  }
+
+  dropdown.style.display = "block";
+});
+
+// Klik ven → zavřít
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".custom-select-wrapper")) {
+    dropdown.style.display = "none";
+  }
+});
 
   // Odeslání formuláře
   galleryForm.addEventListener('submit', async (e) => {

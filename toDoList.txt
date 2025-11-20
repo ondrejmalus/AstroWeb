@@ -6,10 +6,6 @@
 - na "home" stránce v sekci "základní pojmy astronomie" ke každému vložit malý přikladný obrázek
 - na stránce "objekty" přidat to, že vyhledaný objekt bude zvýrazněný
 - -------- || -------- přidat to, že objekt na který najedu myší změní barvu (název)
-- v uploadu u souhvězdí upravit tak, aby se při vkládání snímků nabízeli již někdy použité souhvězdí nebo jestli ještě nebylo použito, tak aby se dalo přidat
-- v galerii upravit to, aby další a předchozí tlačítka procházeli snímky jen v dané "podkategorii", aby nepřecházeli třeba z "ostatních objektů na spirální galaxie", 
-protože to teď dělá a nelíbí se mi to (dělá to, protože to předchozí a další proklikává mezi "nově přidanými snímky až po ty starší, jakoby podle pořadí přidání")
-
 
 
 (Done ✅)
@@ -20,3 +16,8 @@ protože to teď dělá a nelíbí se mi to (dělá to, protože to předchozí 
 - navigace v galerii (pro kategorie a podkategorie)
 - přidat filtry do galerie (podle souhvězdí, podkategorie, katalog Messier, ...)
 - přidat vyhledávač do galerie
+- u filtrů v galerii, zvýraznit ty co jsou zakliklé
+- v galerii upravit to, aby další a předchozí tlačítka procházeli snímky jen v dané "podkategorii", aby nepřecházeli třeba z "ostatních objektů na spirální galaxie", 
+protože to teď dělá a nelíbí se mi to (dělá to, protože to předchozí a další proklikává mezi "nově přidanými snímky až po ty starší, jakoby podle pořadí přidání, podle ID")
+- v uploadu u souhvězdí upravit tak, aby se při vkládání snímků nabízeli již někdy použité souhvězdí nebo jestli ještě nebylo použito, tak aby se dalo přidat
+- v uploadu u sluneční soustavy upravit to, aby se tam nevyplňovalo souhvězdí (protože tam nepatří logicky)
