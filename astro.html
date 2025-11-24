@@ -372,7 +372,6 @@ function renderTopGallery(list, title) {
   list.forEach(item => {
     const col = document.createElement("div");
     col.className = "col-md-6 mb-4";
-
     col.innerHTML = `
       <div class="card gallery-card shadow-sm">
         <img src="/images/${item.image}" class="card-img-top" alt="${item.common_name}">
@@ -594,40 +593,42 @@ showModalItem(currentGroup[currentGroupIndex]);
 
   // Like tlačítko
   const likeBtn = document.getElementById('likeBtn');
-  if (likeBtn) {
-    likeBtn.addEventListener('click', async () => {
-      if (!galleryData.length) return;
-      const item = galleryData[currentIndex];
+if (likeBtn) {
+  likeBtn.addEventListener('click', async () => {
 
-      const userId = localStorage.getItem('userId');
-      if (!userId) {
-        alert('Pro lajkování se prosím přihlas.');
-        return;
+    if (!currentGroup || currentGroup.length === 0) return;
+
+    const item = currentGroup[currentGroupIndex];  // <-- FIX TADY !!!
+
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      alert('Pro lajkování se prosím přihlas.');
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:3000/gallery/${item.id}/like`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        item.likes = data.likes;
+        item.likedByUser = true;
+        document.getElementById('likeCount').innerText = data.likes;
+        likeBtn.classList.add('liked');
+      } else {
+        alert(data.message || 'Chyba při lajkování.');
       }
-
-      try {
-        const res = await fetch(`http://localhost:3000/gallery/${item.id}/like`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId })
-        });
-
-        const data = await res.json();
-
-        if (data.success) {
-          item.likes = data.likes;
-          item.likedByUser = true;
-          document.getElementById('likeCount').innerText = data.likes;
-          likeBtn.classList.add('liked');
-        } else {
-          alert(data.message || 'Chyba při lajkování.');
-        }
-      } catch (err) {
-        console.error('Chyba při lajkování:', err);
-        alert('Chyba serveru při lajkování.');
-      }
-    });
-  }
+    } catch (err) {
+      console.error('Chyba při lajkování:', err);
+      alert('Chyba serveru při lajkování.');
+    }
+  });
+}
 
   // fakticky načteme galerii
   loadGallery();

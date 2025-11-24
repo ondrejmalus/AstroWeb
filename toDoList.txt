@@ -6,6 +6,8 @@
 - na "home" stránce v sekci "základní pojmy astronomie" ke každému vložit malý přikladný obrázek
 - na stránce "objekty" přidat to, že vyhledaný objekt bude zvýrazněný
 - -------- || -------- přidat to, že objekt na který najedu myší změní barvu (název)
+- fixnout zavírací křížek v modálu
+- v pravém sidebaru v galerii seřadit filtry : 1. kategorie podle toho jak jdou za sebou na stránce, 2. podkategorie podle toho taky, 3. souhvězdí podle abecedy
 
 
 (Done ✅)

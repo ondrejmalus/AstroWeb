@@ -100,6 +100,8 @@ if (logoutBtn) {
     e.preventDefault();
     localStorage.removeItem("userRole");
     localStorage.removeItem("role"); // pro jistotu, pokud se někde používá starší klíč
+    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
     window.location.href = "login.html"; // přesměruje na login stránku
   });
 }
