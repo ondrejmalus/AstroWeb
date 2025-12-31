@@ -1,15 +1,19 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow } = require("electron");
 
-function createWindow () {
+function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
   });
 
-  win.loadFile('index.html');
+  if (!app.isPackaged) {
+    win.loadURL("http://localhost:5173");
+  } else {
+    win.loadFile("frontend-admin/login.html");
+  }
 }
 
 app.whenReady().then(createWindow);

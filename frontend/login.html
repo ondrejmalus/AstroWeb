@@ -104,7 +104,7 @@ document.getElementById('loginForm').addEventListener('submit', async e => {
 <!-- Načítání layoutu -->
 <script>
   // Footer
-  fetch('/layout/footer.html')
+  fetch('./layout/footer.html')
     .then(res => res.text())
     .then(data => document.getElementById('footer').innerHTML = data);
 </script>

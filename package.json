@@ -4,14 +4,16 @@
   "description": "",
   "main": "main.cjs",
   "type": "module",
-  "scripts": {
-    "start": "electron ."
-  },
+"scripts": {
+  "dev": "vite",
+  "start": "electron ."
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^38.1.2"
+    "electron": "^38.1.2",
+    "vite": "^7.3.0"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

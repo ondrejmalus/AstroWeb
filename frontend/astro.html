@@ -11,7 +11,7 @@
   <link href="assets/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
 </head>
-<body class="body">
+<body class="body, gallery-page">
 
   <!-- === SIDEBAR VLEVO === -->
 <aside id="sidebar" class="astro-sidebar">
@@ -68,10 +68,22 @@
 
 
 <main class="container mt-5 content">
-  <h1 class="text-center mb-4" style="padding-top:80px">Astronomická galerie</h1>
-  <p class="text-center mb-5 popisek">
-    Prozkoumejte obrázky podle kategorií a podkategorií. Kliknutím na snímek se zobrazí detail a možnost lajkovat.
-  </p>
+
+<section class="gallery-hero">
+  <div class="hero-content">
+    <h1>Astronomická galerie</h1>
+    <p>
+      Toto je má sbírka originálních astronomických snímků, které jsem pořídil pomocí svého teleskopu. 
+      Každý snímek je pečlivě zpracován a představují fascinující objekty ve vesmíru, od planet naší sluneční soustavy až po vzdálené galaxie, mlhoviny a mnoho dalších.
+      Každý snímek je doplněn podrobným popisem, který poskytuje informace o objektu, jeho vzdálenosti, souhvězdí a dalších zajímavostech.
+      <p>Prozkoumejte mou galerii a objevte krásy vesmíru a vciťte se do nekonečna a ještě dál!</p>
+    </p>
+    <div class="hero-actions">
+      <button onclick="scrollToGallery()">Prozkoumat galerii</button>
+    </div>
+  </div>
+</section>
+
 
   <div id="gallery"></div>
   <div id="topResults"></div>
@@ -106,7 +118,7 @@
 <div id="footer"></div>
 <script src="layout/navbar.js"></script>
 <script>
-  fetch('/layout/footer.html')
+  fetch('./layout/footer.html')
     .then(res => res.text())
     .then(data => document.getElementById('footer').innerHTML = data);
 </script>
@@ -134,7 +146,7 @@ function formatTitle(str) {
 function formatDistance(num) {
   if (!num) return '-';
   const formatted = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  return num > 1000 ? `~ ${formatted}` : formatted;
+  return num > 100 ? `~ ${formatted}` : formatted;
 }
 
 // ---------- LEVÝ SIDEBAR ----------
@@ -184,39 +196,65 @@ function buildSidebar(data) {
 
 // ---------- PRAVÝ SIDEBAR – GENEROVÁNÍ FILTRŮ ----------
 
+// Pevné pořadí kategorií a jejich podkategorií
+const categories = [
+  "sluneční_soustava",
+  "hvězdy",
+  "mlhoviny",
+  "hvězdokupy",
+  "galaxie"
+];
+
+const subcategories = {
+  sluneční_soustava: ["Planeta", "Slunce", "Měsíc", "Ostatní objekty"],
+  hvězdy: ["Nadobr", "Jasný obr", "Obr", "Podobr", "Hvězdy hlavní posloupnosti"],
+  mlhoviny: ["Emisní", "Planetární", "Reflexní", "Pozůstatky supernov"],
+  hvězdokupy: ["Kulové", "Otevřené"],
+  galaxie: ["Eliptické", "Spirální"]
+};
+
+// Generování filtrů do pravého sidebaru
 function fillRightSidebarFilters(data) {
   // Kategorie
   const catBox = document.getElementById('filterCategory');
   if (catBox) {
-    const cats = [...new Set(data.map(i => i.category))];
     catBox.innerHTML = "";
-    cats.forEach(c => {
-      catBox.innerHTML += `
-        <label class="filter-checkbox">
-          <input type="checkbox" class="catCheck" value="${c}">
-          ${formatTitle(c)}
-        </label>`;
+    categories.forEach(c => {
+      if (data.some(i => i.category === c)) {
+        catBox.innerHTML += `
+          <label class="filter-checkbox">
+            <input type="checkbox" class="catCheck" value="${c}">
+            ${formatTitle(c)}
+          </label>`;
+      }
     });
   }
 
-  // Podkategorie
-  const subBox = document.getElementById('filterSubcategory');
-  if (subBox) {
-    const subs = [...new Set(data.map(i => i.subcategory))];
-    subBox.innerHTML = "";
-    subs.forEach(s => {
-      subBox.innerHTML += `
-        <label class="filter-checkbox">
-          <input type="checkbox" class="subCheck" value="${s}">
-          ${formatTitle(s)}
-        </label>`;
-    });
-  }
+// Podkategorie – podle hlavní kategorie
+const subBox = document.getElementById('filterSubcategory');
+if (subBox) {
+  subBox.innerHTML = "";
+  categories.forEach(c => {
+    if (data.some(i => i.category === c)) {
+      subcategories[c].forEach(s => {
+        // najdi přesně, jak je to v datech
+        const matchedSub = data.find(i => i.category === c && i.subcategory.toLowerCase() === s.toLowerCase());
+        if (matchedSub) {
+          subBox.innerHTML += `
+            <label class="filter-checkbox">
+              <input type="checkbox" class="subCheck" value="${matchedSub.subcategory}">
+              ${s} – ${formatTitle(c)}
+            </label>`;
+        }
+      });
+    }
+  });
+}
 
-  // Souhvězdí
+  // Souhvězdí – abecedně
   const conBox = document.getElementById('filterConstellation');
   if (conBox) {
-    const cons = [...new Set(data.map(i => i.constellation).filter(Boolean))];
+    const cons = [...new Set(data.map(i => i.constellation).filter(Boolean))].sort();
     conBox.innerHTML = "";
     cons.forEach(c => {
       conBox.innerHTML += `
@@ -274,7 +312,7 @@ function renderGallery(data) {
           const card = document.createElement('div');
           card.className = 'card gallery-card shadow-sm me-3';
           card.innerHTML = `
-            <img src="/images/${item.image}" class="card-img-top" alt="${item.common_name}">
+            <img src="./images/${item.image}" class="card-img-top" alt="${item.common_name}">
             <div class="card-body text-center">
               <h5 class="card-title">${item.common_name}</h5>
               <p class="card-text small">${item.name}</p>
@@ -292,7 +330,9 @@ function renderGallery(data) {
 }
 
 // ---------- FILTRY – APLIKACE ----------
+let filteredGalleryData = []; // nové pole pro vyfiltrované snímky
 
+// upravená funkce applyFilters
 function applyFilters() {
   const searchInput = document.getElementById('searchInput');
   const search = searchInput ? searchInput.value.toLowerCase() : "";
@@ -302,7 +342,7 @@ function applyFilters() {
   const selectedCons = [...document.querySelectorAll('.conCheck:checked')].map(e => e.value);
   const selectedCatalogs = [...document.querySelectorAll('.catalogCheck:checked')].map(e => e.value);
 
-  const filtered = galleryData.filter(item => {
+  filteredGalleryData = galleryData.filter(item => {
     const matchesSearch =
       item.common_name.toLowerCase().includes(search) ||
       item.name.toLowerCase().includes(search);
@@ -331,7 +371,21 @@ function applyFilters() {
     return matchesSearch && matchCat && matchSub && matchCon && matchCatalog;
   });
 
-  renderGallery(filtered);
+  renderGallery(filteredGalleryData);
+
+  // pokud je modál otevřený, rebuildnout currentGroup podle vyfiltrovaných dat
+  if (modalInstance && modalInstance._isShown) {
+    rebuildCurrentGroup();
+    currentGroupIndex = 0; // nebo zachovat aktuální položku, pokud chceš
+  }
+}
+
+// upravená funkce rebuildCurrentGroup
+function rebuildCurrentGroup() {
+  currentGroup = filteredGalleryData.filter(i =>
+    i.category === currentCategory &&
+    i.subcategory === currentSubcategory
+  );
 }
 
 // ---------- TOP 10 GALERIE ----------
@@ -374,7 +428,7 @@ function renderTopGallery(list, title) {
     col.className = "col-md-6 mb-4";
     col.innerHTML = `
       <div class="card gallery-card shadow-sm">
-        <img src="/images/${item.image}" class="card-img-top" alt="${item.common_name}">
+        <img src="./images/${item.image}" class="card-img-top" alt="${item.common_name}">
         <div class="card-body text-center">
           <h5 class="card-title">${item.common_name}</h5>
           <p class="card-text small">${item.name} | Souhvězdí: ${item.constellation}</p>
@@ -459,7 +513,7 @@ function goToPrevSubcategory() {
 }
 
 function showModalItem(item) {
-  document.getElementById('modalImage').src = `/images/${item.image}`;
+  document.getElementById('modalImage').src = `./images/${item.image}`;
   document.getElementById('modalTitle').innerText = item.common_name;
   document.getElementById('modalDescription').innerText = item.fact || 'Žádný popis.';
   document.getElementById('modalType').innerText = formatTitle(item.category);
@@ -475,6 +529,27 @@ function showModalItem(item) {
     modalInstance.show();
   }
 }
+
+const modalImage = document.getElementById('modalImage');
+
+modalImage.addEventListener('click', () => {
+  if (!document.fullscreenElement) {
+    // otevři fullscreen
+    modalImage.requestFullscreen().catch(err => {
+      console.error(`Nelze přejít do fullscreenu: ${err.message}`);
+    });
+  } else {
+    // ukonči fullscreen
+    document.exitFullscreen();
+  }
+});
+
+// volitelně: po opuštění fullscreenu znovu zobraz modál (Bootstrap ho udrží otevřený)
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) {
+    // nic extra dělat nemusíme, modál zůstává otevřený
+  }
+});
 
 // ---------- INIT ----------
 
@@ -565,31 +640,51 @@ document.body.addEventListener('change', e => {
     });
   }
 
-  // Prev / Next v modálu
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
+// Prev / Next v modálu – upraveno pro filtrování
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
 
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      if (!galleryData.length) return;
-currentGroupIndex--;
-if (currentGroupIndex < 0) {
-    goToPrevSubcategory();
-}
-showModalItem(currentGroup[currentGroupIndex]);
-    });
-  }
+if (prevBtn) {
+  prevBtn.addEventListener('click', () => {
+    if (!currentGroup || currentGroup.length === 0) return; // nic, pokud je prázdné
 
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      if (!galleryData.length) return;
-currentGroupIndex++;
-if (currentGroupIndex >= currentGroup.length) {
-    goToNextSubcategory();
+    currentGroupIndex--;
+    if (currentGroupIndex < 0) {
+      // přejdi na předchozí subkategorii, pokud existuje
+      const subs = getSubcategoriesInCategory(currentCategory).filter(sub => 
+        filteredData.some(i => i.subcategory === sub)
+      );
+      let index = subs.indexOf(currentSubcategory);
+      index--;
+      if (index < 0) index = subs.length - 1; // loop na konec
+      currentSubcategory = subs[index];
+      rebuildCurrentGroup();
+      currentGroupIndex = currentGroup.length - 1; // poslední snímek v nové subkategorii
+    }
+    showModalItem(currentGroup[currentGroupIndex]);
+  });
 }
-showModalItem(currentGroup[currentGroupIndex]);
-    });
-  }
+
+if (nextBtn) {
+  nextBtn.addEventListener('click', () => {
+    if (!currentGroup || currentGroup.length === 0) return;
+
+    currentGroupIndex++;
+    if (currentGroupIndex >= currentGroup.length) {
+      // přejdi na další subkategorii, pokud existuje
+      const subs = getSubcategoriesInCategory(currentCategory).filter(sub => 
+        filteredData.some(i => i.subcategory === sub)
+      );
+      let index = subs.indexOf(currentSubcategory);
+      index++;
+      if (index >= subs.length) index = 0; // loop na začátek
+      currentSubcategory = subs[index];
+      rebuildCurrentGroup();
+      currentGroupIndex = 0; // první snímek v nové subkategorii
+    }
+    showModalItem(currentGroup[currentGroupIndex]);
+  });
+}
 
   // Like tlačítko
   const likeBtn = document.getElementById('likeBtn');
@@ -640,13 +735,28 @@ if (likeBtn) {
   <i class="fas fa-arrow-up"></i>
 </button>
 <script>
+  const scrollBtn = document.getElementById("scrollTopBtn");
+
   window.onscroll = function () {
-    const btn = document.getElementById("scrollTopBtn");
-    btn.style.display = (document.documentElement.scrollTop > 500) ? "block" : "none";
+    scrollBtn.style.display = (document.documentElement.scrollTop > 500) ? "block" : "none";
   };
-  function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+  function scrollToTop() { 
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  }
+
+  function scrollToGallery() {
+    document.getElementById("gallery").scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+
+  // Posun šipky jen pokud jsme na galerii
+  if (document.body.classList.contains('gallery-page')) {
+    scrollBtn.style.right = '280px'; // uprav podle potřeby
+  }
 </script>
 
-<script src="/assets/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="/frontend/assets/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>

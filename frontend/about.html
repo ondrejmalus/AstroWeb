@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AstroWeb – Tvůj profil</title>
+  <title>AstroWeb – O Stránce</title>
   <link rel="icon" type="image/png" href="data/web_images/icon.png">
   
   <!-- Vlastní CSS -->
@@ -32,7 +32,7 @@
 <!-- Načítání layoutu -->
 <script>
   // Footer
-  fetch('/layout/footer.html')
+  fetch('./layout/footer.html')
     .then(res => res.text())
     .then(data => document.getElementById('footer').innerHTML = data);
 </script>

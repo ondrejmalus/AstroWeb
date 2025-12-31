@@ -11,7 +11,7 @@ const router = express.Router();
 // ================================
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'images'); // složka v kořeni projektu
+    cb(null, 'frontend/images'); // složka pro ukládání obrázků
   },
   filename: function (req, file, cb) {
     // unikátní název souboru: timestamp + originální jméno

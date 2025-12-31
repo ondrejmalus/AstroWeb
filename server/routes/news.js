@@ -7,7 +7,7 @@ import fs from 'fs';
 const router = express.Router();
 
 // složka pro ukládání obrázků
-const newsImagesPath = 'data/news_images/';
+const newsImagesPath = 'frontend/data/news_images/';
 
 // zajistíme existenci složky
 if (!fs.existsSync(newsImagesPath)) fs.mkdirSync(newsImagesPath, { recursive: true });
@@ -45,7 +45,7 @@ router.post("/", upload.single('image'), async (req, res) => {
     return res.status(400).json({ success: false, error: "Název, obsah a obrázek jsou povinné" });
   }
 
-  const imagePath = `${newsImagesPath}${file.filename}`;
+  const imagePath = `data/news_images/${file.filename}`;
 
   try {
     const [result] = await db.query(
