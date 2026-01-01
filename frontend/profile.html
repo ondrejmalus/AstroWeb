@@ -20,7 +20,171 @@
 <!-- HLAVNÍ OBSAH -->
 <main class="container mt-5 content">
 
-<p class="under-construction">Under Construction</p>
+<section class="profile-header mb-5 text-center">
+  <h1 class="profile-title">
+    Profil uživatele <span id="profileUsername" style="font-size: 35px"></span>
+  </h1>
+
+  <p class="profile-rank">
+    Astronaut AstroWebu
+  </p>
+
+  <p class="profile-lore" id="profileLore">
+    Na AstroWeb jsi poprvé doletěl dne
+    <strong id="profileCreatedAt">--.--.----</strong>
+    a od té doby objevuješ krásy vesmíru.
+  </p>
+</section>
+
+<section class="profile-section mb-5">
+  <h3 class="section-title">🪐 Základní údaje</h3>
+
+<div class="profile-info-box">
+  <div class="profile-info-row">
+    <span class="label">Uživatelské jméno:</span>
+    <span id="infoUsername"></span>
+    <button class="btn btn-sm btn-outline-info">Změnit</button>
+  </div>
+
+  <div class="profile-info-row">
+    <span class="label">Email:</span>
+    <span id="infoEmail"></span>
+    <button class="btn btn-sm btn-outline-info">Změnit</button>
+  </div>
+</div>
+</section>
+
+<section class="profile-section mb-5">
+  <h3 class="section-title">📊 Astronomické statistiky</h3>
+
+  <div class="table-responsive">
+    <table class="table table-dark table-bordered profile-stats-table">
+      <tbody>
+        <tr>
+          <th>❤️ Udělené lajky</th>
+          <td id="statsLikes">0</td>
+        </tr>
+        <tr>
+          <th>🗂️ Oblíbená kategorie</th>
+          <td id="statsCategory">—</td>
+        </tr>
+        <tr>
+          <th>✨ Nejoblíbenější souhvězdí</th>
+          <td id="statsConstellation">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="profile-section mb-5">
+  <h3 class="section-title">🔐 Bezpečnost účtu</h3>
+
+  <button class="btn btn-outline-warning" id="changePasswordBtn">
+    Změnit heslo
+  </button>
+</section>
+
+<section class="profile-section mb-5">
+  <h3 class="section-title">🏅 Odměny & achievementy</h3>
+
+  <p class="text-muted">
+    Systém vesmírných odměn bude brzy k dispozici ✨  
+    Pokračuj v objevování AstroWebu!
+  </p>
+</section>
+
+
+<div class="modal fade" id="changeUsernameModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title">Změnit uživatelské jméno</h5>
+        <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="text" id="newUsername" class="form-control" placeholder="Nové uživatelské jméno">
+        <small class="mt-2 d-block">
+          Musí být jedinečné
+        </small>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Zrušit</button>
+        <button class="btn btn-info" id="saveUsernameBtn">Uložit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="changeEmailModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title">Změnit email</h5>
+        <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="email" id="newEmail" class="form-control mb-2" placeholder="Nový email">
+        <input type="email" id="confirmEmail" class="form-control" placeholder="Nový email znovu">
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Zrušit</button>
+        <button class="btn btn-info" id="saveEmailBtn">Uložit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="changePasswordModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title">Změnit heslo</h5>
+        <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <input
+          type="password"
+          id="currentPassword"
+          class="form-control mb-2"
+          placeholder="Aktuální heslo"
+        >
+
+        <input
+          type="password"
+          id="newPassword"
+          class="form-control mb-2"
+          placeholder="Nové heslo"
+        >
+
+        <input
+          type="password"
+          id="confirmNewPassword"
+          class="form-control"
+          placeholder="Nové heslo znovu"
+        >
+
+        <small class="d-block mt-2">
+          Heslo musí mít alespoň 6 znaků
+        </small>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Zrušit
+        </button>
+        <button class="btn btn-warning" id="savePasswordBtn">
+          Uložit nové heslo
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </main>  
 
@@ -28,6 +192,8 @@
 <div id="footer"></div>
 
 <script src="layout/navbar.js"></script>
+<script src="assets/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="layout/profile.js"></script>
 
 <!-- Načítání layoutu -->
 <script>

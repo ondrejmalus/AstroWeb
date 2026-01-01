@@ -5,9 +5,10 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import newsRouter from './routes/news.js';
-import galleryRouter from './routes/gallery.js'; // 🆕 přidáno
-import authRouter from './routes/auth.js'; // náš auth router
+import newsRouter from './routes/news.js'; // news router
+import galleryRouter from './routes/gallery.js'; // gallery router
+import authRouter from './routes/auth.js'; // auth router
+import usersRoutes from './routes/users.js'; // users router
 
 const app = express();
 const PORT = 3000;
@@ -25,9 +26,10 @@ app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, '../images')));
 
 // ROUTES
-app.use('/news', newsRouter);
-app.use('/gallery', galleryRouter); // 🆕 připojeno
+app.use('/news', newsRouter); // news
+app.use('/gallery', galleryRouter); // gallery
 app.use('/auth', authRouter); // login + register
+app.use('/users', usersRoutes); // users
 
 // MySQL připojení
 const db = await mysql.createPool({

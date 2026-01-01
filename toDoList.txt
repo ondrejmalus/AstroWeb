@@ -1,24 +1,26 @@
 (To DO ❌)
-- profil stránka uživatelů
 - zajímavosti stránka (rozdělení na osobnosti a všeobecné např.: markarians chain, galilein moons, zimní šestiúhelník, atd..)
 - o webu stránka
+
 - na "home" stránce v sekci "základní pojmy astronomie" ke každému vložit malý přikladný obrázek
 - na stránce "objekty" přidat to, že vyhledaný objekt bude zvýrazněný
 - -------- || -------- přidat to, že objekt na který najedu myší změní barvu (název) a půjde na něj kliknout, když se klikne, tak se zobrazí okno s obrázkem daného objektu
 a proto musím v tabulce "objects" přidat sloupec, který bude obsahovat id snímku z galerie, aby to načítalo správný obrázek. Při přidávání nového objektu tudíž budu muset
 vybrat i snímek z galerie, který mu přiřadit
-
-- fixnout to, že když jsou aktivní filtry, tak že tlačítka předchozí a další budou fungovat jenom na vyfiltrované snímky (teď fungují jako kdyby byla zobrazena stále celá 
-galerie i když mám zaplé filry)
-
 - v upload stránce přidat sekci na úpravu/editaci snímků v galerii (změna popisku - zajímavosti, obrázku)
 - přidat responzivitu přes bootstrap classy všude a celkově upravit css
 - v home stránce upravit sekci s novinkami, aby byli max tři vedle sebe a pak by se skládali pod sebe jako do nějakého dropdownu nebo tak něco, 
 kdybych si chtěl zobrazit starší, tudíž vždy půjdou vidět jen tři nejnovější a zbytek bude schovaný v "dropdownu" nebo tak něco
-- v uploadu pořešit to, aby se nedalo poslat snímek, když jakýkoli bod nebude vyplněn (musí být všechny)
+- v uploadu pořešit to, aby se nedalo odeslat snímek, když jakýkoli bod nebude vyplněn (musí být všechny)
+- udělat admin část neboli electron
+- přidat takové "odměny" pro uživatele - badges třeba za nějaký počet lajknutých snímků nebo delší dobu založení profilu, třeba měsíc, rok atd..
+
+- !!! fixnout to, že když jsou aktivní filtry, tak že tlačítka předchozí a další budou fungovat jenom na vyfiltrované snímky (teď fungují jako kdyby byla zobrazena stále celá 
+galerie i když mám zaplé filry)
 
 
 (Done ✅)
+- profil stránka uživatelů
 - udělat v galerii sidebary tak, aby šli až dolů, klidně přeš patičku
 - v modálu udělat rozklikávací obrázek na celou obrazovku
 - v pravém sidebaru v galerii seřadit filtry : 1. kategorie podle toho jak jdou za sebou na stránce, 2. podkategorie podle toho taky, 3. souhvězdí podle abecedy
