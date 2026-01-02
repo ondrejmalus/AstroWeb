@@ -20,14 +20,31 @@
 <!-- HLAVNÍ OBSAH -->
 <main class="container mt-5 content">
 
-<p class="under-construction">Under Construction</p>
+  <section class="facts-header text-center mb-5">
+    <h1 class="facts-title">Astronomické zajímavosti</h1>
+    <p class="facts-intro">
+      Krátké a srozumitelné zajímavosti ze světa astronomie –  
+      od slavných osobností až po fascinující vesmírné jevy.
+    </p>
 
-</main>  
+    <div class="facts-filters mt-4">
+      <button class="btn btn-outline-info active" data-filter="all">Vše</button>
+      <button class="btn btn-outline-info" data-filter="general">Všeobecné</button>
+      <button class="btn btn-outline-info" data-filter="personality">Osobnosti</button>
+    </div>
+  </section>
+
+  <section class="facts-grid row g-4" id="factsContainer">
+    <!-- karty se načtou JS -->
+  </section>
+
+</main> 
 
 <!-- FOOTER (načtený dynamicky) -->
 <div id="footer"></div>
 
 <script src="layout/navbar.js"></script>
+<script src="layout/facts.js"></script>
 
 <!-- Načítání layoutu -->
 <script>

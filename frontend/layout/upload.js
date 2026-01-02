@@ -1,6 +1,4 @@
-// ================================
 // FORMULÁŘ PRO ČLÁNKY
-// ================================
 const newsForm = document.getElementById('add-news-form');
 
 if(newsForm){
@@ -40,9 +38,7 @@ if(newsForm){
   });
 }
 
-// ================================
 // FORMULÁŘ PRO GALERII
-// ================================
 const galleryForm = document.getElementById('add-gallery-form');
 
 if (galleryForm) {
@@ -138,6 +134,7 @@ document.addEventListener("click", (e) => {
   galleryForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    // Sběr dat z formuláře
     const category = categorySelect.value;
     const subcategory = subcategorySelect.value;
     const name = document.getElementById('gallery-name').value.trim();
@@ -178,6 +175,37 @@ document.addEventListener("click", (e) => {
     } catch (err) {
       console.error(err);
       alert('Chyba při komunikaci se serverem');
+    }
+  });
+}
+
+// FORMULÁŘ PRO ZAJÍMAVOSTI
+const factForm = document.getElementById('add-fact-form');
+
+if (factForm) {
+  factForm.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const formData = new FormData(factForm);
+
+    try {
+      const res = await fetch('http://localhost:3000/facts', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert('Zajímavost byla přidána ✨');
+        factForm.reset();
+      } else {
+        alert(data.msg || 'Chyba při ukládání zajímavosti');
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert('Chyba serveru');
     }
   });
 }

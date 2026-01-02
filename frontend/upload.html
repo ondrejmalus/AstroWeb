@@ -14,9 +14,9 @@
 
 <main class="container mt-5 content">
 
-  <!-- ========================== -->
+
   <!--    FORMULÁŘ PRO ČLÁNKY     -->
-  <!-- ========================== -->
+
   <h1 class="upload-header">Přidat nový článek</h1>
 
   <form id="add-news-form" class="shadow p-4 rounded bg-light mb-5">
@@ -42,9 +42,9 @@
 
   <hr class="my-5">
 
-  <!-- ========================== -->
+
   <!--    FORMULÁŘ PRO GALERII    -->
-  <!-- ========================== -->
+
   <h1 class="upload-header">Přidat snímek do galerie</h1>
 
 <form id="add-gallery-form" class="shadow p-4 rounded bg-light">
@@ -78,7 +78,7 @@
   </div>
 
   <div class="mb-3">
-    <label for="gallery-constellation" class="form-label">Souhvězdí</label>
+    <label for="gallery-constellation" class="form-label">Souhvězdí - latinsky (česky)</label>
       <div class="custom-select-wrapper">
         <input type="text" id="gallery-constellation" class="form-control" autocomplete="off">
       <div id="constellation-dropdown" class="custom-dropdown"></div>
@@ -104,6 +104,44 @@
   <button type="submit" class="btn btn-success me-2">Nahrát snímek</button>
   <button type="reset" class="btn btn-secondary">Vymazat</button>
 </form>
+
+
+<!-- FORMULÁŘ – ZAJÍMAVOST -->
+
+<div class="add-fact-form mt-5">
+  <h1 class="upload-header">Přidat zajímavost</h1>
+
+  <form id="add-fact-form" enctype="multipart/form-data">
+
+    <div class="mb-3">
+      <label class="form-label">Kategorie</label>
+      <select name="category" class="form-select" required>
+        <option value="general">Všeobecná zajímavost</option>
+        <option value="personality">Osobnost</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Nadpis</label>
+      <input type="text" name="title" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Text</label>
+      <textarea name="text" rows="5" class="form-control" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Vyber obrázek</label>
+      <input type="file" name="image" class="form-control" accept="image/*">
+      <p class="text-path">Obrázek bude uložen do složky <b>/data/facts_images</b></p>
+    </div>
+
+    <button type="submit" class="btn btn-success">Přidat zajímavost</button>
+    <button type="reset" class="btn btn-secondary">Vymazat</button>
+
+  </form>
+</div>
 
 </main>
 

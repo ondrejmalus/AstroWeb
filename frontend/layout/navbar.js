@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     authLinks.innerHTML = `
       <li class="nav-item">
         <a class="nav-link" href="upload.html">
-          <i class="fas fa-upload"></i> Upload
+          <i class="fas fa-upload"></i> Administrace
         </a>
       </li>
       <li class="nav-item">

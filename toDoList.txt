@@ -1,39 +1,13 @@
 (To DO ❌)
-- zajímavosti stránka (rozdělení na osobnosti a všeobecné např.: markarians chain, galilein moons, zimní šestiúhelník, atd..)
-- o webu stránka
 
-- na "home" stránce v sekci "základní pojmy astronomie" ke každému vložit malý přikladný obrázek
-- na stránce "objekty" přidat to, že vyhledaný objekt bude zvýrazněný
-- -------- || -------- přidat to, že objekt na který najedu myší změní barvu (název) a půjde na něj kliknout, když se klikne, tak se zobrazí okno s obrázkem daného objektu
-a proto musím v tabulce "objects" přidat sloupec, který bude obsahovat id snímku z galerie, aby to načítalo správný obrázek. Při přidávání nového objektu tudíž budu muset
-vybrat i snímek z galerie, který mu přiřadit
-- v upload stránce přidat sekci na úpravu/editaci snímků v galerii (změna popisku - zajímavosti, obrázku)
-- přidat responzivitu přes bootstrap classy všude a celkově upravit css
-- v home stránce upravit sekci s novinkami, aby byli max tři vedle sebe a pak by se skládali pod sebe jako do nějakého dropdownu nebo tak něco, 
-kdybych si chtěl zobrazit starší, tudíž vždy půjdou vidět jen tři nejnovější a zbytek bude schovaný v "dropdownu" nebo tak něco
-- v uploadu pořešit to, aby se nedalo odeslat snímek, když jakýkoli bod nebude vyplněn (musí být všechny)
-- udělat admin část neboli electron
 - přidat takové "odměny" pro uživatele - badges třeba za nějaký počet lajknutých snímků nebo delší dobu založení profilu, třeba měsíc, rok atd..
 
-- !!! fixnout to, že když jsou aktivní filtry, tak že tlačítka předchozí a další budou fungovat jenom na vyfiltrované snímky (teď fungují jako kdyby byla zobrazena stále celá 
-galerie i když mám zaplé filry)
+- vytvořit novou podstránku uploadu/administrace a to přidat sekci na úpravu/editaci snímků v galerii (změna popisku - zajímavosti, obrázku)
+- v upload stránce přidat sidebar na navigaci (přidání článků, snímků a zajímavostí)
+- v uploadu pořešit to, aby se nedalo odeslat snímek, když jakýkoli bod nebude vyplněn (musí být všechny), to samé i u přidávání článku a zajímavosti, vždy musí být vyplněna
+všechna políčka
+- v upload stránce přidat možnost, přidat fotku k existujícímu snímku už, tak aby byla pak možnost v galerii si zobrazit snímek objektu, 
+který jsem fotil víckrát (nejspíš nová tabulka)
 
-
-(Done ✅)
-- profil stránka uživatelů
-- udělat v galerii sidebary tak, aby šli až dolů, klidně přeš patičku
-- v modálu udělat rozklikávací obrázek na celou obrazovku
-- v pravém sidebaru v galerii seřadit filtry : 1. kategorie podle toho jak jdou za sebou na stránce, 2. podkategorie podle toho taky, 3. souhvězdí podle abecedy
-- přidat do galerie všechny moje snímky
-- spravit lajkování
-- spravit rozklikávání karet v galerii
-- v galerii u vzdálenosti upravit tak, aby se vždy oddělovala čísla po třech mezerou (např: 5 000 000)
-- ---------------- || ---------------- aby když bude větší jak 1 000 tak by se tam před číslo přidala "~"
-- navigace v galerii (pro kategorie a podkategorie)
-- přidat filtry do galerie (podle souhvězdí, podkategorie, katalog Messier, ...)
-- přidat vyhledávač do galerie
-- u filtrů v galerii, zvýraznit ty co jsou zakliklé
-- v galerii upravit to, aby další a předchozí tlačítka procházeli snímky jen v dané "podkategorii", aby nepřecházeli třeba z "ostatních objektů na spirální galaxie", 
-protože to teď dělá a nelíbí se mi to (dělá to, protože to předchozí a další proklikává mezi "nově přidanými snímky až po ty starší, jakoby podle pořadí přidání, podle ID")
-- v uploadu u souhvězdí upravit tak, aby se při vkládání snímků nabízeli již někdy použité souhvězdí nebo jestli ještě nebylo použito, tak aby se dalo přidat
-- v uploadu u sluneční soustavy upravit to, aby se tam nevyplňovalo souhvězdí (protože tam nepatří logicky)
+- přidat responzivitu přes bootstrap classy všude a celkově upravit css
+- udělat admin část neboli electron

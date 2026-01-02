@@ -54,13 +54,21 @@
 
 <!-- HLAVNÍ OBSAH -->
   <main class="container mt-5 content">
+
+<!-- === NOVINKY SEKCE === -->
     
-<!-- Tento element dělá posun nad nadpis -->
-<div id="news-section" style="position: relative; top: -130px;"></div>    
 <section id="news-section" class="container py-5">
   <h2 class="text-center mb-4 news-header">Aktuálně</h2>
+
   <div id="news-container" class="row g-4">
     <!-- Články se načtou sem skriptem -->
+  </div>
+
+  <!-- Tlačítko na starší novinky -->
+  <div class="text-center mt-4">
+    <button id="toggle-news-btn" class="btn btn-outline-primary d-none">
+      Zobrazit starší novinky
+    </button>
   </div>
 </section>
 
@@ -70,70 +78,102 @@
   <div class="overlay-content"></div>
 </div>
 
-    <!-- Tento element dělá posun nad nadpis -->
-<div id="basic-terms" style="position: relative; top: -150px;"></div>
-<!-- === ZÁKLADNÍ POJMY === -->
-<section id="basic-terms" class="basic-terms">
-  <h2>Základní pojmy astronomie</h2>
-  <p style="text-align: center;">
-    Astronomie je věda, která zkoumá vesmír, nebeská tělesa a jevy, 
-    které se v něm odehrávají – od hvězd a planet až po vzdálené galaxie a mlhoviny.
-  </p>
+<!-- Věta nad tlačítky – základní pilíře astronomie -->
+  <h3 class="zaklad">Základní pilíře amatérské astronomie najdeš v těchto katalozích:</h3>
 
-  <div class="terms-columns">
-    <!-- Levý sloupec -->
-    <div class="term-box">
-      <h3>⭐ Hvězdy</h3>
-      <p>
-        Hvězdy jsou ohromné koule plazmatu, které září díky jaderné fúzi. 
-        Rozdělují se podle svítivosti a velikosti do tříd I–VIII 
-        (nadobři, obři, podobři, hvězdy hlavní posloupnosti, podtrpaslíci, bílí trpaslíci...).
-      </p>
-
-      <h3>☄️ Komety</h3>
-      <p>
-        Malá tělesa složená převážně z ledu a prachu. 
-        Při přiblížení ke Slunci vytvářejí viditelnou komu a ohon.
-      </p>
-
-      <h3>✨ Hvězdokupy</h3>
-      <p>
-        Seskupení hvězd vzniklých ze stejného mračna. 
-        Existují <strong>otevřené hvězdokupy</strong> (volnější, mladší) 
-        a <strong>kulové hvězdokupy</strong> (husté, starší, kulovitého tvaru).
-      </p>
-    </div>
-
-    <!-- Pravý sloupec -->
-    <div class="term-box">
-      <h3>🌌 Galaxie</h3>
-      <p>
-        Obrovské soustavy hvězd, plynu a temné hmoty. 
-        <strong>Eliptické galaxie</strong> mají hladký oválný tvar, 
-        zatímco <strong>spirální galaxie</strong> mají výrazná ramena a centrální výduť.
-      </p>
-
-      <h3>☁️ Mlhoviny</h3>
-      <p>Obrovská mračna plynu a prachu. Dělí se na:</p>
-      <ul>
-        <li><strong>Emisní</strong> – září vlastním světlem díky ionizaci.</li>
-        <li><strong>Reflexní</strong> – pouze odrážejí světlo hvězd.</li>
-        <li><strong>Planetární</strong> – vznikají odvržením obalů hvězdy.</li>
-        <li><strong>Pozůstatky supernov</strong> – zbytky po výbuchu masivní hvězdy.</li>
-      </ul>
-    </div>
-  </div>
-
-</section>
-
-      <!-- Věta nad tlačítky – základní pilíře astronomie -->
-     <h3 class="zaklad">Základní pilíře amatérské astronomie najdeš v těchto katalozích:</h3>
-
-    <!-- Tlačítka -->
+  <!-- Tlačítka -->
     <div class="hero-buttons">
       <a href="#messier-offset" class="btn-astro">Messierův katalog</a>
       <a href="#other-catalogs" class="btn-astro">Další katalogy</a>
     </div>
+
+    <!-- Tento element dělá posun nad nadpis -->
+<div id="basic-terms" style="position: relative; top: -150px;"></div>
+
+<!-- === ZÁKLADNÍ POJMY === -->
+<section id="basic-terms" class="basic-terms">
+  <h2>Základní pojmy astronomie</h2>
+  <p style="text-align: center;">
+    Astronomie je věda, která zkoumá vesmír, nebeská tělesa a jevy,
+    které se v něm odehrávají – od hvězd a planet až po vzdálené galaxie a mlhoviny.
+  </p>
+
+  <div class="terms-columns">
+
+    <!-- Levý sloupec -->
+    <div class="term-box">
+
+      <div class="term-item">
+        <img src="data/web_images/star.jpg" alt="Hvězdy" class="term-image">
+        <div class="term-text">
+          <h3>⭐ Hvězdy</h3>
+          <p>
+            Hvězdy jsou ohromné koule plazmatu, které září díky jaderné fúzi.
+            Rozdělují se podle svítivosti a velikosti do tříd I–VIII
+            (nadobři, obři, podobři, hvězdy hlavní posloupnosti, bílí trpaslíci…).
+          </p>
+        </div>
+      </div>
+
+      <div class="term-item">
+        <img src="data/web_images/comet.jpg" alt="Komety" class="term-image">
+        <div class="term-text">
+          <h3>☄️ Komety</h3>
+          <p>
+            Malá tělesa složená převážně z ledu a prachu.
+            Při přiblížení ke Slunci vytvářejí viditelnou komu a ohon.
+          </p>
+        </div>
+      </div>
+
+      <div class="term-item">
+        <img src="data/web_images/cluster.jpg" alt="Hvězdokupy" class="term-image">
+        <div class="term-text">
+          <h3>✨ Hvězdokupy</h3>
+          <p>
+            Seskupení hvězd vzniklých ze stejného mračna.
+            Existují <strong>otevřené hvězdokupy</strong> (mladší, volnější)
+            a <strong>kulové hvězdokupy</strong> (starší, husté, kulovitého tvaru).
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pravý sloupec -->
+    <div class="term-box">
+
+      <div class="term-item">
+        <img src="data/web_images/galaxy.jpg" alt="Galaxie" class="term-image">
+        <div class="term-text">
+          <h3>🌌 Galaxie</h3>
+          <p>
+            Obrovské soustavy hvězd, plynu a temné hmoty.
+            <strong>Eliptické galaxie</strong> mají hladký oválný tvar,
+            zatímco <strong>spirální galaxie</strong> mají výrazná ramena
+            a centrální výduť.
+          </p>
+        </div>
+      </div>
+
+      <div class="term-item">
+        <img src="data/web_images/nebula.jpg" alt="Mlhoviny" class="term-image">
+        <div class="term-text">
+          <h3>☁️ Mlhoviny</h3>
+          <p>Obrovská mračna plynu a prachu. Dělí se na:</p>
+          <ul>
+            <li><strong>Emisní</strong> – září vlastním světlem díky ionizaci.</li>
+            <li><strong>Reflexní</strong> – pouze odrážejí světlo hvězd.</li>
+            <li><strong>Planetární</strong> – vznikají odvržením obalů hvězdy.</li>
+            <li><strong>Pozůstatky supernov</strong> – zbytky po výbuchu masivní hvězdy.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
     <!-- === MESSIER SEKCE === -->
 <section id="messier" class="messier-section container py-5">
@@ -209,28 +249,6 @@
 </div>
 
 
-</section>
-
-
-<!-- === Messier Tabulka === -->
-<section id="messier-table" class="container py-5">
-  <h3 class="text-center mb-4">Seznam všech Messier objektů</h3>
-  <div class="table-responsive shadow rounded">
-    <table class="table table-dark table-striped" id="messierDataTable">
-      <thead>
-        <tr>
-          <th>Název</th>
-          <th>Jméno</th>
-          <th>Typ objektu</th>
-          <th>Zajímavost</th>
-          <th>Vzdálenost od Slunce</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Data budou vložena skriptem -->
-      </tbody>
-    </table>
-  </div>
 </section>
 
 <!-- === DALŠÍ KATALOGY === -->
@@ -336,16 +354,23 @@
  <script>
 async function loadNews() {
   try {
-    const res = await fetch('http://localhost:3000/news'); // endpoint na serveru
+    const res = await fetch('http://localhost:3000/news');
     const data = await res.json();
-    if(!data.success) return;
+    if (!data.success) return;
 
     const container = document.getElementById('news-container');
+    const toggleBtn = document.getElementById('toggle-news-btn');
+
     container.innerHTML = '';
 
-    data.articles.forEach(article => {
+    data.articles.forEach((article, index) => {
       const col = document.createElement('div');
-      col.className = 'col-lg-4 col-md-6 mb-4';
+      col.className = 'col-lg-4 col-md-6 mb-4 news-item';
+
+      // všechno kromě prvních 3 skryjeme
+      if (index >= 3) {
+        col.classList.add('news-hidden');
+      }
 
       col.innerHTML = `
         <div class="card shadow-sm h-100 news-card">
@@ -362,16 +387,35 @@ async function loadNews() {
       container.appendChild(col);
     });
 
-    // --- Overlay functionality ---
+    // pokud je víc než 3 články, zobrazíme tlačítko
+    if (data.articles.length > 3) {
+      toggleBtn.classList.remove('d-none');
+    }
+
+    // toggle starších článků
+    let expanded = false;
+    toggleBtn.addEventListener('click', () => {
+      expanded = !expanded;
+
+      document.querySelectorAll('.news-hidden').forEach(el => {
+        el.style.display = expanded ? 'block' : 'none';
+      });
+
+      toggleBtn.innerText = expanded
+        ? 'Skrýt starší novinky'
+        : 'Zobrazit starší novinky';
+    });
+
+    // overlay – zůstává beze změny
     const overlay = document.getElementById('news-overlay');
     const overlayContent = overlay.querySelector('.overlay-content');
     const closeBtn = overlay.querySelector('.close-overlay');
 
     container.addEventListener('click', (e) => {
-      if(e.target.classList.contains('read-more-btn')){
+      if (e.target.classList.contains('read-more-btn')) {
         const card = e.target.closest('.news-card');
         const clone = card.cloneNode(true);
-        clone.querySelector('.read-more-btn').remove(); // odstraníme tlačítko z overlay
+        clone.querySelector('.read-more-btn').remove();
         clone.querySelector('.card-text').classList.remove('d-none');
         overlayContent.innerHTML = '';
         overlayContent.appendChild(clone);
@@ -380,9 +424,11 @@ async function loadNews() {
     });
 
     closeBtn.addEventListener('click', () => overlay.classList.remove('active'));
-    overlay.addEventListener('click', e => { if(e.target === overlay) overlay.classList.remove('active'); });
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) overlay.classList.remove('active');
+    });
 
-  } catch(err) {
+  } catch (err) {
     console.error('Chyba při načítání článků:', err);
   }
 }
@@ -397,31 +443,6 @@ document.addEventListener('DOMContentLoaded', loadNews);
       .then(res => res.text())
       .then(data => document.getElementById('footer').innerHTML = data);
   </script>
-
-  <script>
-  fetch('data/messier_data.json')
-    .then(response => response.json())
-    .then(data => {
-      const tbody = document.querySelector('#messierDataTable tbody');
-      data.forEach(obj => {
-        const tr = document.createElement('tr');
-
-        tr.innerHTML = `
-          <td>${obj["obj-name"]}</td>
-          <td>${obj["obj-common-name"]}</td>
-          <td>${obj["obj-type"]}</td>
-          <td>${obj["obj-fact"]}</td>
-          <td>${obj["obj-distance"]}</td>
-        `;
-
-        tbody.appendChild(tr);
-      });
-    })
-    .catch(err => console.error('Chyba při načítání Messier dat:', err));
-</script>
-
-
-<!-- Carousel --> 
 
 <script>
 

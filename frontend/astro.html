@@ -15,7 +15,7 @@
 
   <!-- === SIDEBAR VLEVO === -->
 <aside id="sidebar" class="astro-sidebar">
-  <h3 class="sidebar-title"><i class="fas fa-layer-group"></i> Kategorie</h3>
+  <h3 class="sidebar-title"><i class="fas fa-layer-group"></i> Průvodce</h3>
   <ul id="sidebarList" class="sidebar-list"></ul>
 </aside>
 
@@ -69,21 +69,38 @@
 
 <main class="container mt-5 content">
 
+  <!-- úvod -->
 <section class="gallery-hero">
   <div class="hero-content">
+
     <h1>Astronomická galerie</h1>
-    <p>
-      Toto je má sbírka originálních astronomických snímků, které jsem pořídil pomocí svého teleskopu. 
-      Každý snímek je pečlivě zpracován a představují fascinující objekty ve vesmíru, od planet naší sluneční soustavy až po vzdálené galaxie, mlhoviny a mnoho dalších.
-      Každý snímek je doplněn podrobným popisem, který poskytuje informace o objektu, jeho vzdálenosti, souhvězdí a dalších zajímavostech.
-      <p>Prozkoumejte mou galerii a objevte krásy vesmíru a vciťte se do nekonečna a ještě dál!</p>
+
+    <p class="hero-lead">
+      Toto je má sbírka originálních astronomických snímků pořízených mým teleskopem.
     </p>
+
+    <p class="hero-text">
+      Každý snímek zachycuje fascinující objekty vesmíru – od planet naší
+      sluneční soustavy až po vzdálené galaxie, mlhoviny a hvězdokupy.
+      Součástí každého snímku je detailní popis objektu, jeho vzdálenosti,
+      souhvězdí a dalších zajímavostí.
+    </p>
+
+    <p class="hero-quote">
+      Prozkoumej galerii a vciť se do nekonečna a ještě dál.
+    </p>
+
     <div class="hero-actions">
       <button onclick="scrollToGallery()">Prozkoumat galerii</button>
+      <button id="randomImageBtn" class="secondary-btn">Náhodný snímek</button>
     </div>
+
+    <div class="gallery-stats">
+      V galerii se aktuálně nachází <span id="galleryCount" style="color: #6100bb; font-size: 2rem;">—</span> snímků.
+    </div>
+
   </div>
 </section>
-
 
   <div id="gallery"></div>
   <div id="topResults"></div>
@@ -124,13 +141,10 @@
 </script>
 
 <script>
-let galleryData = [];
-let currentIndex = 0;
-let modalInstance = null;
-let currentGroup = [];
-let currentGroupIndex = 0;
-let currentCategory = null;
-let currentSubcategory = null;
+let galleryData = [];           // všechno
+let filteredGalleryData = [];   // to, co je VIDĚT
+let currentIndex = 0;           // index v filteredGalleryData
+let visibleGalleryOrder = [];
 
 // ---------- Pomocné funkce ----------
 
@@ -269,6 +283,7 @@ if (subBox) {
 // ---------- RENDER HLAVNÍ GALERIE ----------
 
 function renderGallery(data) {
+  visibleGalleryOrder = [];
   const gallery = document.getElementById('gallery');
   if (!gallery) return;
 
@@ -309,6 +324,7 @@ function renderGallery(data) {
       catItems
         .filter(i => i.subcategory === sub)
         .forEach(item => {
+          visibleGalleryOrder.push(item.id);
           const card = document.createElement('div');
           card.className = 'card gallery-card shadow-sm me-3';
           card.innerHTML = `
@@ -330,7 +346,6 @@ function renderGallery(data) {
 }
 
 // ---------- FILTRY – APLIKACE ----------
-let filteredGalleryData = []; // nové pole pro vyfiltrované snímky
 
 // upravená funkce applyFilters
 function applyFilters() {
@@ -376,8 +391,20 @@ function applyFilters() {
   // pokud je modál otevřený, rebuildnout currentGroup podle vyfiltrovaných dat
   if (modalInstance && modalInstance._isShown) {
     rebuildCurrentGroup();
-    currentGroupIndex = 0; // nebo zachovat aktuální položku, pokud chceš
+    currentGroupIndex = 0; // nebo zachovat aktuální položku
   }
+
+  // Pokud nejsou aplikovány žádné filtry, zobrazit původní data
+  if (
+  !search &&
+  !selectedCats.length &&
+  !selectedSubs.length &&
+  !selectedCons.length &&
+  !selectedCatalogs.length
+) {
+  filteredGalleryData = galleryData;
+}
+
 }
 
 // upravená funkce rebuildCurrentGroup
@@ -463,17 +490,9 @@ document.querySelectorAll(".filter-checkbox input").forEach(cb => {
 // ---------- MODÁL ----------
 
 function openModalById(id) {
-  const item = galleryData.find(i => i.id === id);
-  if (!item) return;
-
-  currentCategory = item.category;
-  currentSubcategory = item.subcategory;
-
-  rebuildCurrentGroup();
-
-  currentGroupIndex = currentGroup.findIndex(i => i.id === id);
-
-  showModalItem(currentGroup[currentGroupIndex]);
+  currentIndex = visibleGalleryOrder.indexOf(id);
+  if (currentIndex === -1) return;
+  showModalItem();
 }
 
 function rebuildCurrentGroup() {
@@ -512,7 +531,11 @@ function goToPrevSubcategory() {
   currentGroupIndex = currentGroup.length - 1; // poslední snímek ve starší subkategorii
 }
 
-function showModalItem(item) {
+function showModalItem() {
+  const id = visibleGalleryOrder[currentIndex];
+  const item = galleryData.find(i => i.id === id);
+  if (!item) return;
+
   document.getElementById('modalImage').src = `./images/${item.image}`;
   document.getElementById('modalTitle').innerText = item.common_name;
   document.getElementById('modalDescription').innerText = item.fact || 'Žádný popis.';
@@ -562,9 +585,15 @@ async function loadGallery() {
     const data = await res.json();
     galleryData = data;
 
+    const countEl = document.getElementById('galleryCount');
+      if (countEl) {
+        countEl.textContent = galleryData.length;
+      }
+
     buildSidebar(data);
     fillRightSidebarFilters(data);
     renderGallery(data);
+    filteredGalleryData = galleryData;
 
   } catch (err) {
     console.error('Chyba při načítání galerie:', err);
@@ -605,6 +634,20 @@ document.body.addEventListener('change', e => {
   }
 });
 
+  // Náhodný snímek
+const randomBtn = document.getElementById('randomImageBtn');
+
+if (randomBtn) {
+  randomBtn.addEventListener('click', () => {
+    if (!filteredGalleryData.length) return;
+
+    const randomIndex = Math.floor(Math.random() * filteredGalleryData.length);
+    const randomItem = filteredGalleryData[randomIndex];
+
+    // otevře modál rovnou na náhodném snímku
+    openModalById(randomItem.id);
+  });
+}
 
   // Top 10 nejnovějších
   const btnNewest = document.getElementById("showTopNewest");
@@ -644,47 +687,17 @@ document.body.addEventListener('change', e => {
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 
-if (prevBtn) {
-  prevBtn.addEventListener('click', () => {
-    if (!currentGroup || currentGroup.length === 0) return; // nic, pokud je prázdné
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if (!filteredGalleryData.length) return;
+  currentIndex = (currentIndex - 1 + visibleGalleryOrder.length) % visibleGalleryOrder.length;
+  showModalItem();
+});
 
-    currentGroupIndex--;
-    if (currentGroupIndex < 0) {
-      // přejdi na předchozí subkategorii, pokud existuje
-      const subs = getSubcategoriesInCategory(currentCategory).filter(sub => 
-        filteredData.some(i => i.subcategory === sub)
-      );
-      let index = subs.indexOf(currentSubcategory);
-      index--;
-      if (index < 0) index = subs.length - 1; // loop na konec
-      currentSubcategory = subs[index];
-      rebuildCurrentGroup();
-      currentGroupIndex = currentGroup.length - 1; // poslední snímek v nové subkategorii
-    }
-    showModalItem(currentGroup[currentGroupIndex]);
-  });
-}
-
-if (nextBtn) {
-  nextBtn.addEventListener('click', () => {
-    if (!currentGroup || currentGroup.length === 0) return;
-
-    currentGroupIndex++;
-    if (currentGroupIndex >= currentGroup.length) {
-      // přejdi na další subkategorii, pokud existuje
-      const subs = getSubcategoriesInCategory(currentCategory).filter(sub => 
-        filteredData.some(i => i.subcategory === sub)
-      );
-      let index = subs.indexOf(currentSubcategory);
-      index++;
-      if (index >= subs.length) index = 0; // loop na začátek
-      currentSubcategory = subs[index];
-      rebuildCurrentGroup();
-      currentGroupIndex = 0; // první snímek v nové subkategorii
-    }
-    showModalItem(currentGroup[currentGroupIndex]);
-  });
-}
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (!filteredGalleryData.length) return;
+  currentIndex = (currentIndex + 1) % visibleGalleryOrder.length;
+  showModalItem();
+});
 
   // Like tlačítko
   const likeBtn = document.getElementById('likeBtn');
