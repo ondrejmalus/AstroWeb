@@ -1,14 +1,19 @@
 import express from 'express';
 import { db } from '../db.js';
 import bcrypt from 'bcrypt';
+import { evaluateBadges } from '../utils/badgesEvaluator.js';
 
 const router = express.Router();
 
 router.get('/:id', async (req, res) => {
+  const userId = req.params.id;
+
   try {
+    await evaluateBadges(userId); // ✅ TADY je to správně
+
     const [rows] = await db.query(
       'SELECT id, username, email, created_at FROM users WHERE id = ?',
-      [req.params.id]
+      [userId]
     );
 
     if (!rows.length) {
@@ -144,6 +149,31 @@ router.put('/:id/password', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Chyba serveru' });
+  }
+});
+
+router.get('/:id/badges', async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const [rows] = await db.query(`
+      SELECT 
+        b.id,
+        b.badge_key,
+        b.name,
+        b.description,
+        b.icon,
+        ub.awarded_at
+      FROM user_badges ub
+      JOIN badges b ON b.id = ub.badge_id
+      WHERE ub.user_id = ?
+      ORDER BY ub.awarded_at ASC
+    `, [userId]);
+
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Chyba při načítání badges' });
   }
 });
 

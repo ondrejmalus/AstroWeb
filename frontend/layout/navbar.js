@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1️⃣ Načtení navbaru z externího souboru
+  // Načtení navbaru z externího souboru
   const navbarContainer = document.createElement("div");
   document.body.prepend(navbarContainer);
 
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // 2️⃣ Zvýraznění aktivní stránky
+  // Zvýraznění aktivní stránky
   const currentPage = location.pathname.split("/").pop() || "index.html";
 
   // mapování stránek, které sdílejí logickou sekci
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // 3️⃣ Správa uživatelské role (guest / user / admin)
+  // Správa uživatelské role (guest / user / admin)
   const role = localStorage.getItem("userRole") || "guest";
   const authLinks = document.getElementById("auth-links");
 
@@ -60,6 +60,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   } else if (role === "admin") {
     authLinks.innerHTML = `
       <li class="nav-item">
+        <a class="nav-link" href="profile.html">
+          <i class="fas fa-user-circle"></i> Admin - Profil
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="upload.html">
           <i class="fas fa-upload"></i> Administrace
         </a>
@@ -81,7 +86,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     `;
   }
 
-  // 4️⃣ Znovu zvýrazní aktivní odkaz i mezi auth odkazy (např. login.html)
+  // Znovu zvýrazní aktivní odkaz i mezi auth odkazy (např. login.html)
   const newLinks = document.querySelectorAll(".nav-link");
   newLinks.forEach(link => {
     const href = link.getAttribute("href");
@@ -93,7 +98,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // 5️⃣ Odhlášení
+  // Odhlášení
 const logoutBtn = document.getElementById("logout");
 if (logoutBtn) {
   logoutBtn.addEventListener("click", e => {

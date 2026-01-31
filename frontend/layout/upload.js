@@ -1,9 +1,34 @@
+function validateForm(form) {
+  const inputs = form.querySelectorAll('input, textarea, select');
+
+  for (const input of inputs) {
+    if (
+      input.type !== 'file' &&
+      input.value.trim() === ''
+    ) {
+      alert('Vyplň prosím všechna pole ❗');
+      input.focus();
+      return false;
+    }
+
+    // file input
+    if (input.type === 'file' && !input.files.length) {
+      alert('Musíš vybrat obrázek ❗');
+      input.focus();
+      return false;
+    }
+  }
+
+  return true;
+}
+
 // FORMULÁŘ PRO ČLÁNKY
 const newsForm = document.getElementById('add-news-form');
 
 if(newsForm){
   newsForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (!validateForm(newsForm)) return;
 
     const title = document.getElementById('news-title').value.trim();
     const content = document.getElementById('news-content').value.trim();
@@ -11,7 +36,6 @@ if(newsForm){
     const role = localStorage.getItem('role');
 
     if(role !== 'admin') return alert('Nemáš oprávnění přidávat články!');
-    if(!title || !content || !image) return alert('Vyplň nadpis, obsah a vyber obrázek!');
 
     const formData = new FormData();
     formData.append('title', title);
@@ -133,6 +157,7 @@ document.addEventListener("click", (e) => {
   // Odeslání formuláře
   galleryForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (!validateForm(galleryForm)) return;
 
     // Sběr dat z formuláře
     const category = categorySelect.value;
@@ -146,7 +171,6 @@ document.addEventListener("click", (e) => {
     const role = localStorage.getItem('role');
 
     if (role !== 'admin') return alert('Nemáš oprávnění přidávat snímky!');
-    if (!category || !subcategory || !name || !image) return alert('Vyplň všechny povinné údaje!');
 
     const formData = new FormData();
     formData.append('category', category);
@@ -185,6 +209,7 @@ const factForm = document.getElementById('add-fact-form');
 if (factForm) {
   factForm.addEventListener('submit', async e => {
     e.preventDefault();
+    if (!validateForm(factForm)) return;
 
     const formData = new FormData(factForm);
 
@@ -201,6 +226,180 @@ if (factForm) {
         factForm.reset();
       } else {
         alert(data.msg || 'Chyba při ukládání zajímavosti');
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert('Chyba serveru');
+    }
+  });
+}
+
+// FORMULÁŘ – BADGES
+const badgeForm = document.getElementById('add-badge-form');
+
+if (badgeForm) {
+  badgeForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!validateForm(badgeForm)) return;
+
+    const role = localStorage.getItem('role');
+    if (role !== 'admin') return alert('Nemáš oprávnění!');
+
+    const formData = new FormData();
+    formData.append('badge_key', document.getElementById('badge-key').value);
+    formData.append('name', document.getElementById('badge-name').value);
+    formData.append('description', document.getElementById('badge-description').value);
+    formData.append('trigger_type', document.getElementById('badge-trigger').value);
+    formData.append('trigger_value', document.getElementById('badge-value').value);
+
+    const icon = document.getElementById('badge-icon').files[0];
+    if (icon) formData.append('icon', icon);
+
+    try {
+      const res = await fetch('http://localhost:3000/badges', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert('Badge přidána 🏅');
+        badgeForm.reset();
+      } else {
+        alert(data.msg || 'Chyba při přidání badge');
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert('Chyba serveru');
+    }
+  });
+}
+
+// ==========================================
+// FORMULÁŘ – DALŠÍ SNÍMKY K OBJEKTU
+// ==========================================
+
+const extraImageForm = document.getElementById(
+  'add-gallery-extra-image-form'
+);
+
+const searchInput = document.getElementById(
+  'extra-gallery-search'
+);
+const dropdown = document.getElementById(
+  'extra-gallery-dropdown'
+);
+const hiddenIdInput = document.getElementById(
+  'extra-gallery-id'
+);
+
+let galleryObjects = [];
+
+// ------------------------------------------
+// Načtení objektů galerie
+// ------------------------------------------
+async function loadGalleryObjectsForExtraImages() {
+  try {
+    const res = await fetch('http://localhost:3000/gallery');
+    galleryObjects = await res.json();
+  } catch (err) {
+    console.error(err);
+    alert('Nepodařilo se načíst objekty galerie');
+  }
+}
+
+loadGalleryObjectsForExtraImages();
+
+// ------------------------------------------
+// Vyhledávání objektů
+// ------------------------------------------
+if (searchInput) {
+  searchInput.addEventListener('input', () => {
+    const value = searchInput.value.toLowerCase();
+    dropdown.innerHTML = '';
+
+    const filtered = galleryObjects.filter(o =>
+      o.name.toLowerCase().includes(value)
+    );
+
+    if (!filtered.length) {
+      dropdown.innerHTML =
+        '<div class="no-results">Žádné výsledky</div>';
+    } else {
+      filtered.forEach(o => {
+        const div = document.createElement('div');
+        div.textContent = `${o.name} (${o.category})`;
+
+        div.addEventListener('click', () => {
+          searchInput.value = o.name;
+          hiddenIdInput.value = o.id;
+          dropdown.style.display = 'none';
+        });
+
+        dropdown.appendChild(div);
+      });
+    }
+
+    dropdown.style.display = 'block';
+  });
+}
+
+// klik mimo → zavřít dropdown
+document.addEventListener('click', e => {
+  if (!e.target.closest('.custom-select-wrapper')) {
+    dropdown.style.display = 'none';
+  }
+});
+
+// ------------------------------------------
+// Odeslání formuláře
+// ------------------------------------------
+if (extraImageForm) {
+  extraImageForm.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const role = localStorage.getItem('role');
+    if (role !== 'admin')
+      return alert('Nemáš oprávnění!');
+
+    const galleryId = hiddenIdInput.value;
+    const image = document.getElementById(
+      'extra-gallery-image'
+    ).files[0];
+
+    if (!galleryId) {
+      alert('Musíš vybrat objekt ❗');
+      return;
+    }
+
+    if (!image) {
+      alert('Musíš vybrat obrázek ❗');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', image);
+
+    try {
+      const res = await fetch(
+        `http://localhost:3000/gallery/${galleryId}/images`,
+        {
+          method: 'POST',
+          body: formData
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert('Další snímek byl přidán ✅');
+        extraImageForm.reset();
+        hiddenIdInput.value = '';
+      } else {
+        alert(data.error || 'Chyba při přidávání snímku');
       }
 
     } catch (err) {

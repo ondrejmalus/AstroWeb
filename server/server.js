@@ -9,6 +9,7 @@ import galleryRouter from './routes/gallery.js'; // gallery router
 import authRouter from './routes/auth.js'; // auth router
 import usersRoutes from './routes/users.js'; // users router
 import factsRouter from './routes/facts.js'; // facts router
+import badgesRouter from './routes/badges.js'; // badges router
 
 const app = express();
 const PORT = 3000;
@@ -22,8 +23,9 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// zpřístupnění složky "images" (statické soubory)
+// zpřístupnění složky "images" a "data" pro obrázky
 app.use('/images', express.static(path.join(__dirname, '../images')));
+app.use('/data', express.static(path.join(__dirname, '../frontend/data')));
 
 // ROUTES
 app.use('/news', newsRouter); // news
@@ -31,6 +33,7 @@ app.use('/gallery', galleryRouter); // gallery
 app.use('/auth', authRouter); // login + register
 app.use('/users', usersRoutes); // users
 app.use('/facts', factsRouter); // facts
+app.use('/badges', badgesRouter); // badges
 
 // MySQL připojení
 const db = await mysql.createPool({

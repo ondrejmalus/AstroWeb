@@ -3,21 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AstroWeb – Nahrávání</title>
+  <title>AstroWeb – Administrace</title>
   <link rel="icon" type="image/png" href="data/web_images/icon.png">
   
   <link href="assets/css/style.css" rel="stylesheet">
   <link href="assets/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
 </head>
-<body class="body">
+<body class="body edit-page">
+
+<!-- ADMIN SIDEBAR -->
+<aside class="admin-sidebar-simple">
+  <h2 class="admin-title">Administrace</h2>
+
+  <nav class="admin-nav">
+    <a href="#news">
+      <i class="fas fa-newspaper"></i>
+      Články
+    </a>
+
+    <a href="#gallery">
+      <i class="fas fa-images"></i>
+      Galerie
+    </a>
+
+    <a href="#gallery-extra">
+      <i class="fas fa-image"></i>
+      Další snímky k objektu
+    </a>
+
+    <a href="#facts">
+      <i class="fas fa-lightbulb"></i>
+      Zajímavosti
+    </a>
+
+    <a href="#badges">
+      <i class="fas fa-medal"></i>
+      Odznaky
+    </a>
+
+    <hr>
+
+    <a href="edit.html" class="edit-link">
+      <i class="fas fa-pen"></i>
+      Editace obsahu
+    </a>
+  </nav>
+</aside>
 
 <main class="container mt-5 content">
 
-
   <!--    FORMULÁŘ PRO ČLÁNKY     -->
 
-  <h1 class="upload-header">Přidat nový článek</h1>
+  <h1 id="news" class="upload-header">Přidat nový článek</h1>
 
   <form id="add-news-form" class="shadow p-4 rounded bg-light mb-5">
     <div class="mb-3">
@@ -45,7 +83,7 @@
 
   <!--    FORMULÁŘ PRO GALERII    -->
 
-  <h1 class="upload-header">Přidat snímek do galerie</h1>
+  <h1 id="gallery" class="upload-header">Přidat snímek do galerie</h1>
 
 <form id="add-gallery-form" class="shadow p-4 rounded bg-light">
   <div class="mb-3">
@@ -105,11 +143,56 @@
   <button type="reset" class="btn btn-secondary">Vymazat</button>
 </form>
 
+<!-- FORMULÁŘ – DALŠÍ SNÍMKY K OBJEKTU -->
+
+<h1 id="gallery-extra" class="upload-header">Přidat další snímek k objektu</h1>
+
+<form id="add-gallery-extra-image-form" class="shadow p-4 rounded bg-light mb-5 add-fact-form">
+
+  <div class="mb-3">
+    <label class="form-label">Vyber objekt</label>
+
+    <div class="custom-select-wrapper">
+      <input
+        type="text"
+        id="extra-gallery-search"
+        class="form-control"
+        placeholder="Začni psát název objektu…"
+        autocomplete="off"
+      >
+      <div
+        id="extra-gallery-dropdown"
+        class="custom-dropdown"
+      ></div>
+    </div>
+
+    <!-- skutečné ID objektu -->
+    <input type="hidden" id="extra-gallery-id">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Vyber obrázek</label>
+    <input
+      type="file"
+      id="extra-gallery-image"
+      class="form-control"
+      accept="image/*"
+      required
+    >
+    <p class="text-path">
+      Obrázek se uloží do <b>/images</b>
+    </p>
+  </div>
+
+  <button class="btn btn-success">
+    Přidat snímek
+  </button>
+</form>
 
 <!-- FORMULÁŘ – ZAJÍMAVOST -->
 
 <div class="add-fact-form mt-5">
-  <h1 class="upload-header">Přidat zajímavost</h1>
+  <h1 id="facts" class="upload-header">Přidat zajímavost</h1>
 
   <form id="add-fact-form" enctype="multipart/form-data">
 
@@ -143,8 +226,50 @@
   </form>
 </div>
 
-</main>
+<hr class="my-5">
 
+<h1 id="badges" class="upload-header">Přidat badge</h1>
+
+<form id="add-badge-form" class="mb-5">
+
+  <div class="mb-3">
+    <label class="form-label">Klíč badge (za co je odznak udělený)</label>
+    <input type="text" id="badge-key" class="form-control" placeholder="např.: first_like" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Název odznaku</label>
+    <input type="text" id="badge-name" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Popisek</label>
+    <input type="text" id="badge-description" class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Ikonka / obrázek</label>
+    <input type="file" id="badge-icon" class="form-control" accept="image/*">
+    <p class="text-path">Uloží se do <b>/frontend/data/badges</b></p>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Trigger - Druh</label>
+      <select id="badge-trigger" class="form-select">
+        <option value="likes">Počet lajků</option>
+        <option value="account_days">Stáří účtu (dny)</option>
+      </select>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Hodnota - Počet lajků / dnů</label>
+    <input type="number" id="badge-value" class="form-control" required>
+  </div>
+
+  <button class="btn btn-success">Přidat badge</button>
+</form>
+
+</main>
 <div id="footer"></div>
 
 <script src="layout/navbar.js"></script>
@@ -170,6 +295,8 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

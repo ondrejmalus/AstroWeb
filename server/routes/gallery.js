@@ -3,12 +3,11 @@ import express from 'express';
 import multer from 'multer';
 import path from 'path';
 import { db } from '../db.js';
+import fs from 'fs';
 
 const router = express.Router();
 
-// ================================
 // Multer – ukládání obrázků
-// ================================
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'frontend/images'); // složka pro ukládání obrázků
@@ -21,6 +20,7 @@ const storage = multer.diskStorage({
   }
 });
 
+// Filtr pro povolené typy souborů
 const upload = multer({
   storage: storage,
   limits: { fileSize: 10 * 1024 * 1024 }, // max 10 MB
@@ -35,9 +35,7 @@ const upload = multer({
   }
 });
 
-// ================================
 // POST – přidání snímku do galerie
-// ================================
 router.post('/', upload.single('image'), async (req, res) => {
   try {
     const { category, subcategory, name, common_name, constellation, distance, fact } = req.body;
@@ -64,9 +62,7 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
-// ================================
 // GET – získání všech snímků z galerie
-// ================================
 router.get('/', async (req, res) => {
   try {
     const userId = req.query.userId; // ID přihlášeného uživatele (volitelné)
@@ -99,9 +95,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// ================================
 // POST – lajkování snímku
-// ================================
 router.post('/:id/like', async (req, res) => {
   const galleryId = req.params.id;
   const { userId } = req.body;
@@ -118,6 +112,145 @@ router.post('/:id/like', async (req, res) => {
   } catch (err) {
     console.error('Chyba při lajkování:', err);
     res.status(500).json({ success: false, message: 'Chyba serveru při lajkování.' });
+  }
+});
+
+// PUT – úprava snímku v galerii
+
+router.put('/:id', upload.single('image'), async (req, res) => {
+  const { id } = req.params;
+  const { name, common_name, constellation, fact } = req.body;
+
+  try {
+    // najdeme původní záznam
+    const [[old]] = await db.query(
+      'SELECT image FROM gallery WHERE id = ?',
+      [id]
+    );
+
+    if (!old) {
+      return res.status(404).json({ success: false, msg: 'Snímek nenalezen' });
+    }
+
+    let imageName = old.image;
+
+    // pokud přišel nový obrázek
+    if (req.file) {
+      imageName = req.file.filename;
+
+      // smažeme starý obrázek ze složky
+      const oldImagePath = path.join('frontend/images', old.image);
+      if (fs.existsSync(oldImagePath)) {
+        fs.unlinkSync(oldImagePath);
+      }
+    }
+
+    // update databáze
+    await db.query(
+      `
+      UPDATE gallery SET
+        name = ?,
+        common_name = ?,
+        constellation = ?,
+        fact = ?,
+        image = ?
+      WHERE id = ?
+      `,
+      [
+        name,
+        common_name || null,
+        constellation || null,
+        fact || null,
+        imageName,
+        id
+      ]
+    );
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.error('Chyba při editaci snímku:', err);
+    res.status(500).json({ success: false, msg: 'Chyba serveru při editaci snímku' });
+  }
+});
+
+// POST – přidání další fotky k objektu
+router.post('/:id/images', upload.single('image'), async (req, res) => {
+  const galleryId = req.params.id;
+
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        error: 'Nebyl nahrán žádný obrázek'
+      });
+    }
+
+    await db.query(
+      'INSERT INTO gallery_images (gallery_id, image) VALUES (?, ?)',
+      [galleryId, req.file.filename]
+    );
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.error('Chyba při ukládání další fotky:', err);
+    res.status(500).json({ success: false });
+  }
+});
+
+// GET – všechny dodatečné fotky objektu
+router.get('/:id/images', async (req, res) => {
+  try {
+    const [rows] = await db.query(
+      `
+      SELECT id, image, created_at
+      FROM gallery_images
+      WHERE gallery_id = ?
+      ORDER BY created_at DESC
+      `,
+      [req.params.id]
+    );
+
+    res.json(rows);
+
+  } catch (err) {
+    console.error('Chyba při načítání dalších fotek:', err);
+    res.status(500).json({ success: false });
+  }
+});
+
+// DELETE – smazání jedné dodatečné fotky
+router.delete('/images/:imageId', async (req, res) => {
+  const imageId = req.params.imageId;
+
+  try {
+    const [[img]] = await db.query(
+      'SELECT image FROM gallery_images WHERE id = ?',
+      [imageId]
+    );
+
+    if (!img) {
+      return res.status(404).json({ success: false });
+    }
+
+    // smazání souboru
+    const imagePath = path.join('frontend/images', img.image);
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+    }
+
+    // smazání z DB
+    await db.query(
+      'DELETE FROM gallery_images WHERE id = ?',
+      [imageId]
+    );
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.error('Chyba při mazání fotky:', err);
+    res.status(500).json({ success: false });
   }
 });
 

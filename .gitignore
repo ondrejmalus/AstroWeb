@@ -1,11 +1,11 @@
-# Node.js dependencies
+# Node.js
 node_modules/
 
-# assets
-assets/
+# assets - css, bootstrap, fontawesome
+frontend/assets/
 
-# data
-data/
+# data - ostatní obrázky na webu
+frontend/data/
 
-# snímky
-images/
+# snímky - snímky v galerii
+frontend/images/

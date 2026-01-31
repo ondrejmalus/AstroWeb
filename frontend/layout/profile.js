@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const user = await res.json();
     fillProfile(user);
     loadUserStats(userId);
+    loadUserBadges(userId);
 
   } catch (err) {
     console.error(err);
@@ -182,3 +183,38 @@ document.getElementById('changePasswordBtn')
     document.getElementById('newPassword').value = '';
     document.getElementById('confirmNewPassword').value = '';
   });
+
+  // Načtení uživatelských odznaků
+  async function loadUserBadges(userId) {
+  try {
+    const res = await fetch(`http://localhost:3000/users/${userId}/badges`);
+    if (!res.ok) throw new Error('Badges nenalezeny');
+
+    const badges = await res.json();
+    const grid = document.getElementById('badges-grid');
+    grid.innerHTML = '';
+
+    if (badges.length === 0) {
+      grid.innerHTML = '<p class="text-muted">Zatím nemáš žádné odznaky.</p>';
+      return;
+    }
+
+    badges.forEach(badge => {
+      const card = document.createElement('div');
+      card.className = 'badge-card';
+
+    card.innerHTML = `
+      <div class="badge-icon">
+        <img src="http://localhost:3000${badge.icon}" alt="${badge.name}">
+      </div>
+      <div class="badge-name">${badge.name}</div>
+      <div class="badge-desc">${badge.description || ''}</div>
+    `;
+
+      grid.appendChild(card);
+    });
+
+  } catch (err) {
+    console.error(err);
+  }
+}

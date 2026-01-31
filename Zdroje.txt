@@ -1,2 +1,5 @@
-- Solar eclipse obrázek: https://www.britannica.com/science/solar-eclipse
-- Galilein moons obrázke: https://science.nasa.gov/photojournal/the-galilean-satellites/
+- Solar eclipse obrázek: https://pixabay.com
+- Galilein moons obrázek: https://science.nasa.gov/photojournal/the-galilean-satellites/
+- Charles Messier obrázek: https://commons.wikimedia.org/wiki/Main_Page
+- Markarian's Chain obrázek: https://commons.wikimedia.org/wiki/Main_Page
+- Artemis II obrázek: https://commons.wikimedia.org/wiki/File:Artemis_2_Crew_Portrait.jpg

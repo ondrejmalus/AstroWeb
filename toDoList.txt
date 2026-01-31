@@ -1,13 +1,21 @@
 (To DO ❌)
 
-- přidat takové "odměny" pro uživatele - badges třeba za nějaký počet lajknutých snímků nebo delší dobu založení profilu, třeba měsíc, rok atd..
+- přidat responzivitu přes bootstrap classy všude a celkově upravit css:
+navbar.html = DONE
+footer.html = DONE
+index.html = DONE
+login.html = DONE
+register.html = DONE
+facts.html = DONE
+profile.html = DONE
+about.html = DONE
 
-- vytvořit novou podstránku uploadu/administrace a to přidat sekci na úpravu/editaci snímků v galerii (změna popisku - zajímavosti, obrázku)
-- v upload stránce přidat sidebar na navigaci (přidání článků, snímků a zajímavostí)
-- v uploadu pořešit to, aby se nedalo odeslat snímek, když jakýkoli bod nebude vyplněn (musí být všechny), to samé i u přidávání článku a zajímavosti, vždy musí být vyplněna
-všechna políčka
-- v upload stránce přidat možnost, přidat fotku k existujícímu snímku už, tak aby byla pak možnost v galerii si zobrazit snímek objektu, 
-který jsem fotil víckrát (nejspíš nová tabulka)
+astro.html
+upload.html
+edit.html
 
-- přidat responzivitu přes bootstrap classy všude a celkově upravit css
+
+
+
 - udělat admin část neboli electron
+- přidat do scriptů komentáře

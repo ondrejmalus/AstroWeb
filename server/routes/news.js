@@ -59,4 +59,37 @@ router.post("/", upload.single('image'), async (req, res) => {
   }
 });
 
+router.put('/:id', upload.single('image'), async (req, res) => {
+  const { title, content } = req.body;
+  const id = req.params.id;
+
+  try {
+    let query = 'UPDATE news SET title = ?, content = ?';
+    let params = [title, content];
+
+    if (req.file) {
+      query += ', image = ?';
+      params.push(`data/news_images/${req.file.filename}`);
+    }
+
+    query += ' WHERE id = ?';
+    params.push(id);
+
+    await db.query(query, params);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    await db.query('DELETE FROM news WHERE id = ?', [req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false });
+  }
+});
+
 export default router;

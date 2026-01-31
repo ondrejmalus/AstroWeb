@@ -1,3 +1,10 @@
+function truncateText(text, max = 200) {
+  if (!text) return '';
+  return text.length > max
+    ? text.substring(0, max) + '…'
+    : text;
+}
+
 let allFacts = [];
 
 async function loadFacts() {
@@ -37,7 +44,19 @@ function renderFacts(facts) {
             ${fact.category === 'personality' ? 'Osobnost' : 'Všeobecné'}
           </span>
           <h5>${fact.title}</h5>
-          <p>${fact.text}</p>
+          <p>${truncateText(fact.text, 180)}</p>
+          <div class="fact-readmore">
+          <button class="btn btn-outline-info btn-sm mt-2"
+            data-bs-toggle="modal"
+            data-bs-target="#factModal"
+            data-title="${fact.title}"
+            data-category="${fact.category}"
+            data-text="${fact.text}"
+            data-image="${fact.image || ''}"
+            >
+            Číst více
+          </button>
+          </div>
         </div>
       </div>
     `;
@@ -65,3 +84,30 @@ document.addEventListener('click', e => {
 });
 
 document.addEventListener('DOMContentLoaded', loadFacts);
+
+document.addEventListener('click', e => {
+  if (!e.target.matches('[data-bs-target="#factModal"]')) return;
+
+  const btn = e.target;
+
+  document.querySelector('#factModal .modal-title').innerText =
+    btn.dataset.title;
+
+  document.getElementById('factModalText').innerText =
+    btn.dataset.text;
+
+  const category =
+    btn.dataset.category === 'personality'
+      ? 'Osobnost'
+      : 'Všeobecné';
+
+  document.getElementById('factModalCategory').innerText = category;
+
+  const img = document.getElementById('factModalImage');
+  if (btn.dataset.image) {
+    img.src = btn.dataset.image;
+    img.classList.remove('d-none');
+  } else {
+    img.classList.add('d-none');
+  }
+});

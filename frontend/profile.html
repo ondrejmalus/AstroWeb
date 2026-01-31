@@ -18,7 +18,7 @@
 <body class="body">
 
 <!-- HLAVNÍ OBSAH -->
-<main class="container mt-5 content">
+<main class="container mt-5 content background">
 
 <section class="profile-header mb-5 text-center">
   <h1 class="profile-title">
@@ -37,21 +37,11 @@
 </section>
 
 <section class="profile-section mb-5">
-  <h3 class="section-title">🪐 Základní údaje</h3>
+  <h3 class="section-title">🏅 Ves­mírné odznaky</h3>
 
-<div class="profile-info-box">
-  <div class="profile-info-row">
-    <span class="label">Uživatelské jméno:</span>
-    <span id="infoUsername"></span>
-    <button class="btn btn-sm btn-outline-info">Změnit</button>
+  <div id="badges-grid" class="badges-grid">
+    <!-- badges se načtou dynamicky -->
   </div>
-
-  <div class="profile-info-row">
-    <span class="label">Email:</span>
-    <span id="infoEmail"></span>
-    <button class="btn btn-sm btn-outline-info">Změnit</button>
-  </div>
-</div>
 </section>
 
 <section class="profile-section mb-5">
@@ -78,22 +68,30 @@
 </section>
 
 <section class="profile-section mb-5">
+  <h3 class="section-title">🪐 Základní údaje</h3>
+
+<div class="profile-info-box">
+  <div class="profile-info-row">
+    <span class="label">Uživatelské jméno:</span>
+    <span id="infoUsername"></span>
+    <button class="btn btn-sm btn-outline-info">Změnit</button>
+  </div>
+
+  <div class="profile-info-row">
+    <span class="label">Email:</span>
+    <span id="infoEmail"></span>
+    <button class="btn btn-sm btn-outline-info">Změnit</button>
+  </div>
+</div>
+</section>
+
+<section class="profile-section mb-5">
   <h3 class="section-title">🔐 Bezpečnost účtu</h3>
 
   <button class="btn btn-outline-warning" id="changePasswordBtn">
     Změnit heslo
   </button>
 </section>
-
-<section class="profile-section mb-5">
-  <h3 class="section-title">🏅 Odměny & achievementy</h3>
-
-  <p class="text-muted">
-    Systém vesmírných odměn bude brzy k dispozici ✨  
-    Pokračuj v objevování AstroWebu!
-  </p>
-</section>
-
 
 <div class="modal fade" id="changeUsernameModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">

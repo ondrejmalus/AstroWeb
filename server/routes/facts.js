@@ -79,4 +79,41 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
+router.put('/:id', upload.single('image'), async (req, res) => {
+  const { category, title, text } = req.body;
+  const id = req.params.id;
+
+  try {
+    let sql = `
+      UPDATE facts
+      SET category = ?, title = ?, text = ?
+    `;
+    const params = [category, title, text];
+
+    if (req.file) {
+      sql += ', image = ?';
+      params.push(`data/facts_images/${req.file.filename}`);
+    }
+
+    sql += ' WHERE id = ?';
+    params.push(id);
+
+    await db.query(sql, params);
+    res.json({ success: true });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    await db.query('DELETE FROM facts WHERE id = ?', [req.params.id]);
+    res.json({ success: true });
+  } catch {
+    res.status(500).json({ success: false });
+  }
+});
+
 export default router;

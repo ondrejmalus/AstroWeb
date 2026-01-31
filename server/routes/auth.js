@@ -1,6 +1,7 @@
 import express from 'express';
 import { db } from '../db.js';
 import bcrypt from 'bcrypt';
+import { evaluateBadges } from '../utils/badgesEvaluator.js';
 
 const router = express.Router();
 
@@ -14,11 +15,25 @@ router.post('/register', async (req, res) => {
 
   try {
     const hash = await bcrypt.hash(password, 10);
-    await db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hash]);
+
+    const [result] = await db.query(
+      'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
+      [username, email, hash]
+    );
+
+    const newUserId = result.insertId;
+
+    // přidělení badge za registraci
+    await evaluateBadges(newUserId);
+
     res.json({ success: true });
+
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, msg: 'Chyba serveru / uživatel již existuje' });
+    res.status(500).json({
+      success: false,
+      msg: 'Chyba serveru / uživatel již existuje'
+    });
   }
 });
 
