@@ -38,6 +38,47 @@
   </nav>
 </aside>
 
+<button
+  class="btn btn-primary admin-toggle d-lg-none"
+  data-bs-toggle="offcanvas"
+  data-bs-target="#adminSidebarMobile"
+  aria-label="Otevřít administraci"
+>
+  <i class="fas fa-bars"></i>
+</button>
+
+<!-- MOBILNÍ SIDEBAR -->
+ <div
+  class="offcanvas offcanvas-start admin-offcanvas"
+  tabindex="-1"
+  id="adminSidebarMobile"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Administrace</h5>
+    <button class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+  <div class="offcanvas-body">
+    <nav class="admin-nav">
+      <a href="#gallery" class="admin-link" data-target="gallery">
+        <i class="fas fa-images"></i> Galerie
+      </a>
+
+      <a href="#news" class="admin-link" data-target="news">
+        <i class="fas fa-newspaper"></i> Novinky
+      </a>
+
+      <a href="#facts" class="admin-link" data-target="facts">
+        <i class="fas fa-lightbulb"></i> Zajímavosti
+      </a>
+      <hr>
+      <a href="upload.html" data-bs-dismiss="offcanvas">
+        <i class="fas fa-upload"></i> Přidávání
+      </a>
+    </nav>
+  </div>
+</div>
+
 <main class="container mt-5 content">
 
   <h1 id="gallery" class="upload-header">Editace galerie</h1>
@@ -255,4 +296,27 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
+
+<script>
+  document.querySelectorAll('.admin-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+
+      const targetId = link.dataset.target;
+      const targetEl = document.getElementById(targetId);
+
+      const offcanvasEl = document.getElementById('adminSidebarMobile');
+      const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
+
+      // zavřít sidebar
+      offcanvas.hide();
+
+      // počkat až se zavře, pak scroll
+      setTimeout(() => {
+        targetEl?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    });
+  });
+</script>
+
 </html>

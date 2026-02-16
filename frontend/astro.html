@@ -11,7 +11,7 @@
   <link href="assets/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
 </head>
-<body class="body, gallery-page">
+<body class="body gallery-page">
 
   <!-- === SIDEBAR VLEVO === -->
 <aside id="sidebar" class="astro-sidebar">
@@ -65,7 +65,13 @@
 
 </div>
 
+<button class="gallery-toggle left" onclick="toggleLeftSidebar()">
+  <i class="fas fa-compass"></i>
+</button>
 
+<button class="gallery-toggle right" onclick="toggleRightSidebar()">
+  <i class="fas fa-filter"></i>
+</button>
 
 <main class="container mt-5 content">
 
@@ -194,6 +200,61 @@
   if (document.body.classList.contains('gallery-page')) {
     scrollBtn.style.right = '280px'; // uprav podle potřeby
   }
+
+function toggleLeftSidebar() {
+  document.querySelector('.astro-sidebar-right')
+    .classList.remove('mobile-open');
+
+  document.querySelector('.astro-sidebar')
+    .classList.toggle('mobile-open');
+}
+
+function toggleRightSidebar() {
+  document.querySelector('.astro-sidebar')
+    .classList.remove('mobile-open');
+
+  document.querySelector('.astro-sidebar-right')
+    .classList.toggle('mobile-open');
+}
+
+document.addEventListener('click', e => {
+  if (window.innerWidth >= 992) return;
+
+  const leftSidebar = document.querySelector('.astro-sidebar');
+  const rightSidebar = document.querySelector('.astro-sidebar-right');
+  const leftBtn = document.querySelector('.gallery-toggle.left');
+  const rightBtn = document.querySelector('.gallery-toggle.right');
+
+  // klik mimo levý sidebar
+  if (
+    leftSidebar.classList.contains('mobile-open') &&
+    !leftSidebar.contains(e.target) &&
+    !leftBtn.contains(e.target)
+  ) {
+    leftSidebar.classList.remove('mobile-open');
+  }
+
+  // klik mimo pravý sidebar
+  if (
+    rightSidebar.classList.contains('mobile-open') &&
+    !rightSidebar.contains(e.target) &&
+    !rightBtn.contains(e.target)
+  ) {
+    rightSidebar.classList.remove('mobile-open');
+  }
+});
+
+ // Zavření levého sidebaru po kliknutí na odkaz (mobil)
+document.querySelector('.astro-sidebar').addEventListener('click', e => {
+  if (window.innerWidth >= 992) return;
+
+  // pokud se kliklo na odkaz nebo jeho potomka
+  if (e.target.closest('a')) {
+    document
+      .querySelector('.astro-sidebar')
+      .classList.remove('mobile-open');
+  }
+});
 </script>
 
 <script src="/frontend/assets/bootstrap/bootstrap.bundle.min.js"></script>

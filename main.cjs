@@ -1,17 +1,71 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
+const path = require("path");
+
+global.fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
+
+let mainWindow;
+let adminSession = null;
 
 function createWindow() {
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
-      nodeIntegration: true,
+      preload: path.join(__dirname, "preload.js"),
     },
   });
 
-  if (!app.isPackaged) {
-    win.loadFile("frontend-admin/login.html");
-  }
+  mainWindow.loadFile("frontend-admin/login.html");
+
+  mainWindow.webContents.openDevTools();
 }
+
+ipcMain.handle("admin-login", async (_, credentials) => {
+  try {
+    const res = await fetch("http://localhost:3000/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      return { success: false, msg: data.msg };
+    }
+
+    if (data.role !== "admin") {
+      return { success: false, msg: "Nemáš admin oprávnění" };
+    }
+
+    adminSession = {
+      id: data.id,
+      username: data.username,
+      role: data.role,
+    };
+
+    return { success: true };
+
+  } catch (err) {
+    console.error(err);
+    return { success: false, msg: "Chyba serveru" };
+  }
+});
+
+ipcMain.handle("go-to", (_, page) => {
+  if (!adminSession && page !== "login") return;
+  mainWindow.loadFile(`frontend-admin/${page}.html`);
+});
+
+ipcMain.handle("logout", () => {
+  adminSession = null;
+  mainWindow.loadFile("frontend-admin/login.html");
+});
+
+ipcMain.handle("get-admin-session", () => {
+  return adminSession;
+});
+
 
 app.whenReady().then(createWindow);

@@ -1,8 +1,18 @@
+function normalize(str) {
+  return str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/_/g, " ")
+    .trim();
+}
+
 let galleryData = [];           // všechno
 let filteredGalleryData = [];   // to, co je VIDĚT
 let currentIndex = 0;           // index v filteredGalleryData
 let visibleGalleryOrder = [];
 let currentPrimaryImage = null;
+let scrollBeforeFullscreen = 0;
 
 // ---------- Pomocné funkce ----------
 
@@ -106,21 +116,25 @@ function fillRightSidebarFilters(data) {
 const subBox = document.getElementById('filterSubcategory');
 if (subBox) {
   subBox.innerHTML = "";
-  categories.forEach(c => {
-    if (data.some(i => i.category === c)) {
-      subcategories[c].forEach(s => {
-        // najdi přesně, jak je to v datech
-        const matchedSub = data.find(i => i.category === c && i.subcategory.toLowerCase() === s.toLowerCase());
-        if (matchedSub) {
-          subBox.innerHTML += `
-            <label class="filter-checkbox">
-              <input type="checkbox" class="subCheck" value="${matchedSub.subcategory}">
-              ${s} – ${formatTitle(c)}
-            </label>`;
-        }
-      });
+categories.forEach(c => {
+  if (!data.some(i => i.category === c)) return;
+
+  subcategories[c].forEach(s => {
+    const exists = data.some(i =>
+      normalize(i.category) === normalize(c) &&
+      normalize(i.subcategory) === normalize(s)
+    );
+
+    if (exists) {
+      subBox.innerHTML += `
+        <label class="filter-checkbox">
+          <input type="checkbox" class="subCheck" value="${s}">
+          ${s} – ${formatTitle(c)}
+        </label>
+      `;
     }
   });
+});
 }
 
   // Souhvězdí – abecedně
@@ -207,42 +221,53 @@ function renderGallery(data) {
 
 // upravená funkce applyFilters
 function applyFilters() {
-  const searchInput = document.getElementById('searchInput');
-  const search = searchInput ? searchInput.value.toLowerCase() : "";
 
-  const selectedCats = [...document.querySelectorAll('.catCheck:checked')].map(e => e.value);
-  const selectedSubs = [...document.querySelectorAll('.subCheck:checked')].map(e => e.value);
-  const selectedCons = [...document.querySelectorAll('.conCheck:checked')].map(e => e.value);
-  const selectedCatalogs = [...document.querySelectorAll('.catalogCheck:checked')].map(e => e.value);
+  const search =
+    document.getElementById('searchInput')?.value.toLowerCase() || "";
 
-  filteredGalleryData = galleryData.filter(item => {
-    const matchesSearch =
-      item.common_name.toLowerCase().includes(search) ||
-      item.name.toLowerCase().includes(search);
+  const selectedCats =
+    [...document.querySelectorAll('.catCheck:checked')]
+      .map(e => e.value);
 
-    const matchCat =
-      selectedCats.length ? selectedCats.includes(item.category) : true;
+  const selectedSubs =
+    [...document.querySelectorAll('.subCheck:checked')]
+      .map(e => e.value);
 
-    const matchSub =
-      selectedSubs.length ? selectedSubs.includes(item.subcategory) : true;
+  const selectedCons =
+    [...document.querySelectorAll('.conCheck:checked')]
+      .map(e => e.value);
 
-    const matchCon =
-      selectedCons.length ? selectedCons.includes(item.constellation) : true;
+  filteredGalleryData =
+    galleryData.filter(item => {
 
-    let matchCatalog = true;
-    const nm = item.name.toLowerCase();
+      const matchesSearch =
+        item.common_name.toLowerCase().includes(search) ||
+        item.name.toLowerCase().includes(search);
 
-    if (selectedCatalogs.length) {
-      matchCatalog = selectedCatalogs.some(catalog => {
-        if (catalog === "messier") return nm.includes("messier");
-        if (catalog === "ngc") return nm.includes("ngc");
-        if (catalog === "ic") return nm.includes("ic");
-        return true;
-      });
-    }
+      const matchCat =
+        selectedCats.length
+          ? selectedCats.some(cat =>
+              normalize(cat) === normalize(item.category)
+            )
+          : true;
 
-    return matchesSearch && matchCat && matchSub && matchCon && matchCatalog;
-  });
+      const matchSub =
+        selectedSubs.length
+          ? selectedSubs.some(sub =>
+              normalize(sub) === normalize(item.subcategory)
+            )
+          : true;
+
+      const matchCon =
+        selectedCons.length
+          ? selectedCons.some(con =>
+              normalize(con) === normalize(item.constellation)
+            )
+          : true;
+
+      return matchesSearch && matchCat && matchSub && matchCon;
+
+    });
 
   renderGallery(filteredGalleryData);
 }
@@ -384,12 +409,9 @@ const modalImage = document.getElementById('modalImage');
 
 modalImage.addEventListener('click', () => {
   if (!document.fullscreenElement) {
-    // otevři fullscreen
-    modalImage.requestFullscreen().catch(err => {
-      console.error(`Nelze přejít do fullscreenu: ${err.message}`);
-    });
+    scrollBeforeFullscreen = window.scrollY;
+    modalImage.requestFullscreen();
   } else {
-    // ukonči fullscreen
     document.exitFullscreen();
   }
 });
@@ -397,7 +419,10 @@ modalImage.addEventListener('click', () => {
 // po opuštění fullscreenu znovu zobraz modál
 document.addEventListener('fullscreenchange', () => {
   if (!document.fullscreenElement) {
-    // nic extra dělat nemusíme, modál zůstává otevřený
+    window.scrollTo({
+      top: scrollBeforeFullscreen,
+      behavior: 'instant'
+    });
   }
 });
 
@@ -407,6 +432,15 @@ const extraImagesModal = new bootstrap.Modal(
   document.getElementById('extraImagesModal')
 );
 const extraImagesGrid = document.getElementById('extraImagesGrid');
+
+function toggleFullscreen(img) {
+  if (!document.fullscreenElement) {
+    scrollBeforeFullscreen = window.scrollY;
+    img.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
 
 // funkce pro otevření modálu s dalšími snímky
 async function openExtraImages(galleryId) {
@@ -436,8 +470,10 @@ async function openExtraImages(galleryId) {
       </div>
     `;
 
-    primaryCol.querySelector('img').addEventListener('click', () => {
-      primaryCol.querySelector('img').requestFullscreen();
+    const primaryImg = primaryCol.querySelector('img');
+
+    primaryImg.addEventListener('click', () => {
+      toggleFullscreen(primaryImg);
     });
 
     grid.appendChild(primaryCol);
@@ -459,9 +495,11 @@ async function openExtraImages(galleryId) {
         </div>
       `;
 
-      col.querySelector('img').addEventListener('click', () => {
-        col.querySelector('img').requestFullscreen();
-      });
+    const extraImg = col.querySelector('img');
+
+    extraImg.addEventListener('click', () => {
+      toggleFullscreen(extraImg);
+    });
 
       grid.appendChild(col);
     });

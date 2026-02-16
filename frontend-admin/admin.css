@@ -1,0 +1,354 @@
+    body {
+      height: 100vh;
+      margin: 0;
+      background:
+        radial-gradient(circle at top, rgba(60, 100, 180, 0.35), transparent 60%),
+        linear-gradient(180deg, #0b1220, #05080f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* subtle stars effect */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(#ffffff22 1px, transparent 1px);
+      background-size: 120px 120px;
+      pointer-events: none;
+    }
+
+    .login-card {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      background: linear-gradient(180deg, #f4f6f8, #e9ecef);
+      color: #0b1220;
+      border-radius: 16px;
+      padding: 38px;
+      box-shadow:
+        0 30px 60px rgba(0,0,0,0.55),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .login-header h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: 0.4px;
+    }
+
+    .login-header p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .form-label {
+      font-weight: 500;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      background: #e3e6ea;
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px solid #c6ccd4;
+      transition: 0.2s;
+    }
+
+    .form-control:focus {
+      background: #eef1f5;
+      border-color: #355fa5;
+      box-shadow: 0 0 0 2px rgba(53,95,165,0.25);
+    }
+
+    .btn-login {
+      background: linear-gradient(135deg, #1d3252, #355fa5);
+      color: #fff;
+      padding: 14px;
+      font-weight: 500;
+      border-radius: 10px;
+      border: none;
+      letter-spacing: 0.4px;
+      transition: 0.25s;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+      background: linear-gradient(135deg, #26406a, #3f6ec2);
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 26px;
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .login-footer span {
+      color: #355fa5;
+      font-weight: 500;
+    }
+
+    * {
+      user-select: none;
+    }
+
+    input {
+      user-select: text;
+    }
+
+    .login-error {
+      margin-top: 12px;
+      color: #ff6b6b;
+      font-size: 0.9rem;
+      text-align: center;
+      min-height: 20px;
+    }
+
+    /* ADMIN PANEL */
+.admin-panel {
+  max-width: 480px;
+}
+
+/* container */
+.admin-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+/* main admin buttons */
+.btn-admin {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 16px;
+  border-radius: 12px;
+
+  border: none;
+
+  cursor: pointer;
+
+  background: linear-gradient(180deg, #eef1f5, #dde3ea);
+
+  transition: 0.25s;
+
+  text-align: left;
+}
+
+.btn-admin:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+/* icon */
+.btn-admin .icon {
+  font-size: 22px;
+  width: 28px;
+  text-align: center;
+}
+
+/* text */
+.btn-admin .title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.btn-admin .desc {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+/* variants */
+.btn-admin.primary {
+  border-left: 4px solid #355fa5;
+}
+
+.btn-admin.secondary {
+  border-left: 4px solid #6c757d;
+}
+
+/* logout */
+.btn-logout {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #c6ccd4;
+  background: white;
+  color: #202020;
+  transition: 0.25s;
+}
+
+.btn-logout:hover {
+  background: #f7cdcd;
+}
+
+.admin-container {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  padding: 30px;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.admin-header h1 {
+  font-size: 28px;
+}
+
+.admin-header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-back {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #2f4f85;
+  color: white;
+  transition: 0.25s;
+}
+
+.btn-back:hover {
+  background-color: rgb(52, 171, 218);
+}
+
+.admin-section {
+  background: linear-gradient(180deg, #f4f6f8, #e9ecef);
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.admin-section h2 {
+  margin-bottom: 16px;
+}
+
+.btn-admin-action {
+  background: linear-gradient(135deg, #1d3252, #355fa5);
+  border: none;
+  padding: 10px 16px;
+  color: white;
+  border-radius: 10px;
+  transition: 0.25s;
+}
+
+.btn-admin-action:hover {
+  background-color: rgb(0, 0, 170);
+}
+
+/* toast */
+.admin-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  display: none;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+}
+
+.admin-toast.success {
+  background: #1f7a3f;
+  color: white;
+}
+
+.admin-toast.error {
+  background: #a53a3a;
+  color: white;
+}
+
+/* dropdown */
+.custom-select-wrapper {
+  position: relative;
+}
+
+.custom-dropdown {
+  color: white;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #1b263b;
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.custom-dropdown div {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.custom-dropdown div:hover {
+  background: #415a77;
+}
+
+/* reset button */
+.btn-admin-reset {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-left: 10px;
+}
+
+.table-wrapper {
+
+  max-height: 500px;
+  overflow-y: auto;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 5px 20px rgba(0,0,0,0.3);
+
+}
+
+.admin-thumb {
+
+  width: 80px;
+  border-radius: 6px;
+
+}

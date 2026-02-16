@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // zpřístupnění složky "images" a "data" pro obrázky
-app.use('/images', express.static(path.join(__dirname, '../images')));
+app.use('/images', express.static(path.join(__dirname, '../frontend/images')));
 app.use('/data', express.static(path.join(__dirname, '../frontend/data')));
 
 // ROUTES

@@ -1,21 +1,3 @@
 (To DO ❌)
 
-- přidat responzivitu přes bootstrap classy všude a celkově upravit css:
-navbar.html = DONE
-footer.html = DONE
-index.html = DONE
-login.html = DONE
-register.html = DONE
-facts.html = DONE
-profile.html = DONE
-about.html = DONE
-
-astro.html
-upload.html
-edit.html
-
-
-
-
-- udělat admin část neboli electron
-- přidat do scriptů komentáře
+nic :)

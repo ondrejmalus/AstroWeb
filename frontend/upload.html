@@ -13,7 +13,7 @@
 <body class="body edit-page">
 
 <!-- ADMIN SIDEBAR -->
-<aside class="admin-sidebar-simple">
+<aside class="admin-sidebar admin-sidebar-desktop">
   <h2 class="admin-title">Administrace</h2>
 
   <nav class="admin-nav">
@@ -51,13 +51,46 @@
   </nav>
 </aside>
 
+<!-- MOBILNÍ SIDEBAR -->
+<button
+  class="btn btn-primary admin-toggle d-lg-none"
+  data-bs-toggle="offcanvas"
+  data-bs-target="#adminSidebarMobile"
+>
+  <i class="fas fa-bars"></i>
+</button>
+
+<!-- OFFCANVAS -->
+<div
+  class="offcanvas offcanvas-start admin-offcanvas"
+  tabindex="-1"
+  id="adminSidebarMobile"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Administrace</h5>
+    <button class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+<div class="offcanvas-body admin-offcanvas-body">
+    <nav class="admin-nav">
+      <a href="#news"><i class="fas fa-newspaper"></i> Články</a>
+      <a href="#gallery"><i class="fas fa-images"></i> Galerie</a>
+      <a href="#gallery-extra"><i class="fas fa-image"></i> Další snímky</a>
+      <a href="#facts"><i class="fas fa-lightbulb"></i> Zajímavosti</a>
+      <a href="#badges"><i class="fas fa-medal"></i> Odznaky</a>
+      <hr>
+      <a href="edit.html"><i class="fas fa-pen"></i> Editace obsahu</a>
+    </nav>
+  </div>
+</div>
+
 <main class="container mt-5 content">
 
   <!--    FORMULÁŘ PRO ČLÁNKY     -->
 
   <h1 id="news" class="upload-header">Přidat nový článek</h1>
 
-  <form id="add-news-form" class="shadow p-4 rounded bg-light mb-5">
+  <form id="add-news-form" class="admin-form shadow rounded bg-light">
     <div class="mb-3">
       <label for="news-title" class="form-label">Nadpis článku</label>
       <input type="text" id="news-title" class="form-control" required>
@@ -85,7 +118,7 @@
 
   <h1 id="gallery" class="upload-header">Přidat snímek do galerie</h1>
 
-<form id="add-gallery-form" class="shadow p-4 rounded bg-light">
+<form id="add-gallery-form" class="admin-form shadow rounded bg-light">
   <div class="mb-3">
     <label for="gallery-category" class="form-label">Kategorie</label>
     <select id="gallery-category" class="form-select" required>
@@ -147,7 +180,7 @@
 
 <h1 id="gallery-extra" class="upload-header">Přidat další snímek k objektu</h1>
 
-<form id="add-gallery-extra-image-form" class="shadow p-4 rounded bg-light mb-5 add-fact-form">
+<form id="add-gallery-extra-image-form" class="admin-form shadow rounded bg-light">
 
   <div class="mb-3">
     <label class="form-label">Vyber objekt</label>
@@ -194,7 +227,7 @@
 <div class="add-fact-form mt-5">
   <h1 id="facts" class="upload-header">Přidat zajímavost</h1>
 
-  <form id="add-fact-form" enctype="multipart/form-data">
+  <form id="add-fact-form" enctype="multipart/form-data" class="admin-form shadow rounded bg-light">
 
     <div class="mb-3">
       <label class="form-label">Kategorie</label>
@@ -230,7 +263,7 @@
 
 <h1 id="badges" class="upload-header">Přidat badge</h1>
 
-<form id="add-badge-form" class="mb-5">
+<form id="add-badge-form" class="admin-form shadow rounded bg-light">
 
   <div class="mb-3">
     <label class="form-label">Klíč badge (za co je odznak udělený)</label>
@@ -294,6 +327,16 @@
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+</script>
+
+<script>
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('.admin-offcanvas a')) {
+      const offcanvasEl = document.getElementById('adminSidebarMobile');
+      const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
+      if (offcanvas) offcanvas.hide();
+    }
+  });
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

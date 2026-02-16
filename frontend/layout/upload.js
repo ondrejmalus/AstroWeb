@@ -348,9 +348,13 @@ if (searchInput) {
 }
 
 // klik mimo → zavřít dropdown
+const dropdown1 = document.querySelector('.custom-dropdown');
+
 document.addEventListener('click', e => {
+  if (!dropdown1) return;
+
   if (!e.target.closest('.custom-select-wrapper')) {
-    dropdown.style.display = 'none';
+    dropdown1.style.display = 'none';
   }
 });
 
