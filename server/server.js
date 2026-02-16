@@ -12,7 +12,7 @@ import factsRouter from './routes/facts.js'; // facts router
 import badgesRouter from './routes/badges.js'; // badges router
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Potřebné pro práci s __dirname (ESM)
 const __filename = fileURLToPath(import.meta.url);
