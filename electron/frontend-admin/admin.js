@@ -59,39 +59,28 @@ const toast = new bootstrap.Toast(toastEl, {
 }
 
 // =====================================================
-// ADMIN.JS — SAFE VERSION FOR ELECTRON
+// ADMIN.JS
 // =====================================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const gallerySearch =
-  document.getElementById("searchInput");
+const gallerySearch =
+document.getElementById("gallerySearch");
 
 if (gallerySearch) {
 
   gallerySearch.addEventListener("input", e => {
 
-    const val =
-      e.target.value.toLowerCase();
+    const val = e.target.value.toLowerCase();
 
-    const filtered =
-      galleryData.filter(item =>
+    const filtered = galleryData.filter(item =>
 
-        item.name.toLowerCase().includes(val)
-        ||
-        (item.common_name || "")
-          .toLowerCase()
-          .includes(val)
-        ||
-        (item.constellation || "")
-          .toLowerCase()
-          .includes(val)
-        ||
-        item.category
-          .toLowerCase()
-          .includes(val)
+      item.name.toLowerCase().includes(val) ||
+      (item.common_name || "").toLowerCase().includes(val) ||
+      (item.constellation || "").toLowerCase().includes(val) ||
+      (item.category || "").toLowerCase().includes(val)
 
-      );
+    );
 
     renderGallery(filtered);
 
@@ -249,7 +238,7 @@ if (newsForm) {
     try {
 
       const res = await fetch(
-        "http://localhost:3000/news",
+        "https://astro-web.cz/news",
         {
           method: "POST",
           body: formData
@@ -392,7 +381,7 @@ if (categorySelect && subcategorySelect) {
 
         const res =
           await fetch(
-            "http://localhost:3000/gallery",
+            "https://astro-web.cz/gallery",
             {
               method: "POST",
               body: formData
@@ -437,7 +426,7 @@ async function loadConstellations() {
   try {
 
     const res =
-      await fetch("http://localhost:3000/gallery");
+      await fetch("https://astro-web.cz/gallery");
 
     const data =
       await res.json();
@@ -514,7 +503,7 @@ if (constellationInput) {
 
         const res =
           await fetch(
-            "http://localhost:3000/facts",
+            "https://astro-web.cz/facts",
             {
               method: "POST",
               body: formData
@@ -595,7 +584,7 @@ if (badgeForm) {
 
       const res =
         await fetch(
-          "http://localhost:3000/badges",
+          "https://astro-web.cz/badges",
           {
             method: "POST",
             body: formData
@@ -659,7 +648,7 @@ if (extraForm) {
 
       const res =
         await fetch(
-          `http://localhost:3000/gallery/${galleryId}/images`,
+          `https://astro-web.cz/gallery/${galleryId}/images`,
           {
             method: "POST",
             body: formData
@@ -701,7 +690,7 @@ let galleryObjects = [];
 async function loadGalleryObjects() {
 
   const res =
-    await fetch("http://localhost:3000/gallery");
+    await fetch("https://astro-web.cz/gallery");
 
   galleryObjects =
     await res.json();
@@ -801,7 +790,7 @@ async function loadGallery() {
   try {
 
     const res =
-      await fetch("http://localhost:3000/gallery");
+      await fetch("https://astro-web.cz/gallery");
 
     galleryData =
       await res.json();
@@ -834,7 +823,7 @@ function renderGallery(data) {
     tr.innerHTML = `
     <td>
       <img
-        src="http://localhost:3000/images/${item.image}"
+        src="https://astro-web.cz/images/${item.image}"
         class="admin-thumb"
         style="width:80px;border-radius:6px"
       >
@@ -873,7 +862,7 @@ window.deleteItem = async function(id) {
   try {
 
     await fetch(
-      `http://localhost:3000/gallery/${id}`,
+      `https://astro-web.cz/gallery/${id}`,
       { method: "DELETE" }
     );
 
@@ -952,7 +941,7 @@ window.saveEdit = async function() {
   try {
 
     await fetch(
-      `http://localhost:3000/gallery/${id}`,
+      `https://astro-web.cz/gallery/${id}`,
       {
         method: "PUT",
         body: fd
@@ -983,7 +972,7 @@ async function loadNews() {
   try {
 
     const res =
-      await fetch("http://localhost:3000/news");
+      await fetch("https://astro-web.cz/news");
 
     const json =
       await res.json();
@@ -1029,6 +1018,11 @@ function renderNews(data) {
         <button class="btn btn-warning btn-sm me-1"
           onclick="editNews(${n.id})">
           Upravit
+        </button>
+
+        <button class="btn btn-danger btn-sm"
+          onclick="deleteNews(${n.id})">
+          Smazat
         </button>
 
       </td>
@@ -1084,7 +1078,7 @@ window.saveNewsEdit = async function() {
   try {
 
     await fetch(
-      `http://localhost:3000/news/${id}`,
+      `https://astro-web.cz/news/${id}`,
       {
         method: "PUT",
         body: fd
@@ -1105,6 +1099,32 @@ window.saveNewsEdit = async function() {
 
 };
 
+// DELETE NEWS
+window.deleteNews = async function(id) {
+
+  if (!confirm("Opravdu chceš smazat článek?")) return;
+
+  try {
+
+    await fetch(
+      `https://astro-web.cz/news/${id}`,
+      { method: "DELETE" }
+    );
+
+    newsData = newsData.filter(x => x.id !== id);
+
+    renderNews(newsData);
+
+    showSuccess("Článek byl smazán");
+
+  } catch {
+
+    showError("Nepodařilo se smazat článek");
+
+  }
+
+};
+
 
 // =====================================================
 // FACTS
@@ -1115,7 +1135,7 @@ async function loadFacts() {
   try {
 
     const res =
-      await fetch("http://localhost:3000/facts");
+      await fetch("https://astro-web.cz/facts");
 
     const json =
       await res.json();
@@ -1155,10 +1175,15 @@ function renderFacts(data) {
 
       <td>
 
-        <button class="btn btn-warning btn-sm"
-          onclick="editFact(${f.id})">
-          Upravit
-        </button>
+      <button class="btn btn-warning btn-sm me-1"
+        onclick="editFact(${f.id})">
+        Upravit
+      </button>
+
+      <button class="btn btn-danger btn-sm"
+        onclick="deleteFact(${f.id})">
+        Smazat
+      </button>
 
       </td>
     `;
@@ -1219,7 +1244,7 @@ window.saveFactEdit = async function() {
   try {
 
     await fetch(
-      `http://localhost:3000/facts/${id}`,
+      `https://astro-web.cz/facts/${id}`,
       {
         method: "PUT",
         body: fd
@@ -1235,6 +1260,32 @@ window.saveFactEdit = async function() {
   } catch {
 
     showError("Nepodařilo se uložit zajímavost");
+
+  }
+
+};
+
+// DELETE FACT
+window.deleteFact = async function(id) {
+
+  if (!confirm("Opravdu chceš smazat tuto zajímavost?")) return;
+
+  try {
+
+    await fetch(
+      `https://astro-web.cz/facts/${id}`,
+      { method: "DELETE" }
+    );
+
+    factsData = factsData.filter(x => x.id !== id);
+
+    renderFacts(factsData);
+
+    showSuccess("Zajímavost byla smazána");
+
+  } catch {
+
+    showError("Nepodařilo se smazat zajímavost");
 
   }
 

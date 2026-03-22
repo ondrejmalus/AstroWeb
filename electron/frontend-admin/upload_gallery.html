@@ -19,7 +19,7 @@
 <div id="globalError" class="admin-toast error"></div>
 
   <div class="admin-header">
-    <h1>Upload obsahu</h1>
+    <h1>Upload obsahu do galerie</h1>
 
     <div class="admin-header-buttons">
       <button class="btn-back" onclick="goTo('welcome')">
@@ -31,36 +31,6 @@
       </button>
     </div>
   </div>
-
-
-  <!-- ===================== ČLÁNKY ===================== -->
-
-  <div class="admin-section">
-
-    <h2>Přidat článek</h2>
-
-    <form id="add-news-form" class="admin-form">
-
-      <div class="mb-3">
-        <label>Nadpis článku</label>
-        <input type="text" id="news-title" class="form-control" required>
-      </div>
-
-      <div class="mb-3">
-        <label>Obrázek</label>
-        <input type="file" id="news-image" class="form-control" accept="image/*" required>
-      </div>
-
-      <div class="mb-3">
-        <label>Obsah</label>
-        <textarea id="news-content" class="form-control" rows="5" required></textarea>
-      </div>
-
-      <button class="btn-admin-action">Přidat článek</button>
-      <button type="reset" class="btn-admin-reset">Reset</button>
-    </form>
-  </div>
-
 
   <!-- ===================== GALERIE ===================== -->
 
@@ -95,12 +65,12 @@
       </div>
 
       <div class="mb-3">
-        <label>Běžný název</label>
+        <label>Jméno (běžný název)</label>
         <input type="text" id="gallery-common_name" class="form-control">
       </div>
 
       <div class="mb-3">
-        <label>Souhvězdí</label>
+        <label>Souhvězdí - latinsky (česky)</label>
         <div class="custom-select-wrapper">
             <input type="text" id="gallery-constellation" class="form-control" autocomplete="off">
             <div id="constellation-dropdown" class="custom-dropdown"></div>
@@ -113,12 +83,12 @@
       </div>
 
       <div class="mb-3">
-        <label>Zajímavost</label>
+        <label>Zajímavost / Fact</label>
         <textarea id="gallery-fact" class="form-control"></textarea>
       </div>
 
       <div class="mb-3">
-        <label>Obrázek</label>
+        <label>Obrázek (obrázek bude uložen do složky /images)</label>
         <input type="file" id="gallery-image" class="form-control" required>
       </div>
 
@@ -167,97 +137,6 @@
     </form>
   </div>
 
-
-  <!-- ===================== ZAJÍMAVOST ===================== -->
-
-  <div class="admin-section">
-
-    <h2>Přidat zajímavost</h2>
-
-    <form id="add-fact-form" class="admin-form">
-
-      <div class="mb-3">
-        <label>Kategorie</label>
-
-        <select name="category" class="form-select">
-          <option value="general">Všeobecná</option>
-          <option value="personality">Osobnost</option>
-        </select>
-
-      </div>
-
-      <div class="mb-3">
-        <label>Nadpis</label>
-        <input name="title" class="form-control">
-      </div>
-
-      <div class="mb-3">
-        <label>Text</label>
-        <textarea name="text" class="form-control"></textarea>
-      </div>
-
-      <div class="mb-3">
-        <label>Obrázek</label>
-        <input type="file" name="image" class="form-control">
-      </div>
-
-      <button class="btn-admin-action">
-        Přidat zajímavost
-      </button>
-      <button type="reset" class="btn-admin-reset">Reset</button>
-    </form>
-  </div>
-
-
-  <!-- ===================== BADGE ===================== -->
-
-  <div class="admin-section">
-
-    <h2>Přidat badge</h2>
-
-    <form id="add-badge-form" class="admin-form">
-
-      <div class="mb-3">
-        <label>Key</label>
-        <input id="badge-key" class="form-control">
-      </div>
-
-      <div class="mb-3">
-        <label>Název</label>
-        <input id="badge-name" class="form-control">
-      </div>
-
-      <div class="mb-3">
-        <label>Popis</label>
-        <input id="badge-description" class="form-control">
-      </div>
-
-      <div class="mb-3">
-        <label>Ikona</label>
-        <input type="file" id="badge-icon" class="form-control">
-      </div>
-
-      <div class="mb-3">
-        <label>Trigger</label>
-
-        <select id="badge-trigger" class="form-select">
-          <option value="likes">Likes</option>
-          <option value="account_days">Dny účtu</option>
-        </select>
-
-      </div>
-
-      <div class="mb-3">
-        <label>Hodnota</label>
-        <input type="number" id="badge-value" class="form-control">
-      </div>
-
-      <button class="btn-admin-action">
-        Přidat badge
-      </button>
-      <button type="reset" class="btn-admin-reset">Reset</button>
-    </form>
-  </div>
 </div>
 
 <script src="admin.js"></script>

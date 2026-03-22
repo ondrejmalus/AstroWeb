@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>AstroWeb – Upload</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+
+</head>
+
+<body>
+
+<div class="admin-container">
+
+<div id="globalSuccess" class="admin-toast success"></div>
+<div id="globalError" class="admin-toast error"></div>
+
+  <div class="admin-header">
+    <h1>Upload ostatního obsahu</h1>
+
+    <div class="admin-header-buttons">
+      <button class="btn-back" onclick="goTo('welcome')">
+        ← Zpět
+      </button>
+
+      <button class="btn-logout" onclick="logout()">
+        Odhlásit se
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ===================== ČLÁNKY ===================== -->
+
+  <div class="admin-section">
+
+    <h2>Přidat článek</h2>
+
+    <form id="add-news-form" class="admin-form">
+
+      <div class="mb-3">
+        <label>Nadpis článku</label>
+        <input type="text" id="news-title" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label>Obrázek</label>
+        <input type="file" id="news-image" class="form-control" accept="image/*" required>
+      </div>
+
+      <div class="mb-3">
+        <label>Obsah</label>
+        <textarea id="news-content" class="form-control" rows="5" required></textarea>
+      </div>
+
+      <button class="btn-admin-action">Přidat článek</button>
+      <button type="reset" class="btn-admin-reset">Reset</button>
+    </form>
+  </div>
+
+  <!-- ===================== ZAJÍMAVOST ===================== -->
+
+  <div class="admin-section">
+
+    <h2>Přidat zajímavost</h2>
+
+    <form id="add-fact-form" class="admin-form">
+
+      <div class="mb-3">
+        <label>Kategorie</label>
+
+        <select name="category" class="form-select">
+          <option value="general">Všeobecná</option>
+          <option value="personality">Osobnost</option>
+        </select>
+
+      </div>
+
+      <div class="mb-3">
+        <label>Nadpis</label>
+        <input name="title" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label>Text</label>
+        <textarea name="text" class="form-control"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label>Obrázek</label>
+        <input type="file" name="image" class="form-control">
+      </div>
+
+      <button class="btn-admin-action">
+        Přidat zajímavost
+      </button>
+      <button type="reset" class="btn-admin-reset">Reset</button>
+    </form>
+  </div>
+
+
+  <!-- ===================== BADGE ===================== -->
+
+  <div class="admin-section">
+
+    <h2>Přidat badge</h2>
+
+    <form id="add-badge-form" class="admin-form">
+
+      <div class="mb-3">
+        <label>Key (za co je odznak udělený, např: first_like)</label>
+        <input id="badge-key" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label>Název odznaku</label>
+        <input id="badge-name" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label>Popisek</label>
+        <input id="badge-description" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label>Ikonka / obrázek</label>
+        <input type="file" id="badge-icon" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label>Trigger - Druh odznaku</label>
+
+        <select id="badge-trigger" class="form-select">
+          <option value="likes">Likes</option>
+          <option value="account_days">Dny účtu</option>
+        </select>
+
+      </div>
+
+      <div class="mb-3">
+        <label>Hodnota - Počet lajků / dnů</label>
+        <input type="number" id="badge-value" class="form-control">
+      </div>
+
+      <button class="btn-admin-action">
+        Přidat badge
+      </button>
+      <button type="reset" class="btn-admin-reset">Reset</button>
+    </form>
+  </div>
+
+</div>
+
+<script src="admin.js"></script>
+
+</body>
+</html>

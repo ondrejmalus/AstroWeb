@@ -9,3 +9,7 @@ frontend/data/
 
 # snímky - snímky v galerii
 frontend/images/
+
+# electron - build pro desktop
+electron/node_modules/
+electron/dist/
