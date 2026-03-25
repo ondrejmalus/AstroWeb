@@ -1,5 +1,4 @@
 import express from 'express';
-import mysql from 'mysql2/promise';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -10,9 +9,15 @@ import authRouter from './routes/auth.js'; // auth router
 import usersRoutes from './routes/users.js'; // users router
 import factsRouter from './routes/facts.js'; // facts router
 import badgesRouter from './routes/badges.js'; // badges router
+import statsRoutes from "./routes/stats.js"; // stats router
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
+
+if (!PORT) {
+  console.error("PORT není nastaven!");
+  process.exit(1);
+}
 
 // Potřebné pro práci s __dirname (ESM)
 const __filename = fileURLToPath(import.meta.url);
@@ -23,7 +28,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// zpřístupnění složky "images" a "data" pro obrázky
+// zpřístupnění složky pro obrázky
 app.use('/images', express.static(path.join(__dirname, '../frontend/images')));
 app.use('/data', express.static(path.join(__dirname, '../frontend/data')));
 
@@ -34,17 +39,47 @@ app.use('/auth', authRouter); // login + register
 app.use('/users', usersRoutes); // users
 app.use('/facts', factsRouter); // facts
 app.use('/badges', badgesRouter); // badges
+app.use("/stats", statsRoutes); // stats
 
-// MySQL připojení
-const db = await mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME
+// FRONTEND ROUTES (clean URL)
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+});
+app.get("/about", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/about.html"));
+});
+app.get("/astro", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/astro.html"));
+});
+app.get("/astrostatistics", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/astrostatistics.html"));
+});
+app.get("/edit", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/edit.html"));
+});
+app.get("/facts-page", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/facts.html"));
+});
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/login.html"));
+});
+app.get("/profile", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/profile.html"));
+});
+app.get("/register", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/register.html"));
+});
+app.get("/thefact", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/thefact.html"));
+});
+app.get("/upload", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/upload.html"));
 });
 
-// Start serveru
-app.listen(PORT, () => console.log(`✅ Server běží na http://localhost:${PORT}`));
+// Načtení frontendu
+app.use(express.static(path.join(__dirname, '../frontend')));
 
-// Export DB pro routery
-export { db };
+// Start serveru
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server běží na portu ${PORT}`);
+});

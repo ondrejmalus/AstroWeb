@@ -1,5 +1,5 @@
 import express from 'express';
-import { db } from '../server.js';
+import { db } from '../db.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -36,7 +36,6 @@ const upload = multer({
 });
 
 // GET /facts – načtení zajímavostí
-
 router.get('/', async (req, res) => {
   try {
     const [rows] = await db.query(

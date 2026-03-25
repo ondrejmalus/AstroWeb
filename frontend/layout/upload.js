@@ -43,7 +43,7 @@ if(newsForm){
     formData.append('image', image);
 
     try {
-      const res = await fetch('http://localhost:3000/news', {
+      const res = await fetch('/news', {
         method: 'POST',
         body: formData
       });
@@ -105,7 +105,7 @@ let constellationValues = [];
 // Načtení existujících souhvězdí
 async function loadConstellations() {
   try {
-    const res = await fetch("http://localhost:3000/gallery");
+    const res = await fetch("/gallery");
     const data = await res.json();
 
     constellationValues = [...new Set(
@@ -183,7 +183,7 @@ document.addEventListener("click", (e) => {
     formData.append('image', image);
 
     try {
-      const res = await fetch('http://localhost:3000/gallery', {
+      const res = await fetch('/gallery', {
         method: 'POST',
         body: formData
       });
@@ -214,7 +214,7 @@ if (factForm) {
     const formData = new FormData(factForm);
 
     try {
-      const res = await fetch('http://localhost:3000/facts', {
+      const res = await fetch('/facts', {
         method: 'POST',
         body: formData
       });
@@ -257,7 +257,7 @@ if (badgeForm) {
     if (icon) formData.append('icon', icon);
 
     try {
-      const res = await fetch('http://localhost:3000/badges', {
+      const res = await fetch('/badges', {
         method: 'POST',
         body: formData
       });
@@ -303,7 +303,7 @@ let galleryObjects = [];
 // ------------------------------------------
 async function loadGalleryObjectsForExtraImages() {
   try {
-    const res = await fetch('http://localhost:3000/gallery');
+    const res = await fetch('/gallery');
     galleryObjects = await res.json();
   } catch (err) {
     console.error(err);
@@ -389,7 +389,7 @@ if (extraImageForm) {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/gallery/${galleryId}/images`,
+        `/gallery/${galleryId}/images`,
         {
           method: 'POST',
           body: formData

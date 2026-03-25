@@ -1,4 +1,3 @@
-// routes/gallery.js
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
@@ -25,12 +24,12 @@ const upload = multer({
   storage: storage,
   limits: { fileSize: 10 * 1024 * 1024 }, // max 10 MB
   fileFilter: (req, file, cb) => {
-    const allowed = /jpeg|jpg|png|gif/;
+    const allowed = /jpeg|jpg|png|gif|webp/;
     const ext = path.extname(file.originalname).toLowerCase();
     if (allowed.test(ext)) {
       cb(null, true);
     } else {
-      cb(new Error('Pouze obrázky jpg, jpeg, png, gif jsou povoleny.'));
+      cb(new Error('Pouze obrázky jpg, jpeg, png, gif, webp jsou povoleny.'));
     }
   }
 });
@@ -103,8 +102,11 @@ router.post('/:id/like', async (req, res) => {
   if (!userId) return res.status(401).json({ success: false, message: 'Musíš být přihlášený.' });
 
   try {
-    const [alreadyLiked] = await db.query('SELECT * FROM gallery_likes WHERE gallery_id = ? AND user_id = ?', [galleryId, userId]);
-    if (alreadyLiked.length) return res.json({ success: false, message: 'Tento snímek jsi již lajknul.' });
+    
+    const [alreadyLiked] = await db.query(
+      'SELECT * FROM gallery_likes WHERE gallery_id = ? AND user_id = ?', [galleryId, userId]);
+    if (alreadyLiked.length) return res.json(
+      { success: false, message: 'Tento snímek jsi již lajknul.' });
 
     await db.query('INSERT INTO gallery_likes (gallery_id, user_id) VALUES (?, ?)', [galleryId, userId]);
     const [countRow] = await db.query('SELECT COUNT(*) AS count FROM gallery_likes WHERE gallery_id = ?', [galleryId]);
@@ -254,4 +256,73 @@ router.delete('/images/:imageId', async (req, res) => {
   }
 });
 
+// DELETE – smazání snímku z galerie
+router.delete('/:id', async (req, res) => {
+
+  const id = req.params.id;
+
+  try {
+
+    // najdeme snímek
+    const [[item]] = await db.query(
+      'SELECT image FROM gallery WHERE id = ?',
+      [id]
+    );
+
+    if (!item) {
+      return res.status(404).json({
+        success: false,
+        error: 'Snímek nenalezen'
+      });
+    }
+
+    // smažeme hlavní obrázek ze složky
+    const imagePath = path.join('frontend/images', item.image);
+
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+    }
+
+    // smažeme dodatečné obrázky (soubory)
+    const [extraImages] = await db.query(
+      'SELECT image FROM gallery_images WHERE gallery_id = ?',
+      [id]
+    );
+
+    for (const img of extraImages) {
+      const extraPath = path.join('frontend/images', img.image);
+      if (fs.existsSync(extraPath)) {
+        fs.unlinkSync(extraPath);
+      }
+    }
+
+    // smažeme z DB (správné pořadí kvůli FK)
+    await db.query(
+      'DELETE FROM gallery_images WHERE gallery_id = ?',
+      [id]
+    );
+
+    await db.query(
+      'DELETE FROM gallery_likes WHERE gallery_id = ?',
+      [id]
+    );
+
+    await db.query(
+      'DELETE FROM gallery WHERE id = ?',
+      [id]
+    );
+
+    res.json({ success: true });
+
+  } catch (err) {
+
+    console.error('Chyba při mazání snímku:', err);
+    res.status(500).json({
+      success: false,
+      error: 'Chyba serveru při mazání'
+    });
+
+  }
+
+});
 export default router;

@@ -1,3 +1,18 @@
+let lastActionTime = 0;
+const COOLDOWN = 60000;
+
+function canProceed() {
+  const now = Date.now();
+
+  if (now - lastActionTime < COOLDOWN) {
+    showToast("Počkej chvíli před další změnou ⏳", "error");
+    return false;
+  }
+
+  lastActionTime = now;
+  return true;
+}
+
 function formatTitle(str) {
   if (!str) return '—';
   return str
@@ -10,13 +25,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   //  Nepřihlášený uživatel
   if (!userId || !usernameLS) {
-    window.location.href = '/login.html';
+    window.location.href = '/login';
     return;
   }
 
   try {
     //  načtení kompletních dat uživatele ze serveru
-    const res = await fetch(`http://localhost:3000/users/${userId}`);
+    const res = await fetch(`/users/${userId}`);
     if (!res.ok) throw new Error('Nelze načíst profil');
 
     const user = await res.json();
@@ -54,7 +69,7 @@ function fillProfile(user) {
 
 async function loadUserStats(userId) {
   try {
-    const res = await fetch(`http://localhost:3000/users/${userId}/stats`);
+    const res = await fetch(`/users/${userId}/stats`);
     if (!res.ok) throw new Error('Statistiky nenalezeny');
 
     const stats = await res.json();
@@ -96,16 +111,24 @@ document.querySelectorAll('.profile-info-row button')[1]
   const newUsername = document.getElementById('newUsername').value.trim();
   const userId = localStorage.getItem('userId');
 
-  if (!newUsername) return alert('Zadej nové uživatelské jméno');
+  const btn = document.getElementById('saveUsernameBtn');
+  btn.disabled = true;
 
-  const res = await fetch(`http://localhost:3000/users/${userId}/username`, {
+  btn.disabled = false;
+
+  if (!newUsername) return showToast('Zadej nové uživatelské jméno', 'error');
+  if (!canProceed()) return;
+
+  const res = await fetch(`/users/${userId}/username`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: newUsername })
   });
 
   const data = await res.json();
-  if (!res.ok) return alert(data.msg);
+  if (!res.ok) return showToast(data.msg, 'error');
+
+  showToast('Uživatelské jméno změněno', 'success');
 
   localStorage.setItem('username', newUsername);
   document.getElementById('profileUsername').innerText = newUsername;
@@ -119,17 +142,21 @@ document.getElementById('saveEmailBtn').addEventListener('click', async () => {
   const confirm = document.getElementById('confirmEmail').value.trim();
   const userId = localStorage.getItem('userId');
 
-  if (!email || !confirm) return alert('Vyplň obě pole');
-  if (email !== confirm) return alert('Emaily se neshodují');
+  if (!email || !confirm) return showToast('Vyplň obě pole', 'error');
+  if (email !== confirm) return showToast('Emaily se neshodují', 'error');
 
-  const res = await fetch(`http://localhost:3000/users/${userId}/email`, {
+  const res = await fetch(`/users/${userId}/email`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email })
   });
 
   const data = await res.json();
-  if (!res.ok) return alert(data.msg);
+  if (!res.ok) return showToast(data.msg, 'error');
+
+  showToast('Email změněn', 'success');
+
+  if (!canProceed()) return;
 
   document.getElementById('infoEmail').innerText = email;
   emailModal.hide();
@@ -150,18 +177,20 @@ document.getElementById('changePasswordBtn')
     const confirm = document.getElementById('confirmNewPassword').value;
 
     if (!current || !next || !confirm)
-      return alert('Vyplň všechna pole');
+      return showToast('Vyplň všechna pole', 'error');
 
-    if (next.length < 6)
-      return alert('Heslo musí mít alespoň 6 znaků');
+    if (next.length < 8)
+      return showToast('Heslo musí mít alespoň 8 znaků', 'error');
 
     if (next !== confirm)
-      return alert('Nová hesla se neshodují');
+      return showToast('Nová hesla se neshodují', 'error');
+
+      if (!canProceed()) return;
 
     const userId = localStorage.getItem('userId');
 
     const res = await fetch(
-      `http://localhost:3000/users/${userId}/password`,
+      `/users/${userId}/password`,
       {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -173,9 +202,9 @@ document.getElementById('changePasswordBtn')
     );
 
     const data = await res.json();
-    if (!res.ok) return alert(data.msg);
+    if (!res.ok) return showToast(data.msg, 'error');
 
-    alert('Heslo bylo úspěšně změněno');
+    showToast('Heslo bylo úspěšně změněno', 'success');
     passwordModal.hide();
 
     // vyčistit pole
@@ -187,7 +216,7 @@ document.getElementById('changePasswordBtn')
   // Načtení uživatelských odznaků
   async function loadUserBadges(userId) {
   try {
-    const res = await fetch(`http://localhost:3000/users/${userId}/badges`);
+    const res = await fetch(`/users/${userId}/badges`);
     if (!res.ok) throw new Error('Badges nenalezeny');
 
     const badges = await res.json();
@@ -205,7 +234,7 @@ document.getElementById('changePasswordBtn')
 
     card.innerHTML = `
       <div class="badge-icon">
-        <img src="http://localhost:3000${badge.icon}" alt="${badge.name}">
+        <img src="${badge.icon}" alt="${badge.name}">
       </div>
       <div class="badge-name">${badge.name}</div>
       <div class="badge-desc">${badge.description || ''}</div>
@@ -216,5 +245,39 @@ document.getElementById('changePasswordBtn')
 
   } catch (err) {
     console.error(err);
+  }
+}
+
+function showToast(message, type = "success") {
+  const toast = document.getElementById("profileToast");
+
+  toast.textContent = message;
+  toast.className = `profile-toast show ${type}`;
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
+}
+
+async function loadUserCooldowns(userId) {
+  const res = await fetch(`/users/${userId}/cooldowns`);
+  const data = await res.json();
+
+  if (data.username) {
+    document.getElementById('usernameCooldown').innerText =
+      `Další změna za: ${data.username}`;
+    document.getElementById('saveUsernameBtn').disabled = true;
+  }
+
+  if (data.email) {
+    document.getElementById('emailCooldown').innerText =
+      `Další změna za: ${data.email}`;
+    document.getElementById('saveEmailBtn').disabled = true;
+  }
+
+  if (data.password) {
+    document.getElementById('passwordCooldown').innerText =
+      `Další změna za: ${data.password}`;
+    document.getElementById('savePasswordBtn').disabled = true;
   }
 }

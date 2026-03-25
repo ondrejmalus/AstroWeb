@@ -39,18 +39,41 @@ router.post('/register', async (req, res) => {
 
 // Přihlášení
 router.post('/login', async (req, res) => {
+
   const { username, password } = req.body;
-  if (!username || !password) return res.status(400).json({ success: false, msg: 'Vyplňte všechna pole' });
+
+  if (!username || !password) {
+    return res.status(400).json({
+      success: false,
+      msg: 'Vyplňte všechna pole'
+    });
+  }
 
   try {
-    const [rows] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
-    if (rows.length === 0) return res.status(400).json({ success: false, msg: 'Uživatel nenalezen' });
+
+    const [rows] = await db.query(
+      'SELECT * FROM users WHERE username = ? OR email = ?',
+      [username, username]
+    );
+
+    if (rows.length === 0) {
+      return res.status(400).json({
+        success: false,
+        msg: 'Špatné přihlašovací údaje'
+      });
+    }
 
     const user = rows[0];
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(400).json({ success: false, msg: 'Špatné heslo' });
 
-    // Odeslání kompletních dat na frontend
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
+      return res.status(400).json({
+        success: false,
+        msg: 'Špatné heslo'
+      });
+    }
+
     res.json({
       success: true,
       id: user.id,
@@ -59,9 +82,13 @@ router.post('/login', async (req, res) => {
     });
 
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, msg: 'Chyba serveru' });
+    console.error("LOGIN ERROR:", err);
+    res.status(500).json({
+      success: false,
+      msg: 'Chyba serveru'
+    });
   }
+
 });
 
 export default router;

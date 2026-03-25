@@ -21,8 +21,10 @@
 <main class="container mt-5 content background">
 
 <section class="profile-header mb-5 text-center">
-  <h1 class="profile-title">
-    Profil uživatele <span id="profileUsername" style="font-size: 35px"></span>
+
+  <h1 class="profile-title mt-3">
+    Profil uživatele 
+    <span id="profileUsername" style="font-size: 35px"></span>
   </h1>
 
   <p class="profile-rank">
@@ -34,6 +36,7 @@
     <strong id="profileCreatedAt">--.--.----</strong>
     a od té doby objevuješ krásy vesmíru.
   </p>
+
 </section>
 
 <section class="profile-section mb-5">
@@ -168,7 +171,7 @@
         >
 
         <small class="d-block mt-2">
-          Heslo musí mít alespoň 6 znaků
+          Heslo musí mít alespoň 8 znaků
         </small>
       </div>
 
@@ -222,5 +225,6 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
+<div id="profileToast" class="profile-toast"></div>
 </body>
 </html>

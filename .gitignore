@@ -13,3 +13,6 @@ frontend/images/
 # electron - build pro desktop
 electron/node_modules/
 electron/dist/
+
+# database - připojení k databázi
+server/db.js

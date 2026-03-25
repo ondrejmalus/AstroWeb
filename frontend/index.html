@@ -25,13 +25,22 @@
 
     <!-- Šipka dolů -->
     <div class="hero-scroll">
-      <i class="fas fa-chevron-down fa-2x bounce"></i>
+      <a href="/astro">
+        <i class="fas fa-chevron-down fa-2x bounce"></i>
+      </a>
     </div>
 
     <!-- Odkaz na galerii -->
     <p class="mt-4 gallery-link">
-      <a href="astro.html" class="btn-astro">Přejdi do galerie</a>
+      <a href="/astro" class="btn-astro">Přejdi do galerie</a>
     </p>
+
+    <div class="hero-section">
+      <p class="hero-pillars">Aktuální novinky ze světa astronomie</p>
+      <div class="hero-buttons">
+        <a href="#news-section" class="btn-astro">Podívej se na novinky</a>
+      </div>
+    </div>
 
     <!-- Věta + tlačítko k základním pojmům -->
     <div class="hero-section mt-5">
@@ -41,12 +50,6 @@
       </div>
     </div>
 
-    <div class="hero-section">
-      <p class="hero-pillars">Aktuální novinky ze světa astronomie</p>
-      <div class="hero-buttons">
-        <a href="#news-section" class="btn-astro">Podívej se na novinky</a>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -59,7 +62,7 @@
 <section id="news-section" class="container py-5">
   <h2 class="text-center mb-4 news-header">Aktuálně</h2>
 
-  <div id="news-container" class="row g-4">
+  <div id="news-container" class="row g-4" style="background-color: rgba(230, 230, 230, 0.486);border-radius: 10px; padding: 20px;box-shadow: 0 4px 20px rgba(0, 0, 0, 0.322);">
     <!-- Články se načtou sem skriptem -->
   </div>
 
@@ -68,8 +71,33 @@
     <button id="toggle-news-btn" class="btn btn-outline-primary d-none">
       Zobrazit starší novinky
     </button>
+    <div id="news-pagination" class="d-flex justify-content-center mt-4"></div>
   </div>
 </section>
+
+<!-- === MODAL PRO NOVINKU === -->
+<div class="modal fade" id="newsModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="newsModalTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <img id="newsModalImage" class="img-fluid mb-3 d-none">
+
+        <p class="text-date" id="newsModalDate" style="color: goldenrod"></p>
+
+        <p id="newsModalContent" style="color: white"></p>
+
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- Overlay pro otevřený článek -->
 <div id="news-overlay" class="news-overlay">
@@ -190,7 +218,7 @@
   <div class="row align-items-center">
     <!-- Levá část – Messier -->
     <div class="col-lg-6 mb-4 mb-lg-0 text-center text-lg-start">
-      <img src="data/web_images/messier.jpg" alt="Charles Messier" class="img-fluid rounded shadow mb-3" style="max-width: 280px;">
+      <img src="data/web_images/Messier.jpg" alt="Charles Messier" class="img-fluid rounded shadow mb-3" style="max-width: 280px;">
       <ul class="list-unstyled mt-3">
         <li>🔭 Francouzský astronom (1730–1817).</li>
         <li>📝 Vytvořil katalog 110 objektů.</li>
@@ -345,15 +373,14 @@
 
   </main>
 
-  <!-- FOOTER (načtený dynamicky) -->
   <div id="footer"></div>
 
   <script src="layout/navbar.js"></script>
 
- <script>
+<script>
 async function loadNews() {
   try {
-    const res = await fetch('http://localhost:3000/news');
+    const res = await fetch('/news');
     const data = await res.json();
     if (!data.success) return;
 
@@ -362,64 +389,135 @@ async function loadNews() {
 
     container.innerHTML = '';
 
-    data.articles.forEach((article, index) => {
-      const col = document.createElement('div');
-      col.className = 'col-lg-4 col-md-6 mb-4 news-item';
+  const NEWS_PER_PAGE = 3;
+  let currentPage = 1;
+  let articles = [];
 
-      // všechno kromě prvních 3 skryjeme
-      if (index >= 3) {
-        col.classList.add('news-hidden');
-      }
+  articles = data.articles;
+  renderNews();
+  renderPagination();
 
-      col.innerHTML = `
-        <div class="card shadow-sm h-100 news-card">
-          ${article.image ? `<img src="${article.image}" class="card-img-top" alt="${article.title}">` : ''}
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">${article.title}</h5>
-            <p class="text-date mb-2">${new Date(article.created_at).toLocaleDateString('cs-CZ')}</p>
-            <p class="card-text d-none">${article.content}</p>
-            <button class="btn btn-primary mt-auto read-more-btn">Více</button>
-          </div>
+  function renderNews() {
+
+  const container = document.getElementById('news-container');
+
+  container.innerHTML = '';
+
+  const start = (currentPage - 1) * NEWS_PER_PAGE;
+  const end = start + NEWS_PER_PAGE;
+
+  const pageArticles = articles.slice(start, end);
+
+  pageArticles.forEach(article => {
+
+    const col = document.createElement('div');
+    col.className = 'col-lg-4 col-md-6 mb-4';
+
+    col.innerHTML = `
+      <div class="card shadow-sm h-100 news-card">
+        ${article.image ? `<img src="${article.image}" class="card-img-top">` : ''}
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">${article.title}</h5>
+          <p class="text-date">${new Date(article.created_at).toLocaleDateString('cs-CZ')}</p>
+          <p class="card-text d-none">${article.content}</p>
+          <button class="btn btn-primary mt-auto read-more-btn">Více</button>
         </div>
-      `;
+      </div>
+    `;
 
-      container.appendChild(col);
-    });
+    container.appendChild(col);
 
-    // pokud je víc než 3 články, zobrazíme tlačítko
-    if (data.articles.length > 3) {
-      toggleBtn.classList.remove('d-none');
-    }
+  });
 
-    // toggle starších článků
-    let expanded = false;
-    toggleBtn.addEventListener('click', () => {
-      expanded = !expanded;
+}
 
-      document.querySelectorAll('.news-hidden').forEach(el => {
-        el.style.display = expanded ? 'block' : 'none';
-      });
+function renderPagination() {
 
-      toggleBtn.innerText = expanded
-        ? 'Skrýt starší novinky'
-        : 'Zobrazit starší novinky';
-    });
+  const pagination = document.getElementById('news-pagination');
 
-    // overlay – zůstává beze změny
+  const pages = Math.ceil(articles.length / NEWS_PER_PAGE);
+
+  pagination.innerHTML = '';
+
+  for (let i = 1; i <= pages; i++) {
+
+    const btn = document.createElement('button');
+
+    btn.className = `btn btn-outline-primary mx-1 ${i === currentPage ? 'active' : ''}`;
+
+    btn.innerText = i;
+
+    btn.onclick = () => {
+      currentPage = i;
+      renderNews();
+      renderPagination();
+    };
+
+    pagination.appendChild(btn);
+
+  }
+
+}
+
+function renderPagination() {
+
+  const pagination = document.getElementById('news-pagination');
+
+  const pages = Math.ceil(articles.length / NEWS_PER_PAGE);
+
+  pagination.innerHTML = '';
+
+  for (let i = 1; i <= pages; i++) {
+
+    const btn = document.createElement('button');
+
+    btn.className = `btn btn-outline-primary mx-1 ${i === currentPage ? 'active' : ''}`;
+
+    btn.innerText = i;
+
+    btn.onclick = () => {
+      currentPage = i;
+      renderNews();
+      renderPagination();
+    };
+
+    pagination.appendChild(btn);
+
+  }
+
+}
+
     const overlay = document.getElementById('news-overlay');
     const overlayContent = overlay.querySelector('.overlay-content');
     const closeBtn = overlay.querySelector('.close-overlay');
 
     container.addEventListener('click', (e) => {
-      if (e.target.classList.contains('read-more-btn')) {
-        const card = e.target.closest('.news-card');
-        const clone = card.cloneNode(true);
-        clone.querySelector('.read-more-btn').remove();
-        clone.querySelector('.card-text').classList.remove('d-none');
-        overlayContent.innerHTML = '';
-        overlayContent.appendChild(clone);
-        overlay.classList.add('active');
+
+      if (!e.target.classList.contains('read-more-btn')) return;
+
+      const card = e.target.closest('.news-card');
+
+      const title = card.querySelector('.card-title').innerText;
+      const date = card.querySelector('.text-date').innerText;
+      const content = card.querySelector('.card-text').innerText;
+      const image = card.querySelector('img')?.src;
+
+      document.getElementById('newsModalTitle').innerText = title;
+      document.getElementById('newsModalDate').innerText = date;
+      document.getElementById('newsModalContent').innerText = content;
+
+      const modalImg = document.getElementById('newsModalImage');
+
+      if (image) {
+        modalImg.src = image;
+        modalImg.classList.remove('d-none');
+      } else {
+        modalImg.classList.add('d-none');
       }
+
+      const modal = new bootstrap.Modal(document.getElementById('newsModal'));
+      modal.show();
+
     });
 
     closeBtn.addEventListener('click', () => overlay.classList.remove('active'));
@@ -445,7 +543,6 @@ document.addEventListener('DOMContentLoaded', loadNews);
 
 <script>
 
-// Vlastní fade carousel
 const slides = document.querySelectorAll('#messierCarousel .carousel-item');
 const prevBtn = document.querySelector('#messierCarousel .prev');
 const nextBtn = document.querySelector('#messierCarousel .next');

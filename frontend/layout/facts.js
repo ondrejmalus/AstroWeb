@@ -9,7 +9,7 @@ let allFacts = [];
 
 async function loadFacts() {
   try {
-    const res = await fetch('http://localhost:3000/facts');
+    const res = await fetch('/facts');
     const data = await res.json();
     if (!data.success) return;
 
@@ -46,16 +46,7 @@ function renderFacts(facts) {
           <h5>${fact.title}</h5>
           <p>${truncateText(fact.text, 180)}</p>
           <div class="fact-readmore">
-          <button class="btn btn-outline-info btn-sm mt-2"
-            data-bs-toggle="modal"
-            data-bs-target="#factModal"
-            data-title="${fact.title}"
-            data-category="${fact.category}"
-            data-text="${fact.text}"
-            data-image="${fact.image || ''}"
-            >
-            Číst více
-          </button>
+            <a href="/thefact?id=${fact.id}" class="btn btn-outline-info btn-sm mt-2" style="color: inherit; text-decoration: none;border-radius: 10px;">Číst více</a>
           </div>
         </div>
       </div>

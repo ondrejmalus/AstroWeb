@@ -11,7 +11,9 @@
   <link href="assets/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
 </head>
-<body class="body gallery-page">
+<body class="gallery-page">
+
+  <div id="particles-js"></div>
 
   <!-- === SIDEBAR VLEVO === -->
 <aside id="sidebar" class="astro-sidebar">
@@ -23,7 +25,7 @@
   <!-- === PRAVÝ SIDEBAR S FILTRY === -->
 <div class="astro-sidebar-right">
 
-  <div class="filter-section">
+  <div class="filter-section sticky-search">
     <label class="filter-label">🔍 Vyhledávání</label>
     <input type="text" id="searchInput" class="filter-input" placeholder="Hledat název...">
   </div>
@@ -31,7 +33,7 @@
   <div class="top-controls">
     <button id="showTopNewest" class="top-btn">Top 10 nejnovějších</button>
     <button id="showTopRated" class="top-btn">Top 10 nejlépe hodnocených</button>
-    <button id="showAll" class="top-btn" style="margin-top:50px;">Zobrazit vše</button>
+    <button id="showAll" class="top-btn" style="margin-top:50px;">Zobrazit vše / Zrušit filtry</button>
   </div>
 
   <div class="filter-section">
@@ -75,37 +77,27 @@
 
 <main class="container mt-5 content">
 
-  <!-- úvod -->
-<section class="gallery-hero">
+<!-- úvod -->
+<section class="gallery-hero text-center py-4">
+
   <div class="hero-content">
 
-    <h1>Astronomická galerie</h1>
+    <h1 style="margin-top:70px;">Astronomická galerie</h1>
 
     <p class="hero-lead">
-      Toto je má sbírka originálních astronomických snímků pořízených mým teleskopem.
+      Sbírka mých originálních astronomických snímků pořízených mým teleskopem.
     </p>
 
-    <p class="hero-text">
-      Každý snímek zachycuje fascinující objekty vesmíru – od planet naší
-      sluneční soustavy až po vzdálené galaxie, mlhoviny a hvězdokupy.
-      Součástí každého snímku je detailní popis objektu, jeho vzdálenosti,
-      souhvězdí a dalších zajímavostí.
-    </p>
+    <div class="hero-actions mt-3">
+        <a id="stats" href="/astrostatistics" class="astro-stats">Astronomické statistiky</a>
 
-    <p class="hero-quote">
-      Prozkoumej galerii a vciť se do nekonečna a ještě dál.
-    </p>
-
-    <div class="hero-actions">
-      <button onclick="scrollToGallery()">Prozkoumat galerii</button>
-      <button id="randomImageBtn" class="secondary-btn">Náhodný snímek</button>
-    </div>
-
-    <div class="gallery-stats">
-      V galerii se aktuálně nachází <span id="galleryCount" style="color: #6100bb; font-size: 2rem;">—</span> snímků.
+      <button id="randomImageBtn" class="btn btn-outline-light ms-2">
+        Náhodný snímek
+      </button>
     </div>
 
   </div>
+
 </section>
 
   <div id="gallery"></div>
@@ -190,12 +182,6 @@
     window.scrollTo({ top: 0, behavior: 'smooth' }); 
   }
 
-  function scrollToGallery() {
-    document.getElementById("gallery").scrollIntoView({
-      behavior: "smooth"
-    });
-  }
-
   // Posun šipky jen pokud jsme na galerii
   if (document.body.classList.contains('gallery-page')) {
     scrollBtn.style.right = '280px'; // uprav podle potřeby
@@ -257,7 +243,44 @@ document.querySelector('.astro-sidebar').addEventListener('click', e => {
 });
 </script>
 
-<script src="/frontend/assets/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<script>
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 60 },
+
+    color: { value: "#5F5F5F" },
+
+    shape: { type: "circle" },
+
+    opacity: {
+      value: 0.8
+    },
+
+    size: {
+      value: 4
+    },
+
+    line_linked: {
+      enable: false
+    },
+
+    move: {
+      enable: true,
+      speed: 0.2
+    }
+  },
+
+  interactivity: {
+    enable: false
+  },
+
+  retina_detect: true
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="layout/astro.js"></script>
 </body>
 </html>

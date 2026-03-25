@@ -13,21 +13,30 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Zvýraznění aktivní stránky
-  const currentPage = location.pathname.split("/").pop() || "index.html";
+  let currentPage = location.pathname.split("/").pop();
+
+  // když je root "/", ber to jako index
+  if (!currentPage) currentPage = "index";
 
   // mapování stránek, které sdílejí logickou sekci
   const activeMap = {
-    "login.html": "login.html",
-    "profile.html": "profile.html",
-    "upload.html": "upload.html",
+    "login": "login",
+    "profile": "profile",
+    "upload": "upload",
+    "edit": "upload",
+    "thefact": "facts-page",
+    "index": "index"
   };
 
   document.querySelectorAll(".nav-link").forEach(link => {
     const href = link.getAttribute("href");
     // Aktivní pokud přesně odpovídá stránce nebo patří do stejné "sekce"
+    const cleanHrefRaw = href.replace(/^\/|\.html$/g, "");
+    const cleanHref = cleanHrefRaw === "" ? "index" : cleanHrefRaw;
+
     if (
-      href === currentPage ||
-      activeMap[currentPage] === href
+      cleanHref === currentPage ||
+      activeMap[currentPage] === cleanHref
     ) {
       link.classList.add("active");
     } else {
@@ -47,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (role === "user") {
     authLinks.innerHTML = `
       <li class="nav-item">
-        <a class="nav-link" href="profile.html">
+        <a class="nav-link" href="/profile">
           <i class="fas fa-user-circle"></i> Profil
         </a>
       </li>
@@ -60,12 +69,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   } else if (role === "admin") {
     authLinks.innerHTML = `
       <li class="nav-item">
-        <a class="nav-link" href="profile.html">
+        <a class="nav-link" href="/profile">
           <i class="fas fa-user-circle"></i> Admin - Profil
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="upload.html">
+        <a class="nav-link" href="/upload">
           <i class="fas fa-upload"></i> Administrace
         </a>
       </li>
@@ -79,20 +88,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Nepřihlášený uživatel
     authLinks.innerHTML = `
       <li class="nav-item">
-        <a class="nav-link" href="login.html">
+        <a class="nav-link" href="/login">
           <i class="fas fa-user"></i> Přihlášení
         </a>
       </li>
     `;
   }
 
-  // Znovu zvýrazní aktivní odkaz i mezi auth odkazy (např. login.html)
+  // Znovu zvýrazní aktivní odkaz i mezi auth odkazy
   const newLinks = document.querySelectorAll(".nav-link");
   newLinks.forEach(link => {
     const href = link.getAttribute("href");
+    const cleanHref = href.replace("/", "");
+
     if (
-      href === currentPage ||
-      activeMap[currentPage] === href
+      cleanHref === currentPage ||
+      activeMap[currentPage] === cleanHref
     ) {
       link.classList.add("active");
     }
@@ -107,7 +118,7 @@ if (logoutBtn) {
     localStorage.removeItem("role"); // pro jistotu, pokud se někde používá starší klíč
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
-    window.location.href = "login.html"; // přesměruje na login stránku
+    window.location.href = "/login"; // přesměruje na login stránku
   });
 }
 });

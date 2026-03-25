@@ -9,12 +9,9 @@ router.get('/:id', async (req, res) => {
   const userId = req.params.id;
 
   try {
-    await evaluateBadges(userId); // ✅ TADY je to správně
+    await evaluateBadges(userId);
 
-    const [rows] = await db.query(
-      'SELECT id, username, email, created_at FROM users WHERE id = ?',
-      [userId]
-    );
+    const [rows] = await db.query('SELECT id, username, email, created_at FROM users WHERE id = ?', [userId]);
 
     if (!rows.length) {
       return res.status(404).json({ msg: 'Uživatel nenalezen' });
@@ -27,18 +24,15 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// 📊 Statistiky uživatele
 router.get('/:id/stats', async (req, res) => {
   const userId = req.params.id;
 
   try {
-    // ❤️ počet udělených lajků
     const [[likesRow]] = await db.query(
       'SELECT COUNT(*) AS count FROM gallery_likes WHERE user_id = ?',
       [userId]
     );
 
-    // 🌌 oblíbená kategorie
     const [[categoryRow]] = await db.query(
       `
       SELECT g.category, COUNT(*) AS count
@@ -52,7 +46,6 @@ router.get('/:id/stats', async (req, res) => {
       [userId]
     );
 
-    // ✨ oblíbené souhvězdí
     const [[constellationRow]] = await db.query(
       `
       SELECT g.constellation, COUNT(*) AS count
@@ -83,8 +76,8 @@ router.put('/:id/username', async (req, res) => {
   const { username } = req.body;
 
   const [exists] = await db.query(
-    'SELECT id FROM users WHERE username = ?',
-    [username]
+    'SELECT id FROM users WHERE username = ? AND id != ?',
+    [username, req.params.id]
   );
 
   if (exists.length)
@@ -102,8 +95,8 @@ router.put('/:id/email', async (req, res) => {
   const { email } = req.body;
 
   const [exists] = await db.query(
-    'SELECT id FROM users WHERE email = ?',
-    [email]
+    'SELECT id FROM users WHERE email = ? AND id != ?',
+    [email, req.params.id]
   );
 
   if (exists.length)
@@ -120,6 +113,10 @@ router.put('/:id/email', async (req, res) => {
 router.put('/:id/password', async (req, res) => {
   const { currentPassword, newPassword } = req.body;
 
+  if (newPassword.length < 8) {
+  return res.status(400).json({ msg: 'Heslo musí mít alespoň 8 znaků' });
+}
+
   if (!currentPassword || !newPassword) {
     return res.status(400).json({ msg: 'Neplatná data' });
   }
@@ -131,7 +128,7 @@ router.put('/:id/password', async (req, res) => {
     );
 
     if (!user)
-      return res.status(404).json({ msg: 'Uživatel nenalezen' });
+      return res.status(404).json({ msg: 'Špatné přihlašovací údaje' });
 
     const match = await bcrypt.compare(currentPassword, user.password);
     if (!match)

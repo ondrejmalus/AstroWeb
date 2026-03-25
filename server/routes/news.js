@@ -1,5 +1,5 @@
 import express from 'express';
-import { db } from '../server.js';
+import { db } from '../db.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -23,12 +23,15 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   }
 });
+
 const upload = multer({ storage });
 
 // GET /news
 router.get("/", async (req, res) => {
   try {
+
     const [rows] = await db.query("SELECT * FROM news ORDER BY created_at DESC");
+
     res.json({ success: true, articles: rows });
   } catch (error) {
     console.error("Chyba při načítání článků:", error);

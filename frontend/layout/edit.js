@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loadGallery() {
   try {
-    const res = await fetch('http://localhost:3000/gallery');
+    const res = await fetch('/gallery');
     galleryData = await res.json();
     renderTable(galleryData);
   } catch (err) {
@@ -31,7 +31,7 @@ function renderTable(data) {
 
     tr.innerHTML = `
       <td>
-        <img src="../frontend/images/${item.image}" alt="${item.name}">
+        <img src="../images/${item.image}" alt="${item.name}">
       </td>
       <td>${item.name}</td>
       <td>${item.common_name || '—'}</td>
@@ -40,12 +40,12 @@ function renderTable(data) {
       <td>
         <button class="btn btn-warning btn-sm me-1"
           onclick="editItem(${item.id})">
-          ✏️ Upravit
+          Upravit
         </button>
 
         <button class="btn btn-danger btn-sm"
           onclick="deleteItem(${item.id})">
-          🗑️ Smazat
+          Smazat
         </button>
       </td>
     `;
@@ -77,7 +77,7 @@ async function deleteItem(id) {
   if (!confirmDelete) return;
 
   try {
-    const res = await fetch(`http://localhost:3000/gallery/${id}`, {
+    const res = await fetch(`/gallery/${id}`, {
       method: 'DELETE'
     });
 
@@ -127,7 +127,7 @@ async function saveEdit() {
   if (image) formData.append('image', image);
 
   try {
-    const res = await fetch(`http://localhost:3000/gallery/${id}`, {
+    const res = await fetch(`/gallery/${id}`, {
       method: 'PUT',
       body: formData
     });
@@ -151,7 +151,7 @@ let factsData = [];
 
 /* NOVINKY */
 async function loadNews() {
-  const res = await fetch('http://localhost:3000/news');
+  const res = await fetch('/news');
   const json = await res.json();
 
   newsData = json.articles ?? [];
@@ -169,9 +169,9 @@ function renderNews(data) {
       <td>${new Date(n.created_at).toLocaleDateString('cs-CZ')}</td>
       <td>
         <button class="btn btn-warning btn-sm me-1"
-          onclick="editNews(${n.id})">✏️ Upravit</button>
+          onclick="editNews(${n.id})">Upravit</button>
         <button class="btn btn-danger btn-sm"
-          onclick="deleteNews(${n.id})">🗑️ Smazat</button>
+          onclick="deleteNews(${n.id})">Smazat</button>
       </td>
     `;
     tbody.appendChild(tr);
@@ -190,7 +190,7 @@ if (newsSearch) {
 
 /* ZAJÍMAVOSTI */
 async function loadFacts() {
-  const res = await fetch('http://localhost:3000/facts');
+  const res = await fetch('/facts');
   const json = await res.json();
 
   const data = Array.isArray(json)
@@ -212,9 +212,9 @@ function renderFacts(data) {
       <td>${f.title}</td>
       <td>
         <button class="btn btn-warning btn-sm me-1"
-          onclick="editFact(${f.id})">✏️ Upravit</button>
+          onclick="editFact(${f.id})">Upravit</button>
         <button class="btn btn-danger btn-sm"
-          onclick="deleteFact(${f.id})">🗑️ Smazat</button>
+          onclick="deleteFact(${f.id})">Smazat</button>
       </td>
     `;
     tbody.appendChild(tr);
@@ -272,7 +272,7 @@ async function saveNewsEdit() {
   const img = document.getElementById('edit-news-image').files[0];
   if (img) fd.append('image', img);
 
-  await fetch(`http://localhost:3000/news/${id}`, {
+  await fetch(`/news/${id}`, {
     method: 'PUT',
     body: fd
   });
@@ -280,6 +280,32 @@ async function saveNewsEdit() {
   alert('Článek uložen ✅');
   newsModal.hide();
   loadNews();
+}
+
+async function deleteNews(id) {
+
+  const confirmDelete = confirm(
+    'Opravdu chceš tuto novinku smazat?'
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+
+    const res = await fetch(`/news/${id}`, {
+      method: 'DELETE'
+    });
+
+    if (!res.ok) throw new Error('Chyba při mazání');
+
+    newsData = newsData.filter(n => n.id !== id);
+    renderNews(newsData);
+
+  } catch (err) {
+    console.error(err);
+    alert('Nepodařilo se smazat novinku');
+  }
+
 }
 
 let factModal = new bootstrap.Modal(
@@ -309,7 +335,7 @@ async function saveFactEdit() {
   const img = document.getElementById('edit-fact-image').files[0];
   if (img) fd.append('image', img);
 
-  await fetch(`http://localhost:3000/facts/${id}`, {
+  await fetch(`/facts/${id}`, {
     method: 'PUT',
     body: fd
   });
@@ -322,7 +348,7 @@ async function saveFactEdit() {
 async function deleteFact(id) {
   if (!confirm('Opravdu chceš tuto zajímavost smazat?')) return;
 
-  await fetch(`http://localhost:3000/facts/${id}`, {
+  await fetch(`/facts/${id}`, {
     method: 'DELETE'
   });
 

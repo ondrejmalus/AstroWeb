@@ -163,8 +163,20 @@ function renderGallery(data) {
   const topResults = document.getElementById('topResults');
   if (topResults) topResults.innerHTML = "";
 
-  gallery.style.display = 'block';
-  gallery.innerHTML = '';
+gallery.style.display = 'block';
+gallery.innerHTML = '';
+
+// když nic nenalezeno
+if (data.length === 0) {
+  gallery.innerHTML = `
+    <div class="no-results text-center w-100 py-5">
+      <i class="fas fa-search fa-2x mb-3"></i>
+      <h5>Žádné výsledky</h5>
+      <p>Zkus upravit filtry nebo vyhledávání.</p>
+    </div>
+  `;
+  return;
+}
 
   const categories = [
     { key: 'sluneční_soustava', label: 'Sluneční soustava' },
@@ -219,11 +231,82 @@ function renderGallery(data) {
 
 // ---------- FILTRY – APLIKACE ----------
 
+function renderCatalogGallery(data, selectedCatalogs) {
+
+  visibleGalleryOrder = [];
+
+  const gallery = document.getElementById('gallery');
+  if (!gallery) return;
+
+  gallery.style.display = 'block';
+  gallery.innerHTML = '';
+
+  let title = "";
+
+if (selectedCatalogs.includes("messier")) {
+  title = "Messierův katalog";
+} else if (selectedCatalogs.includes("ngc")) {
+  title = "NGC katalog";
+} else if (selectedCatalogs.includes("ic")) {
+  title = "IC katalog";
+}
+
+if (title) {
+  const header = document.createElement("div");
+  header.className = "category mb-4 category-title";
+  header.innerHTML = `<h2>${title}</h2>`;
+  gallery.appendChild(header);
+}
+
+  const row = document.createElement('div');
+  row.className = 'subcategory-row'; // stejné jako v klasické galerii
+
+  let filteredData = data;
+
+  if (selectedCatalogs.includes("messier")) {
+    filteredData = data.filter(item =>
+      /^Messier\s?\d+/i.test(item.name)
+    );
+  } else if (selectedCatalogs.includes("ngc")) {
+    filteredData = data.filter(item =>
+      /^NGC\s\d+/i.test(item.name)
+    );
+  } else if (selectedCatalogs.includes("ic")) {
+    filteredData = data.filter(item =>
+      /^IC\s\d+[A-Z]?/i.test(item.name)
+    );
+  }
+
+  filteredData.forEach(item => {
+
+    visibleGalleryOrder.push(item.id);
+
+    const card = document.createElement('div');
+    card.className = 'card gallery-card shadow-sm me-3';
+
+    card.innerHTML = `
+      <img src="./images/${item.image}" class="card-img-top" alt="${item.common_name}">
+      <div class="card-body text-center">
+        <h5 class="card-title">${item.name}</h5>
+        <p class="card-text small">${item.common_name}</p>
+        <p class="card-text small">Souhvězdí: ${item.constellation}</p>
+      </div>
+    `;
+
+    card.addEventListener('click', () => openModalById(item.id));
+
+    row.appendChild(card);
+
+  });
+
+  gallery.appendChild(row);
+}
+
 // upravená funkce applyFilters
 function applyFilters() {
 
   const search =
-    document.getElementById('searchInput')?.value.toLowerCase() || "";
+    document.getElementById('searchInput')?.value.toLowerCase().trim() || "";
 
   const selectedCats =
     [...document.querySelectorAll('.catCheck:checked')]
@@ -237,12 +320,18 @@ function applyFilters() {
     [...document.querySelectorAll('.conCheck:checked')]
       .map(e => e.value);
 
+  const selectedCatalogs =
+  [...document.querySelectorAll('.catalogCheck:checked')]
+    .map(e => e.value);    
+
   filteredGalleryData =
     galleryData.filter(item => {
 
       const matchesSearch =
-        item.common_name.toLowerCase().includes(search) ||
-        item.name.toLowerCase().includes(search);
+        (item.common_name || "").toLowerCase().includes(search) ||
+        (item.name || "").toLowerCase().includes(search) ||
+        (item.constellation || "").toLowerCase().includes(search) ||
+        (item.fact || "").toLowerCase().includes(search);
 
       const matchCat =
         selectedCats.length
@@ -265,11 +354,32 @@ function applyFilters() {
             )
           : true;
 
-      return matchesSearch && matchCat && matchSub && matchCon;
+      const matchCatalog =
+        selectedCatalogs.length
+          ? selectedCatalogs.some(cat =>
+              item.name.toLowerCase().includes(cat)
+          )
+        : true;
+
+      return matchesSearch && matchCat && matchSub && matchCon && matchCatalog;
 
     });
 
-  renderGallery(filteredGalleryData);
+    if (selectedCatalogs.length) {
+  filteredGalleryData.sort((a, b) => {
+
+    const numA = parseInt(a.name.replace(/\D/g, "")) || 0;
+    const numB = parseInt(b.name.replace(/\D/g, "")) || 0;
+
+    return numA - numB;
+  });
+}
+
+  if (selectedCatalogs.length) {
+    renderCatalogGallery(filteredGalleryData, selectedCatalogs);
+  } else {
+    renderGallery(filteredGalleryData);
+  }
 }
 
 // ---------- TOP 10 GALERIE ----------
@@ -390,7 +500,7 @@ function showModalItem() {
   }
 
   // === DALŠÍ SNÍMKY ===
-fetch(`http://localhost:3000/gallery/${item.id}/images`)
+fetch(`/gallery/${item.id}/images`)
   .then(res => res.json())
   .then(images => {
     if (images.length) {
@@ -445,7 +555,7 @@ function toggleFullscreen(img) {
 // funkce pro otevření modálu s dalšími snímky
 async function openExtraImages(galleryId) {
   try {
-    const res = await fetch(`http://localhost:3000/gallery/${galleryId}/images`);
+    const res = await fetch(`/gallery/${galleryId}/images`);
     const images = await res.json();
 
     const grid = document.getElementById('extraImagesGrid');
@@ -519,14 +629,36 @@ async function loadGallery() {
 
   try {
     const userId = localStorage.getItem('userId');
-    const res = await fetch(`http://localhost:3000/gallery${userId ? '?userId=' + userId : ''}`);
+    const res = await fetch(`/gallery${userId ? '?userId=' + userId : ''}`);
     const data = await res.json();
     galleryData = data;
 
+    // počet snímků
     const countEl = document.getElementById('galleryCount');
-      if (countEl) {
-        countEl.textContent = galleryData.length;
-      }
+    if (countEl) {
+      countEl.textContent = galleryData.length;
+    }
+
+    // počet kategorií
+    const categories = [...new Set(galleryData.map(i => i.category))];
+    const categoryEl = document.getElementById('categoryCount');
+    if (categoryEl) {
+      categoryEl.textContent = categories.length;
+    }
+
+    // počet podkategorií
+    const subcategories = [...new Set(galleryData.map(i => i.subcategory))];
+    const subcategoryEl = document.getElementById('subcategoryCount');
+    if (subcategoryEl) {
+      subcategoryEl.textContent = subcategories.length;
+    }
+
+    // počet souhvězdí
+    const constellations = [...new Set(galleryData.map(i => i.constellation).filter(Boolean))];
+    const constellationEl = document.getElementById('constellationCount');
+    if (constellationEl) {
+      constellationEl.textContent = constellations.length;
+    }
 
     buildSidebar(data);
     fillRightSidebarFilters(data);
@@ -656,7 +788,7 @@ if (likeBtn) {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/gallery/${item.id}/like`, {
+      const res = await fetch(`/gallery/${item.id}/like`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId })

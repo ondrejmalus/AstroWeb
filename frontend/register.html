@@ -36,7 +36,7 @@
   <button type="submit" class="login-btn">Zaregistrovat se</button>
 </form>
 <p class="login-register">
-    Již máte účet? <a href="login.html">Přihlaste se</a>
+    Již máte účet? <a href="/login">Přihlaste se</a>
   </p>
 <p id="regMsg" class="login-msg"></p>
   </div>
@@ -57,18 +57,40 @@ document.getElementById('registerForm').addEventListener('submit', async e => {
   const confirm = document.getElementById('regConfirm').value;
   const msg = document.getElementById('regMsg');
 
+  let msgTimeout;
+
+function showMessage(text, type = "error") {
+  const msg = document.getElementById("regMsg");
+
+  msg.textContent = text;
+
+  msg.classList.remove("success-msg", "error-msg");
+
+  if (type === "success") {
+    msg.classList.add("success-msg");
+  } else {
+    msg.classList.add("error-msg");
+  }
+
+  clearTimeout(msgTimeout);
+
+  msgTimeout = setTimeout(() => {
+    msg.textContent = "";
+  }, 2500);
+}
+
   // --- Ověření hesla ---
   if (password.length < 8) {
-    msg.textContent = "Heslo musí mít alespoň 8 znaků.";
+    showMessage("Heslo musí mít alespoň 8 znaků.");
     return;
   }
   if (password !== confirm) {
-    msg.textContent = "Zadaná hesla se musí shodovat.";
+    showMessage("Zadaná hesla se musí shodovat.");
     return;
   }
 
   try {
-      const res = await fetch('http://localhost:3000/auth/register', {
+      const res = await fetch('/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, email, password, confirm })
@@ -76,14 +98,13 @@ document.getElementById('registerForm').addEventListener('submit', async e => {
     const data = await res.json();
 
     if (res.ok) {
-      msg.textContent = 'Registrace úspěšná, nyní se přihlaste.';
-      msg.classList.add('success-msg');
-      setTimeout(() => location.href = 'login.html', 1500);
+      showMessage('Registrace úspěšná, nyní se přihlaste.', 'success');
+      setTimeout(() => location.href = '/login', 1500);
     } else {
-      msg.textContent = data.msg;
+      showMessage(data.msg);
     }
   } catch (err) {
-    msg.textContent = 'Chyba serveru';
+    showMessage('Chyba serveru');
     console.error(err);
   }
 });
