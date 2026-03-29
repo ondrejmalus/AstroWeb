@@ -115,7 +115,7 @@ if (logoutBtn) {
   logoutBtn.addEventListener("click", e => {
     e.preventDefault();
     localStorage.removeItem("userRole");
-    localStorage.removeItem("role"); // pro jistotu, pokud se někde používá starší klíč
+    localStorage.removeItem("role");
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
     window.location.href = "/login"; // přesměruje na login stránku

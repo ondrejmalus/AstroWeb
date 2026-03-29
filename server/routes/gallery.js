@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
 // Filtr pro povolené typy souborů
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // max 10 MB
+  limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowed = /jpeg|jpg|png|gif|webp/;
     const ext = path.extname(file.originalname).toLowerCase();
@@ -64,7 +64,7 @@ router.post('/', upload.single('image'), async (req, res) => {
 // GET – získání všech snímků z galerie
 router.get('/', async (req, res) => {
   try {
-    const userId = req.query.userId; // ID přihlášeného uživatele (volitelné)
+    const userId = req.query.userId; // ID přihlášeného uživatele
 
     // Načteme všechny snímky a počet lajků
     const [rows] = await db.query(`
@@ -283,7 +283,7 @@ router.delete('/:id', async (req, res) => {
       fs.unlinkSync(imagePath);
     }
 
-    // smažeme dodatečné obrázky (soubory)
+    // smažeme dodatečné obrázky
     const [extraImages] = await db.query(
       'SELECT image FROM gallery_images WHERE gallery_id = ?',
       [id]
@@ -296,7 +296,7 @@ router.delete('/:id', async (req, res) => {
       }
     }
 
-    // smažeme z DB (správné pořadí kvůli FK)
+    // smažeme z DB
     await db.query(
       'DELETE FROM gallery_images WHERE gallery_id = ?',
       [id]

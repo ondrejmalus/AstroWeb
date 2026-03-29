@@ -55,7 +55,7 @@ function fillProfile(user) {
   document.getElementById('infoUsername').innerText = user.username;
   document.getElementById('infoEmail').innerText = user.email;
 
-  // Astronomický text 🌌
+  // Astronomický text
   const created = new Date(user.created_at);
   const formatted = created.toLocaleDateString('cs-CZ', {
     day: 'numeric',

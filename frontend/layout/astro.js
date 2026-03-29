@@ -259,7 +259,7 @@ if (title) {
 }
 
   const row = document.createElement('div');
-  row.className = 'subcategory-row'; // stejné jako v klasické galerii
+  row.className = 'subcategory-row';
 
   let filteredData = data;
 
@@ -302,7 +302,7 @@ if (title) {
   gallery.appendChild(row);
 }
 
-// upravená funkce applyFilters
+// funkce applyFilters
 function applyFilters() {
 
   const search =
@@ -456,7 +456,7 @@ function resetFiltersAndShowAll() {
 
 document.querySelectorAll(".filter-checkbox input").forEach(cb => {
   cb.checked = false;
-  cb.parentElement.classList.remove('active'); // odstraní zvýraznění
+  cb.parentElement.classList.remove('active');
 });
 
 
@@ -686,7 +686,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', applyFilters);
   }
 
-  // checkboxy – delegace (ať nepřidáváme listenery milionkrát)
+  // checkboxy
 document.body.addEventListener('change', e => {
   if (e.target.matches('.catCheck, .subCheck, .conCheck, .catalogCheck')) {
 
@@ -753,7 +753,7 @@ if (randomBtn) {
     });
   }
 
-// Prev / Next v modálu – upraveno pro filtrování
+// Prev / Next v modálu
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 
