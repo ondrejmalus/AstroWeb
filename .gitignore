@@ -2,7 +2,7 @@
 node_modules/
 
 # assets - bootstrap, fontawesome
-frontend/assets/fontawesome/
+frontend/assets/fonts/
 frontend/assets/bootstrap/
 
 # data - ostatní obrázky na webu
