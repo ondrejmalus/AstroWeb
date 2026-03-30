@@ -1,8 +1,9 @@
 # Node.js
 node_modules/
 
-# assets - css, bootstrap, fontawesome
-frontend/assets/
+# assets - bootstrap, fontawesome
+frontend/assets/fontawesome/
+frontend/assets/bootstrap/
 
 # data - ostatní obrázky na webu
 frontend/data/
@@ -13,6 +14,3 @@ frontend/images/
 # electron - build pro desktop
 electron/node_modules/
 electron/dist/
-
-# database - připojení k databázi
-server/db.js
